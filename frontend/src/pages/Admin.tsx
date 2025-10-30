@@ -5,6 +5,7 @@ import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import Create from "../components/Admin/CreatePd";
+import EditOrders from "../components/Admin/EditOrders";
 // import usePost from "../hooks/usePost";
 
 const Admin = () => {
@@ -99,7 +100,7 @@ const Admin = () => {
             element={<AdminFetch title="users" url="/api/v1/users" errFunc={setErr} />}
           />
           <Route
-            path="/orders"
+            path="/orders/*"
             element={<AdminFetch title="orders" url="/api/v1/orders" errFunc={setErr} />}
           />
           <Route
@@ -107,6 +108,7 @@ const Admin = () => {
             element={<AdminFetch title="users" url="/api/v1/users" errFunc={setErr} />}
           />
           <Route path="/products/create" element={<Create />} />
+          <Route path="/orders/edit/:tx" element={<EditOrders />} />
         </Routes>
       </div>
     </div>

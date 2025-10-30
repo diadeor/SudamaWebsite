@@ -24,7 +24,7 @@ const AdminFetch = ({
       if (error) {
         errFunc(error);
       } else {
-        console.log(data);
+        // console.log(data);
         setData(data[title]);
         setSearchData(data[title]);
       }
@@ -63,7 +63,7 @@ const AdminFetch = ({
         placeholder={`Search ${title} by name`}
         className="search h-12 w-full bg-white/10 border-1 border-white/20 rounded-xl mt-3 pl-5 text-white placeholder:text-white/60 placeholder:tracking-wide mb-5 outline-0"
       />
-      <div className="items flex flex-col gap-5 overflow-hidden max-h-196">
+      <div className="items flex flex-col gap-5 overflow-hidden">
         {searchData.map((el: any, index: number) => {
           if (title == "products") {
             return (

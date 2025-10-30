@@ -13,6 +13,19 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
+export const getOrder = async (req, res, next) => {
+  try {
+    const { tx } = req.params;
+    const order = await Order.findOne({ tx });
+    res.json({
+      success: true,
+      order,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const generateTx = async () => {
   const tx = Math.floor(10000 + Math.random() * 90000);
   const txExists = await Order.findOne({ tx });
@@ -39,6 +52,33 @@ export const createOrder = async (req, res, next) => {
     const carts = await Cart.findOneAndUpdate({ _id: id }, { $set: { items: [] } }, { new: true });
     // console.log(carts);
     res.json({ success: true, order });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateOrder = async (req, res, next) => {
+  try {
+    const role = req.user.role;
+    if (role != "admin") throw new Error("Unauthorized");
+    const { tx } = req.params;
+    const { status, paymentStatus } = req.body;
+    const statusList = ["pending", "processing", "shipped", "delivered", "cancelled"];
+    const paymentList = ["unpaid", "paid", "refunded"];
+
+    if (!statusList.includes(status) || !paymentList.includes(paymentStatus))
+      throw new Error("Invalid values passed");
+
+    const order = await Order.findOneAndUpdate(
+      { tx },
+      { $set: { status, paymentStatus } },
+      { new: true },
+    );
+    res.json({
+      success: true,
+      message: "Order updated",
+      order,
+    });
   } catch (error) {
     next(error);
   }

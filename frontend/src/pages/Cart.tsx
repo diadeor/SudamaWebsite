@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { FaArrowRight, FaCircleExclamation, FaCheck } from "react-icons/fa6";
 import { useCart } from "../contexts/CartContext";
 import usePost from "../hooks/usePost";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Item = ({
   name,
@@ -75,13 +77,20 @@ const Item = ({
 
 const Cart = () => {
   const { cart: data } = useCart();
+  const { user, setUser } = useAuth();
+  const nav = useNavigate();
   const cart: Object = data.cart ? data.cart : {};
   const items: Array<Object> = cart ? cart?.items : null;
   const checkoutRequest = usePost("/api/v1/orders/create");
 
   const handleCheckout = async () => {
     const { data, error } = await checkoutRequest({ cart });
-    console.log(data);
+    const updatedUser = {
+      ...user,
+      order: data.order,
+    };
+    setUser(updatedUser);
+    nav("/thank-you");
   };
 
   return (

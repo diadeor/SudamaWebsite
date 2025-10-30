@@ -82,9 +82,14 @@ type order = {
   paymentStatus: string;
   items: Array<Object>;
 };
+// type item = {
+//   name: string;
+//   quantity: number;
+//   subTotal: number;
+// };
 
-export const OrderCard = ({ cart, item }: { cart: order; item: Array<Object> }) => {
-  console.log(cart.items);
+export const OrderCard = ({ cart }: { cart: order; item: Array<Object> }) => {
+  // console.log(cart.items);
   return (
     <div className="item bg-white/20 flex flex-row gap-3 p-2 pl-4 rounded-lg text-white hover:scale-95 transition duration-300">
       <div className="details">
@@ -101,16 +106,17 @@ export const OrderCard = ({ cart, item }: { cart: order; item: Array<Object> }) 
         <p className="text-yellow-500 text-center font-bold uppercase border-b-2 border-white/40 tracking-widest">
           Items
         </p>
-        {/* {item.map((element, index) => {
-          // console.log(cart);
-          return (
-            <p className="flex flex-row justify-between items-center" key={index}>
-              <span className="font-bold min-w-55">{element.name}</span>
-              <span className=" min-w-15 text-center">{element.quantity}</span>
-              <span className="min-w-25 text-center">{element.subTotal}</span>
-            </p>
-          );
-        })} */}
+        {cart.items &&
+          cart.items.map((element, index) => {
+            // console.log(cart);
+            return (
+              <p className="flex flex-row justify-between items-center" key={index}>
+                <span className="font-bold min-w-55">{element.name}</span>
+                <span className=" min-w-15 text-center">{element.quantity}</span>
+                <span className="min-w-25 text-center">{element.subTotal}</span>
+              </p>
+            );
+          })}
       </div>
     </div>
   );

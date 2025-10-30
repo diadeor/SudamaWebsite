@@ -7,6 +7,7 @@ import Admin from "./pages/Admin.tsx";
 import Register from "./pages/Register.tsx";
 import Cart from "./pages/Cart.tsx";
 import { FaCartShopping } from "react-icons/fa6";
+import ThankYou from "./pages/ThankYou.tsx";
 const App = () => {
   return (
     <Router>
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/admin/*" element={<Admin />} />
+        <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
     </Router>
   );

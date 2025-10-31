@@ -66,17 +66,7 @@ const AdminFetch = ({
       <div className="items flex flex-col gap-5 overflow-hidden">
         {searchData.map((el: any, index: number) => {
           if (title == "products") {
-            return (
-              <ProductsCard
-                name={el.name}
-                desc={el.description}
-                stock={el.stock}
-                category={el.category}
-                regPrice={el.regularPrice}
-                salePrice={el.salePrice}
-                key={index}
-              />
-            );
+            return <ProductsCard product={el} key={index} />;
           } else if (title == "users") {
             return <UserCard name={el.name} email={el.email} key={index} />;
           } else if (title == "orders") {

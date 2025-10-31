@@ -33,7 +33,7 @@ export const createProduct = async (req, res, next) => {
     const { name, category, regularPrice, salePrice, description, stock } = req.body;
     const thumbnail = req.file;
     if ((!name, !category, !salePrice, !stock)) throw new Error("Required fields are not given");
-    console.log(req.body);
+    // console.log(req.body);
     const itemExists = await Product.findOne({ name });
 
     if (itemExists) {
@@ -77,37 +77,42 @@ export const createProduct = async (req, res, next) => {
   }
 };
 
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const product = Product.findById(id);
+    if (!product) throw new Error("Product does not exist");
+
+    const toDelete = Product.findByIdAndDelete(id);
+    res.json({ success: true, message: "Item deleted successfully", item: toDelete });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, images, thumbnail, category, regularPrice, salePrice, description, stock } =
-      req.body;
+    const { name, category, regularPrice, salePrice, description, stock } = req.body;
+    const thumbnail = req.file;
 
-    if (!name) throw new Error("Name is a required field");
-    if (!thumbnail) throw new Error("Product thumbnail is required");
-    if (!category) throw new Error("Product category is a required");
-    if (!salePrice) throw new Error("Product price is required");
-    if (!stock) throw new Error("Stock quantity is required");
-
-    const itemExists = await Product.findOne({ name });
-
-    if (itemExists && itemExists._id != id) {
-      if (itemExists.name == name && itemExists.category == category)
-        throw new Error("Item already exists");
-    }
+    if (!name || !category || !salePrice || !stock) throw new Error("Required fields are missing");
 
     if (regularPrice && regularPrice < salePrice)
       throw new Error("Sale price cannot be higher than regular price");
 
     if (stock < 1) throw new Error("Stock is less than 1");
 
+    const item = await Product.findById(id);
+
+    if (!item) throw new Error("Invalid product id");
+
     const product = await Product.findByIdAndUpdate(
       id,
       {
         $set: {
           name,
-          images,
-          thumbnail,
           category,
           regularPrice,
           salePrice,

@@ -4,6 +4,7 @@ import {
   getProducts,
   getProduct,
   createProduct,
+  deleteProduct,
   updateProduct,
 } from "../controllers/products.controller.js";
 
@@ -21,6 +22,7 @@ const upload = multer({ storage });
 productRouter.get("/", getProducts);
 productRouter.get("/:id", getProduct);
 productRouter.post("/create", upload.single("thumbnail"), createProduct);
-productRouter.put("/update/:id", updateProduct);
+productRouter.delete("/:id", deleteProduct);
+productRouter.put("/update/:id", upload.single("thumbnail"), updateProduct);
 
 export default productRouter;

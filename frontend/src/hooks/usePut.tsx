@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const usePost = (url: string) => {
-  const postReq = async (body: object) => {
+const usePut = (url: string) => {
+  const putReq = async (body: object) => {
     try {
       const response = await (
         await axios.put(url, body, {
@@ -19,7 +19,7 @@ const usePost = (url: string) => {
     }
   };
 
-  return postReq;
+  return putReq;
 };
 
-export default usePost;
+export default usePut;

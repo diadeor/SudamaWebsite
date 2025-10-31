@@ -7,11 +7,13 @@ export const FormInput = ({
   refer,
   req = true,
   name,
+  value,
 }: {
   type: string;
   refer?: any;
   req?: boolean;
   name: string;
+  value?: any;
 }) => {
   return (
     <input
@@ -21,6 +23,7 @@ export const FormInput = ({
       autoComplete={name}
       ref={refer ? refer : null}
       required={req}
+      defaultValue={value ? value : undefined}
       className="min-h-12 pl-3 pr-3 border-1 border-white/20 bg-white/10 rounded-md mb-5 outline-0 text-white"
     />
   );

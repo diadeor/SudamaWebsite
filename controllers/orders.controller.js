@@ -13,6 +13,20 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
+export const getUserOrders = async (req, res, next) => {
+  try {
+    const id = req.user.id;
+    const orders = await Order.find({ userId: id });
+
+    res.json({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getOrder = async (req, res, next) => {
   try {
     const { tx } = req.params;

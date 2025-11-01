@@ -77,7 +77,7 @@ const Admin = () => {
           <AdminCard
             icon={<FaFilePen />}
             title="Blogs"
-            value={data?.productCount}
+            value={data?.blogCount}
             subTitle="Last 7 days"
             subValue={400}
           />

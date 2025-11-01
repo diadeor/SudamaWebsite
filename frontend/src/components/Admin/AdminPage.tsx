@@ -27,10 +27,12 @@ type Pd = {
   name: string;
   category: string;
   description: string;
+  thumbnail: string;
 };
 
 export const ProductsCard = ({ product }: { product: Pd }) => {
-  const handleDelete = (e: any) => {
+  const imagePath = `http://localhost:5000/${product.thumbnail}`;
+  const handleDelete = () => {
     const firstConfirmation = prompt(
       `Do you really want to delete ${product.name} from products ?\n\nType "yes" if you are sure`,
     );
@@ -48,12 +50,8 @@ export const ProductsCard = ({ product }: { product: Pd }) => {
   };
   return (
     <div className="item bg-white/20 flex flex-row p-2 pl-4 rounded-lg text-white">
-      <div className="product-image max-w-[30%] min-w-auto border-1 flex flex-row items-center mr-3">
-        <img
-          src="../../uploads/products/68fdd880673da00905b92031.jpg"
-          alt=""
-          className="w-30 h-30"
-        />
+      <div className="product-image max-w-[30%] min-w-auto flex flex-row items-center mr-3">
+        <img src={imagePath} alt="" className="w-30 h-30 rounded-xl" />
       </div>
       <div className="details min-w-[50%] grow">
         <p className="name text-yellow-600 font-bold text-xl">{product.name}</p>
@@ -101,14 +99,14 @@ type order = {
   items: Array<Object>;
 };
 
-// type OrderItem = {
-//   name: string;
-//   price: number;
-//   subTotal: number;
-//   quantity: number;
-// };
+type OrderItem = {
+  name: string;
+  price: number;
+  subTotal: number;
+  quantity: number;
+};
 
-export const OrderCard = ({ cart }: { cart: order; item: Array<Object> }) => {
+export const OrderCard = ({ cart, item }: { cart: order; item: Array<OrderItem> }) => {
   // console.log(cart.items);
   return (
     <Link to={`/admin/orders/edit/${cart.tx}`}>
@@ -127,8 +125,8 @@ export const OrderCard = ({ cart }: { cart: order; item: Array<Object> }) => {
           <p className="text-yellow-500 text-center font-bold uppercase border-b-2 border-white/40 tracking-widest">
             Items
           </p>
-          {cart.items &&
-            cart.items.map((element, index) => {
+          {item &&
+            item.map((element, index) => {
               // console.log(cart);
               return (
                 <p className="flex flex-row justify-between items-center" key={index}>

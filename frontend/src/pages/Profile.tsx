@@ -2,7 +2,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import usePost from "../hooks/usePost";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Routes, Route, Link } from "react-router-dom";
+import { FaRightFromBracket } from "react-icons/fa6";
 
 const Profile = () => {
   const { user, setUser } = useAuth();
@@ -54,11 +55,11 @@ const Profile = () => {
     }
   };
 
-  return (
-    <div className="profile-container h-[calc(100vh-70px)] bg-green-950 p-10 tracking-wide flex flex-row justify-center items-center">
+  const Form = () => {
+    return (
       <form
         onSubmit={(e) => handleUpdate(e)}
-        className=" bg-black/40 p-10 pt-6 flex flex-col text-white tracking-wider rounded-md font-bold"
+        className=" flex flex-col text-white tracking-wider rounded-md font-bold"
       >
         {(err || result) && (
           <p
@@ -69,11 +70,6 @@ const Profile = () => {
             {err || result?.message}
           </p>
         )}
-        <h2 className="text-center text-white font-bold text-4xl mb-10">
-          Welcome,
-          <br />
-          <span className="text-yellow-600">{user?.name}</span>
-        </h2>
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -97,11 +93,50 @@ const Profile = () => {
         />
         <button
           onClick={(e) => handleLogout(e)}
-          className="log-out p-2.5 bg-gray-600 mt-5 rounded-sm cursor-pointer hover:scale-95 transition duration-200"
+          className="log-out p-2.5 bg-gray-600 mt-5 rounded-sm cursor-pointer hover:scale-95 transition duration-200 flex flex-row items-center justify-center gap-2"
         >
-          ⮨ Sign Out
+          <FaRightFromBracket />
+          Sign Out
         </button>
       </form>
+    );
+  };
+
+  const Orders = () => {
+    return (
+      <div className="font-bold text-white p-3 bg-white/10 rounded-lg flex flex-row">
+        <div className="left">
+          <p>41235</p>
+        </div>
+        <div className="right"></div>
+      </div>
+    );
+  };
+  return (
+    <div className="profile-container h-[calc(100vh-70px)] bg-green-950 p-10 tracking-wide flex flex-row justify-center items-center">
+      <div className="inner-container flex flex-col bg-black/40 p-10 pt-6 rounded-md">
+        <h2 className="text-center text-white font-bold text-4xl mb-5">
+          Welcome,
+          <br />
+          <span className="text-yellow-600">{user?.name}</span>
+        </h2>
+
+        <div className="tabs flex flex-row grow w-full mb-5 bg-white/10 text-center rounded-md overflow-hidden cursor-pointer text-white font-bold">
+          <Link to="/profile" className="grow bg-white/30 p-3">
+            <p className="">Profile</p>
+          </Link>
+          <Link to="/profile/orders" className="grow p-3">
+            <p className="">Orders</p>
+          </Link>
+          <Link to="/profile/password" className="grow p-3">
+            <p className="">Password</p>
+          </Link>
+        </div>
+        <Routes>
+          <Route path="/" element={<Form />} />
+          <Route path="/orders" element={<Orders />} />
+        </Routes>
+      </div>
     </div>
   );
 };

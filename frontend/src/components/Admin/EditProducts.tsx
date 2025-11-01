@@ -1,13 +1,13 @@
 import { FormInput, FormLabel } from "../Form";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { data, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import usePut from "../../hooks/usePut";
 
 const EditProducts = () => {
   const form = useRef<HTMLFormElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
-  const [thumbText, setThumbText] = useState("Choose a thumbnail");
+  const [thumbText, setThumbText] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [product, setProduct] = useState(Object);
@@ -23,7 +23,7 @@ const EditProducts = () => {
     fetchProduct();
   }, []);
 
-  // console.log(imageRef);
+  const imagePath = product && `http://localhost:5000/${product.thumbnail}`;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -75,7 +75,7 @@ const EditProducts = () => {
           className="text-white mt-2 mb-4 cursor-pointer p-2 bg-white/10 text-center min-h-20 flex flex-col justify-center items-center rounded-xl font-bold tracking-wide"
         >
           {thumbText}
-          <img src={undefined} alt="" ref={imageRef} className="w-70 rounded-xl max-h-70" />
+          <img src={imagePath} alt="" ref={imageRef} className="w-70 rounded-xl max-h-70" />
         </label>
         <input
           type="file"

@@ -19,8 +19,10 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// This serves 'public' at the '/public' path
 
 // Routes
+app.use(express.static("./public"));
 app.use("/api/v1", miscRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);

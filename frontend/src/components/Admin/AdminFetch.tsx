@@ -4,11 +4,13 @@ import { OrderCard, ProductsCard, UserCard } from "./AdminPage";
 
 const AdminFetch = ({
   title,
+  icon,
   url,
   errFunc,
   option,
 }: {
   title: string;
+  icon: ReactNode;
   url: string;
   errFunc: Function;
   option?: ReactNode;
@@ -51,7 +53,12 @@ const AdminFetch = ({
   return (
     <div className="admin-data">
       <div className="title flex flex-row justify-between items-center">
-        <p className={`font-bold text-yellow-600 text-2xl uppercase ${option ? "" : "mt-1"}`}>
+        <p
+          className={`font-bold text-yellow-600 text-2xl uppercase ${
+            option ? "" : "mt-1"
+          } flex flex-row gap-2 items-center`}
+        >
+          {icon}
           {title}
         </p>
         {option && option}

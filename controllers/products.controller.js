@@ -33,7 +33,6 @@ export const createProduct = async (req, res, next) => {
     const { name, category, regularPrice, salePrice, description, stock } = req.body;
     const thumbnail = req.file;
     if ((!name, !category, !salePrice, !stock)) throw new Error("Required fields are not given");
-    // console.log(req.body);
     const itemExists = await Product.findOne({ name });
 
     if (itemExists) {
@@ -49,7 +48,8 @@ export const createProduct = async (req, res, next) => {
     const genId = new mongoose.Types.ObjectId();
     const oldPath = req.file.path;
     const newName = `${genId}${path.extname(thumbnail.originalname)}`;
-    const newPath = `uploads/products/${newName}`;
+    const newPath = `public/products/${newName}`;
+
     rename(oldPath, newPath, (err) => {
       if (err) throw new Error("File rename error");
     });
@@ -62,7 +62,7 @@ export const createProduct = async (req, res, next) => {
       salePrice,
       stock,
       description,
-      thumbnail: newName,
+      thumbnail: `products/${newName}`,
     });
 
     res.json({

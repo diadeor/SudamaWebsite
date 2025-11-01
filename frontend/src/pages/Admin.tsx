@@ -7,6 +7,7 @@ import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import Create from "../components/Admin/CreatePd";
 import EditOrders from "../components/Admin/EditOrders";
 import EditProducts from "../components/Admin/EditProducts";
+import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen } from "react-icons/fa6";
 // import usePost from "../hooks/usePost";
 
 const Admin = () => {
@@ -46,10 +47,17 @@ const Admin = () => {
       </h2>
       <div className="data flex flex-row flex-wrap gap-5 justify-center">
         <Link to="/admin/users">
-          <AdminCard title="users" value={data?.userCount} subTitle="Last 7 days" subValue={400} />
+          <AdminCard
+            icon={<FaUsers />}
+            title="users"
+            value={data?.userCount}
+            subTitle="Last 7 days"
+            subValue={400}
+          />
         </Link>
         <Link to="/admin">
           <AdminCard
+            icon={<FaLayerGroup />}
             title="Products"
             value={data?.productCount}
             subTitle="Last 7 days"
@@ -58,6 +66,7 @@ const Admin = () => {
         </Link>
         <Link to="/admin/orders">
           <AdminCard
+            icon={<FaCubesStacked />}
             title="Orders"
             value={data?.orderCount}
             subTitle="Last 7 days"
@@ -66,6 +75,7 @@ const Admin = () => {
         </Link>
         <Link to="/admin/blogs">
           <AdminCard
+            icon={<FaFilePen />}
             title="Blogs"
             value={data?.productCount}
             subTitle="Last 7 days"
@@ -89,6 +99,7 @@ const Admin = () => {
             path="/*"
             element={
               <AdminFetch
+                icon={<FaLayerGroup />}
                 title="products"
                 url="/api/v1/products"
                 errFunc={setErr}
@@ -98,15 +109,26 @@ const Admin = () => {
           />
           <Route
             path="/users"
-            element={<AdminFetch title="users" url="/api/v1/users" errFunc={setErr} />}
+            element={
+              <AdminFetch icon={<FaUsers />} title="users" url="/api/v1/users" errFunc={setErr} />
+            }
           />
           <Route
             path="/orders/*"
-            element={<AdminFetch title="orders" url="/api/v1/orders" errFunc={setErr} />}
+            element={
+              <AdminFetch
+                icon={<FaCubesStacked />}
+                title="orders"
+                url="/api/v1/orders"
+                errFunc={setErr}
+              />
+            }
           />
           <Route
             path="/blogs"
-            element={<AdminFetch title="users" url="/api/v1/users" errFunc={setErr} />}
+            element={
+              <AdminFetch icon={<FaFilePen />} title="users" url="/api/v1/users" errFunc={setErr} />
+            }
           />
           <Route path="/products/create" element={<Create />} />
           <Route path="/products/edit/:id" element={<EditProducts />} />

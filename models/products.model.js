@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Indoor", "Outdoor", "Fruit"],
+      enum: ["Indoor", "Outdoor", "Fruits"],
       required: true,
       default: "Indoor",
     },

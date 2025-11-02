@@ -7,6 +7,7 @@ import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import Create from "../components/Admin/CreatePd";
 import EditOrders from "../components/Admin/EditOrders";
 import EditProducts from "../components/Admin/EditProducts";
+import CreateBlogs from "../components/Admin/CreateBlogs";
 import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen } from "react-icons/fa6";
 // import usePost from "../hooks/usePost";
 
@@ -40,51 +41,47 @@ const Admin = () => {
   }
 
   return user.role == "admin" ? (
-    <div className="admin-container bg-green-950 p-10 flex flex-col items-center min-h-[calc(100vh-70px)]">
-      <h2 className="font-bold text-center text-3xl text-white mb-10">
+    <div className="admin-container p-5 flex flex-col items-center min-h-screen pt-25 pb-15">
+      <h2 className="font-lobster font-bold text-center text-3xl text-white mb-10">
         Howdy,
-        <br /> <span className="text-yellow-600 text-4xl">{user.name}</span>
+        <br /> <span className="text-yellow-500 text-4xl">{user.name}</span>
       </h2>
-      <div className="data flex flex-row flex-wrap gap-5 justify-center">
-        <Link to="/admin/users">
-          <AdminCard
-            icon={<FaUsers />}
-            title="users"
-            value={data?.userCount}
-            subTitle="Last 7 days"
-            subValue={400}
-          />
-        </Link>
-        <Link to="/admin">
-          <AdminCard
-            icon={<FaLayerGroup />}
-            title="Products"
-            value={data?.productCount}
-            subTitle="Last 7 days"
-            subValue={400}
-          />
-        </Link>
-        <Link to="/admin/orders">
-          <AdminCard
-            icon={<FaCubesStacked />}
-            title="Orders"
-            value={data?.orderCount}
-            subTitle="Last 7 days"
-            subValue={400}
-          />
-        </Link>
-        <Link to="/admin/blogs">
-          <AdminCard
-            icon={<FaFilePen />}
-            title="Blogs"
-            value={data?.blogCount}
-            subTitle="Last 7 days"
-            subValue={400}
-          />
-        </Link>
+      <div className="data flex flex-row flex-wrap gap-2 justify-center">
+        <AdminCard
+          icon={<FaUsers />}
+          title="users"
+          value={data?.userCount}
+          subTitle="Last 7 days"
+          subValue={400}
+          toUrl="/admin/users"
+        />
+        <AdminCard
+          icon={<FaLayerGroup />}
+          title="Products"
+          value={data?.productCount}
+          subTitle="Last 7 days"
+          subValue={400}
+          toUrl="/admin"
+        />
+        <AdminCard
+          icon={<FaCubesStacked />}
+          title="Orders"
+          value={data?.orderCount}
+          subTitle="Last 7 days"
+          subValue={400}
+          toUrl="/admin/orders"
+        />
+        <AdminCard
+          icon={<FaFilePen />}
+          title="Blogs"
+          value={data?.blogCount}
+          subTitle="Last 7 days"
+          subValue={400}
+          toUrl="/admin/blogs"
+        />
       </div>
 
-      <div className="show bg-black/40 mt-5 p-5 pt-3 rounded-xl w-195">
+      <div className="show bg-black/60 mt-2 p-3 pt-3 rounded-xl w-full max-w-185">
         {(err || result) && (
           <p
             className={`error mb-3 bg-${
@@ -127,12 +124,19 @@ const Admin = () => {
           <Route
             path="/blogs"
             element={
-              <AdminFetch icon={<FaFilePen />} title="users" url="/api/v1/users" errFunc={setErr} />
+              <AdminFetch
+                icon={<FaFilePen />}
+                title="blogs"
+                url="/api/v1/blogs"
+                errFunc={setErr}
+                option={<Option url="/admin/blogs/create" />}
+              />
             }
           />
           <Route path="/products/create" element={<Create />} />
           <Route path="/products/edit/:id" element={<EditProducts />} />
           <Route path="/orders/edit/:tx" element={<EditOrders />} />
+          <Route path="/blogs/create/" element={<CreateBlogs />} />
         </Routes>
       </div>
     </div>

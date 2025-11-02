@@ -25,7 +25,7 @@ const Login = () => {
     }
   }, [user]);
   return (
-    <div className="login-container h-[calc(100vh-70px)] bg-green-950 p-10 tracking-wide flex flex-row justify-center items-center">
+    <div className="login-container h-screen p-5 tracking-wide flex flex-row justify-center items-center ">
       <Form
         title="Sign in"
         navTo="/profile"

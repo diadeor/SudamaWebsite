@@ -24,11 +24,11 @@ const Popular = () => {
   }, []);
 
   return (
-    <section className="popular bg-green-950 pt-5 pl-10 pr-10 pb-20">
-      <p className="sec-title text-yellow-600 text-4xl text-center font-bold tracking-wider">
+    <section className="font-fauna popular p-5 pb-20">
+      <p className="font-lobster sec-title text-yellow-500 text-4xl text-center font-bold tracking-wider">
         Popular
       </p>
-      <div className="products flex flex-row gap-5 pt-10 flex-wrap justify-center">
+      <div className="products flex flex-row gap-3 pt-10 flex-wrap justify-center">
         {data &&
           data.map((el: product, index: number) => {
             return (

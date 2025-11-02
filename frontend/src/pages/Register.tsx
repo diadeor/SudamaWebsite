@@ -27,7 +27,7 @@ const Register = () => {
     if (user) nav(user.role == "admin" ? "/admin" : "/");
   }, [user]);
   return (
-    <div className="signup-container h-[calc(100vh-70px)] bg-green-950 p-10 tracking-wide flex flex-row justify-center items-center">
+    <div className="signup-container h-screen p-5 tracking-wide flex flex-row justify-center items-center">
       <Form
         title="Sign Up"
         subTitle="Sudama Plant Store"

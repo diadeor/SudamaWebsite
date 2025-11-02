@@ -7,14 +7,16 @@ import Admin from "./pages/Admin.tsx";
 import Register from "./pages/Register.tsx";
 import Cart from "./pages/Cart.tsx";
 import { FaCartShopping } from "react-icons/fa6";
+import { IoCartOutline } from "react-icons/io5";
 import ThankYou from "./pages/ThankYou.tsx";
+import Footer from "./components/Footer.tsx";
 const App = () => {
   return (
     <Router>
       <NavBar />
       <Link to="/cart">
-        <button className="cart fixed bottom-[5%] left-[5%] bg-yellow-600 p-4 rounded-full shadow-[0px_0px_15px_0px_white] border-2 border-white/50 hover:scale-110 transition duration-300 cursor-pointer">
-          <FaCartShopping size="1.5em" color="white" />
+        <button className="z-15 cart fixed bottom-[5%] left-[5%] bg-yellow-600 p-4 rounded-full shadow-[0px_0px_15px_0px_white] hover:scale-110 transition duration-300 cursor-pointer">
+          <IoCartOutline size="1.5em" color="white" />
         </button>
       </Link>
       <Routes>
@@ -26,6 +28,7 @@ const App = () => {
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };

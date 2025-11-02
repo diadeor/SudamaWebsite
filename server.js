@@ -11,6 +11,7 @@ import miscRouter from "./routes/misc.route.js";
 import orderRouter from "./routes/orders.route.js";
 import cartRouter from "./routes/carts.route.js";
 import authUser from "./middlewares/auth.middleware.js";
+import blogRouter from "./routes/blogs.route.js";
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/orders", authUser, orderRouter);
-app.use("/api/v1/blogs", orderRouter);
+app.use("/api/v1/blogs", blogRouter);
 app.use("/api/v1/carts", cartRouter);
 
 // Error Middleware

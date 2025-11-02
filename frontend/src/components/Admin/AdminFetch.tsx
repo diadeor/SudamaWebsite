@@ -1,6 +1,6 @@
 import { useState, useEffect, type ReactNode } from "react";
 import useFetch from "../../hooks/useFetch";
-import { OrderCard, ProductsCard, UserCard } from "./AdminPage";
+import { BlogCard, OrderCard, ProductsCard, UserCard } from "./AdminPage";
 
 const AdminFetch = ({
   title,
@@ -52,7 +52,7 @@ const AdminFetch = ({
 
   return (
     <div className="admin-data">
-      <div className="title flex flex-row justify-between items-center">
+      <div className="font-lobster tracking-wider title flex flex-row justify-between items-center">
         <p
           className={`font-bold text-yellow-600 text-2xl uppercase ${
             option ? "" : "mt-1"
@@ -68,9 +68,9 @@ const AdminFetch = ({
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder={`Search ${title} by name`}
-        className="search h-12 w-full bg-white/10 border-1 border-white/20 rounded-xl mt-3 pl-5 text-white placeholder:text-white/60 placeholder:tracking-wide mb-5 outline-0"
+        className="search h-12 w-full bg-white/10 border border-white/20 rounded-xl mt-3 pl-5 text-white placeholder:text-white/60 placeholder:tracking-wide mb-3 outline-0"
       />
-      <div className="items flex flex-col gap-5 overflow-hidden">
+      <div className="items flex flex-col gap-2 overflow-hidden">
         {searchData.map((el: any, index: number) => {
           if (title == "products") {
             return <ProductsCard product={el} key={index} />;
@@ -78,6 +78,8 @@ const AdminFetch = ({
             return <UserCard name={el.name} email={el.email} key={index} />;
           } else if (title == "orders") {
             return <OrderCard cart={el} item={el.items} key={index} />;
+          } else if (title == "blogs") {
+            return <BlogCard blog={el} key={index} />;
           }
         })}
       </div>

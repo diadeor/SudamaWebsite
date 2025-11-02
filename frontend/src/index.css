@@ -1,21 +1,54 @@
-@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Big+Shoulders+Stencil:opsz,wght@10..72,100..900&family=Borel&family=Fauna+One&family=Fleur+De+Leah&family=Indie+Flower&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
 
 :root {
-  --jetbrains: "Jetbrains Mono";
+  --jetbrains: "JetBrains Mono";
 }
 * {
-  font-family: "Poppins";
+  /* font-family: ""; */
   box-sizing: border-box;
 }
 
-@import "tailwindcss";
+.font-jetbrains {
+  font-family: "JetBrains Mono";
+}
 
-.hero-section,
-.login-container {
-  background-image: url(../src/assets/floral.png);
-  /* background-color: #094b25; */
-  background-size: cover;
+.font-lobster {
+  font-family: "Lobster Two";
+}
+
+.font-poppins {
+  font-family: "Poppins";
+}
+.font-fleur {
+  font-family: "Fleur De Leah";
+}
+.font-fauna {
+  font-family: "Fauna One";
+}
+.font-indie {
+  font-family: "Indie Flower";
+}
+body {
+  background-image: radial-gradient(ellipse at center, #5cc96a, #046711),
+    url(../src/assets/floral.png);
+  /* background-image: radial-gradient(circle, #588157, #ebf5ee); */
+  /* background-color: #66c473; */
+  background-attachment: fixed;
+  background-size: contain;
   background-position: bottom;
   background-repeat: no-repeat;
   background-blend-mode: multiply;
+}
+
+/* footer {
+  background-image: url(../src/assets/floral.png);
+  background-color: rgba(255, 255, 255, 0.15);
+  background-blend-mode: multiply;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
+
+footer {
 }

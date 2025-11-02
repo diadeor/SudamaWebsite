@@ -1,45 +1,34 @@
-import { FormInput, FormLabel } from "../Form";
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
+import { FormLabel, FormInput } from "../Form";
+import useFile from "../../hooks/useFile";
 import usePost from "../../hooks/usePost";
 
-const Create = () => {
+const CreateBlogs = () => {
   const form = useRef<HTMLFormElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [thumbText, setThumbText] = useState("Choose a thumbnail");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-
-  // console.log(imageRef);
-  const request = usePost("/api/v1/products/create");
+  const handleFile = useFile(setThumbText);
+  const request = usePost("/api/v1/blogs/create");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!form.current) return;
     const formData = new FormData(form.current);
     const { data, error } = await request(formData);
-    if (error) {
+    if (!error) {
+      setSuccess(data.message);
+      setError("");
+    } else {
       setError(error);
       setSuccess("");
-    } else {
-      setError("");
-      setSuccess(data.message);
     }
   };
-  const handleFile = (e: any) => {
-    const file = e.target.files[0];
-    // console.log(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        imageRef.current && imageRef.current.setAttribute("src", e.target.result);
-        setThumbText("");
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+
   return (
-    <div className="create">
-      <p className="title text-green-500 font-bold text-2xl">Create New Product</p>
+    <div className="create-blog flex flex-col text-white ">
+      <p className="title text-green-500 font-bold text-2xl">Create New Blog</p>
       {(error || success) && (
         <p
           className={`message ${
@@ -68,37 +57,17 @@ const Create = () => {
           name="thumbnail"
           id="thumbnail"
           accept="image/*"
-          onChange={(e) => handleFile(e)}
+          onChange={(e) => handleFile(e, imageRef)}
           className="bg-white/10 p-10 rounded-lg text-white text-center cursor-pointer mb-5 hidden"
         />
-        <FormLabel name="name" />
-        <FormInput type="text" name="name" />
-        <FormLabel name="price" labelFor="salePrice" />
-        <FormInput type="number" name="salePrice" />
-        <FormLabel name="Regular Price" req={false} labelFor="regularPrice" />
-        <FormInput type="number" req={false} name="regularPrice" />
-        <FormLabel name="stock" />
-        <FormInput type="number" name="stock" />
-        <FormLabel name="category" />
-        <select
-          name="category"
-          id="category"
-          className="bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border-1 border-white/10 focus:bg-black/50 mb-5"
-        >
-          <option value="Indoor" className="bg-black/70">
-            Indoor
-          </option>
-          <option value="Outdoor">Outdoor</option>
-          <option value="Fruits">Fruits</option>
-        </select>
-        <label htmlFor="description" className="text-white pb-2">
-          Description
-        </label>
+        <FormLabel name="title" />
+        <FormInput type="text" name="title" />
+        <FormLabel name="description" />
         <textarea
           name="description"
-          id="description"
-          rows={5}
-          className="p-2 outline-0 text-white border-1 border-white/10 bg-white/10 rounded-lg mb-5"
+          id=""
+          rows={10}
+          className="bg-white/10 p-3 outline-0 border-1 border-white/20 rounded-md mb-5"
         ></textarea>
         <input
           type="submit"
@@ -110,4 +79,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreateBlogs;

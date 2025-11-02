@@ -6,22 +6,26 @@ export const AdminCard = ({
   subTitle,
   subValue,
   icon,
+  toUrl,
 }: {
   title: string;
   value: number;
   subTitle: string;
   subValue: number;
   icon: ReactNode;
+  toUrl: string;
 }) => {
   return (
-    <div className="users min-w-45 bg-black/40 text-white p-4 pl-5 pr-5 rounded-xl">
-      <p className="text-yellow-600 font-bold mb-2 uppercase tracking-wide flex flex-row items-center gap-2">
-        {icon}
-        {title}
-      </p>
-      <p className="font-bold text-2xl mb-2">{value}</p>
-      <p className="">{`${subTitle}: ${subValue}`}</p>
-    </div>
+    <Link to={toUrl} className="grow">
+      <div className="users min-w-45 bg-black/60 text-white p-5 pt-3 pb-3 rounded-xl">
+        <p className="font-fauna tracking-wider text-yellow-600 font-bold mb-2 uppercase flex flex-row items-center gap-2">
+          {icon}
+          {title}
+        </p>
+        <p className="font-bold text-2xl mb-2 font-jetbrains">{value}</p>
+        <p className="font-fauna">{`${subTitle}: ${subValue}`}</p>
+      </div>
+    </Link>
   );
 };
 

@@ -92,7 +92,7 @@ export const Form = ({
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="flex flex-col bg-black/80 text-white p-8 pt-5 rounded-lg w-full"
+      className="flex flex-col bg-black/80 text-white p-8 pt-5 rounded-lg w-full max-w-100"
     >
       <div className="site-info flex flex-col items-center">
         {err && (

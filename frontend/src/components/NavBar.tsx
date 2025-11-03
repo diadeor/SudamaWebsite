@@ -3,18 +3,36 @@ import logo from "../assets/logo.png";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoCallOutline } from "react-icons/io5";
 import { useAuth } from "../contexts/AuthContext";
+import { useRef, useState } from "react";
 
 const NavBar = () => {
   const { user } = useAuth();
+  const [menu, setMenu] = useState(false);
+
+  const handleMenu = (e: any) => {
+    setMenu(!menu);
+  };
+
   return (
-    <nav className="font-poppins fixed top-3 left-3 right-3 flex flex-row items-center justify-between pl-5 pr-5 h-[70px] bg-green-300/15 rounded-xl backdrop-blur-sm shadow-md border border-white/30 z-15">
-      <Link to="tel:+977 9847440395">
-        <IoCallOutline size="1.5em" className="text-yellow-400 sm:hidden" />
+    <nav className="font-poppins flex flex-row items-center justify-between px-5 h-[70px] bg-green-300/15 border-b-2 border-green-300/20">
+      <Link to="tel:+977 9847440395" className="sm:hidden">
+        <IoCallOutline size="1.5em" className="text-yellow-400" />
       </Link>
       <Link to="/">
         <img src={logo} alt="" className="w-8" />
       </Link>
-      <FaBarsStaggered className="text-yellow-400 sm:hidden" size="1.5em" />
+      <FaBarsStaggered
+        className="text-yellow-400 sm:hidden cursor-pointer"
+        size="1.5em"
+        onClick={(e) => handleMenu(e)}
+      />
+      <div
+        className={`${
+          menu ? "flex" : "hidden"
+        } menu right-0 left-0 top-18 absolute bg-black/30 p-5 rounded-b-xl text-white font-lobster`}
+      >
+        <p>hi THere</p>
+      </div>
       <ul className="font-lobster tracking-widest flex-row gap-5 text-white font-bold text-xl items-center hidden sm:flex">
         <li>
           <Link to="/">Home</Link>

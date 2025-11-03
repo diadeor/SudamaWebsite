@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 const InfoItem = ({ title, value }: { title: string; value: string }) => {
   return (
     <p className="flex flex-col bg-white/10 text-white p-3 font-bold gap-2 grow items-center rounded-lg">
-      <span className="text-lg border-b-2 w-full text-center border-white/20 pb-1 tracking-wider capitalize">
+      <span className="font-fauna text-lg border-b-2 w-full text-center border-white/20 pb-1 tracking-wider capitalize">
         {title}
       </span>
-      <span className="text-md text-yellow-600">{value}</span>
+      <span className="font-poppins text-md text-yellow-600">{value}</span>
     </p>
   );
 };
@@ -80,7 +80,9 @@ const EditOrders = () => {
   };
   return (
     <div className="edit">
-      <p className="title text-green-500 font-bold text-2xl">Order #{data.tx}</p>
+      <p className="font-lobster title text-green-500 font-bold text-2xl">
+        Order <span className="font-jetbrains">#{data.tx}</span>
+      </p>
       {(error || success) && (
         <p
           className={`message ${
@@ -91,13 +93,13 @@ const EditOrders = () => {
         </p>
       )}
       <div className="second flex flex-col mt-5 gap-3">
-        <div className="user-info flex flex-row justify-center gap-3">
+        <div className="user-info flex flex-row flex-wrap justify-center gap-3">
           <InfoItem title="User" value={data.user} />
           <InfoItem title="Email" value={data.email} />
           <InfoItem title="Created" value={data.createdAt} />
         </div>
         <div className="items flex flex-col bg-white/10 p-3 text-white rounded-lg">
-          <p className="text-center font-bold text-lg border-b-2 border-white/10 pb-1 mb-2">
+          <p className="font-fauna text-center font-bold text-lg border-b-2 border-white/10 pb-1 mb-2">
             Order Items
           </p>
           {data.items &&
@@ -107,35 +109,41 @@ const EditOrders = () => {
                   className="order-item flex flex-row justify-between text-yellow-600"
                   key={index}
                 >
-                  <p className="min-w-60 tracking-wider font-bold">{item.name}</p>
-                  <p className="min-w-10 text-center ">{item.quantity}</p>
-                  <p className="min-w-30 text-right ">Rs. {item.subTotal}</p>
+                  <p className="min-w-50 tracking-wider font-bold font-poppins">{item.name}</p>
+                  <p className="min-w-10 text-center font-jetbrains">{item.quantity}</p>
+                  <p className="min-w-25 text-right font-jetbrains">Rs.{item.subTotal}</p>
                 </div>
               );
             })}
-          <hr className="mt-2 border-1 border-white/10" />
+          <hr className="mt-2 border border-white/10" />
           <p className="title flex flex-row mt-2 border-b-2 border-white/10 text-center">
-            <span className="w-[70%] font-bold border-r-2 border-white/10">SubTotal</span>
-            <span className="w-[30%]">Rs. {data.total}</span>
+            <span className="w-[70%] font-bold border-r-2 border-white/10 font-lobster tracking-widest">
+              SubTotal
+            </span>
+            <span className="w-[30%] font-jetbrains">Rs.{data.total}</span>
           </p>
           <p className="title flex flex-row mt-2 border-b-2 border-white/10 text-center">
-            <span className="w-[70%] font-bold border-r-2 border-white/10">Discount</span>
-            <span className="w-[30%]">-Rs. {data.discount}</span>
+            <span className="w-[70%] font-bold border-r-2 border-white/10 font-lobster tracking-widest">
+              Discount
+            </span>
+            <span className="w-[30%] font-jetbrains">-Rs.{data.discount}</span>
           </p>
           <p className="title flex flex-row mt-2 border-b-2 border-white/10 text-center">
-            <span className="w-[70%] font-bold border-r-2 border-white/10">Grand Total</span>
-            <span className="w-[30%]">Rs. {data.amount}</span>
+            <span className="w-[70%] font-bold border-r-2 border-white/10 font-lobster tracking-widest">
+              Grand Total
+            </span>
+            <span className="w-[30%] font-jetbrains ">Rs.{data.amount}</span>
           </p>
         </div>
         <div className="status flex flex-row justify-center gap-3">
           <div className="order-status bg-white/10 rounded-lg p-3 text-center text-white min-w-[50%]">
-            <p className="font-bold text-lg">Order Status</p>
+            <p className="font-bold text-lg font-fauna ">Order Status</p>
             <select
               name="order-status"
               value={status}
               id=""
               onChange={(e) => handleStatusChange(e)}
-              className="text-yellow-600 font-bold outline-0"
+              className="font-poppins text-yellow-600 font-bold outline-0"
             >
               <option value="processing">Processing</option>
               <option value="pending">Pending</option>
@@ -145,13 +153,13 @@ const EditOrders = () => {
             </select>
           </div>
           <div className="payment-status bg-white/10 rounded-lg p-3 text-center text-white min-w-[50%]">
-            <p className="font-bold text-lg">Payment Status</p>
+            <p className="font-bold font-fauna text-lg">Payment Status</p>
             <select
               name="payment-status"
               value={paymentStatus}
               onChange={(e) => handlePaymentStatusChange(e)}
               id=""
-              className="text-yellow-600 font-bold outline-0"
+              className="font-poppins text-yellow-600 font-bold outline-0"
             >
               <option value="paid">Paid</option>
               <option value="unpaid">Unpaid</option>

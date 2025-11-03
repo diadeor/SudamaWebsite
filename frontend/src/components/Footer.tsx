@@ -15,10 +15,9 @@ const Footer = () => {
         <p className="text-white">gairesanjay70@gmail.com</p>
         <p className="text-white">Kalika Chowk, Butwal</p>
       </div>
-      <p className=" rounded-full text-white font-jetbrains m-5 p- w-full text-center bg-white/20">
-        Copyright &copy; 2025
+      <p className=" rounded-full text-white font-jetbrains mb-0 mt-5 w-full text-center">
+        Copyright &copy; 2024. All rights reserved
         <br />
-        <span className="font-bold">Sudama Plant Store</span>
       </p>
     </footer>
   );

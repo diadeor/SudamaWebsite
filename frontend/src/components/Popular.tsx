@@ -36,6 +36,7 @@ const Popular = () => {
                 key={index}
                 id={el._id}
                 image={dummy}
+                cat={el.category}
                 price={el.salePrice}
                 regularPrice={el.regularPrice}
                 name={el.name}

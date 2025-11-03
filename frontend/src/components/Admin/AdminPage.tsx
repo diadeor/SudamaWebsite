@@ -147,16 +147,21 @@ export const OrderCard = ({ cart, item }: { cart: order; item: Array<OrderItem> 
     </Link>
   );
 };
+type Blog = {
+  thumbnail: string;
+  title: string;
+  description: string;
+};
 
-export const BlogCard = ({ blog }: { blog: Object }) => {
+export const BlogCard = ({ blog }: { blog: Blog }) => {
   console.log(blog.thumbnail);
   const imageSrc = `http://localhost:5000/${blog.thumbnail}`;
   return (
     <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
       <img src={imageSrc} alt="" className="min-w-30 w-30 h-30 rounded-xl" />
       <div className="right flex flex-col flex-wrap">
-        <p className="title font-bold text-xl wrap-normal">{blog.title}</p>
-        <p className="desc">{blog.description}</p>
+        <p className="title font-bold text-xl wrap-normal font-poppins">{blog.title}</p>
+        <p className="desc font-fauna">{blog.description}</p>
       </div>
     </div>
   );

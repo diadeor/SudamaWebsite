@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <main
-        className={` hero-section h-screen flex flex-row flex-wrap justify-center wrap-normal pl-5 pr-5 pt-25`}
+        className={` hero-section h-screen flex flex-row flex-wrap justify-center wrap-normal pl-5 pr-5 pt-5`}
       >
         <div className="text">
           <p className="hero font-bold text-white text-4xl mb-5 font-lobster tracking-wider">

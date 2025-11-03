@@ -1,4 +1,9 @@
 import mongoose from "mongoose";
+import Category from "./categories.model.js";
+
+const getCategories = async () => {
+  const categories = await Category.find({});
+};
 
 const productSchema = new mongoose.Schema(
   {
@@ -16,6 +21,11 @@ const productSchema = new mongoose.Schema(
     images: {
       type: [String],
       required: false,
+    },
+    badge: {
+      type: String,
+      enum: ["Sale", "Featured", "New", ""],
+      default: "",
     },
     description: {
       type: String,

@@ -41,7 +41,7 @@ const Admin = () => {
   }
 
   return user.role == "admin" ? (
-    <div className="admin-container p-5 flex flex-col items-center min-h-screen pt-25 pb-15">
+    <div className="admin-container p-5 flex flex-col items-center min-h-screen pt-5 pb-15">
       <h2 className="font-lobster font-bold text-center text-3xl text-white mb-10">
         Howdy,
         <br /> <span className="text-yellow-500 text-4xl">{user.name}</span>

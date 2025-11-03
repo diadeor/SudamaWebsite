@@ -3,12 +3,12 @@ import { Option, AdminCard } from "../components/Admin/Misc";
 import AdminFetch from "../components/Admin/AdminFetch";
 import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
-import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Create from "../components/Admin/CreatePd";
 import EditOrders from "../components/Admin/EditOrders";
 import EditProducts from "../components/Admin/EditProducts";
 import CreateBlogs from "../components/Admin/CreateBlogs";
-import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen, FaEye } from "react-icons/fa6";
+import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen, FaEye, FaList } from "react-icons/fa6";
 import CreateCategory from "../components/Admin/CreateCat";
 // import usePost from "../hooks/usePost";
 
@@ -81,7 +81,7 @@ const Admin = () => {
           toUrl="/admin/blogs"
         />
         <AdminCard
-          icon={<FaFilePen />}
+          icon={<FaList />}
           title="Categories"
           value={data?.catCount}
           subTitle="Last 7 days"
@@ -94,7 +94,7 @@ const Admin = () => {
           value={data?.blogCount}
           subTitle="Last 7 days"
           subValue={400}
-          toUrl="/admin/blogs"
+          toUrl=""
         />
       </div>
 
@@ -103,7 +103,7 @@ const Admin = () => {
           <p
             className={`error mb-3 bg-${
               err ? "red" : "green"
-            }-900 w-[100%] text-center p-1 pl-3 pr-3 rounded-md`}
+            }-900 w-full text-center p-1 pl-3 pr-3 rounded-md`}
           >
             {err || result?.message}
           </p>

@@ -16,10 +16,40 @@ export const getCategories = async (req, res, next) => {
 };
 export const updateCategory = async (req, res, next) => {
   try {
-    const categories = await Category.find({}, "name");
+    const { id } = req.params;
+    const { name } = req.body;
+    const thumbnail = req.file;
+
+    const cat = await Category.findById(id);
+    if (!cat) throw new Error("Invalid id");
+
+    const catByName = await Category.findOne({ name });
+    if (catByName) {
+      if (catByName._id != id) {
+        throw new Error("Category already exists");
+      }
+      if (catByName.name == name) throw new Error("No changes made");
+    }
+
+    const oldPath = req.file.path;
+    const newName = `${generateID}${path.extname(thumbnail.originalname)}`;
+    const newPath = `public/categories/${newName}`;
+
+    rename(oldPath, newPath, (err) => {
+      if (err) throw new Error("File rename error");
+    });
+
+    const category = await Category.findByIdAndUpdate(
+      id,
+      {
+        $set: { name, thumbnail: `categories/${newName}` },
+      },
+      { new: true },
+    );
+
     res.json({
       success: true,
-      categories,
+      category,
     });
   } catch (error) {
     next(error);

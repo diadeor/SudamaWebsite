@@ -12,7 +12,6 @@ export const getCount = async (req, res, next) => {
     const blogCount = await Blog.countDocuments();
     const catCount = await Category.countDocuments();
     // const visitersCount = await
-    console.log(await Category.find({}, "name"));
 
     res.json({
       success: true,

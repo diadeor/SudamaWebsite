@@ -27,7 +27,7 @@ const CreateBlogs = () => {
   };
 
   return (
-    <div className="create-blog flex flex-col text-white ">
+    <div className="font-lobster create-blog flex flex-col text-white ">
       <p className="title text-green-500 font-bold text-2xl">Create New Blog</p>
       {(error || success) && (
         <p
@@ -47,7 +47,7 @@ const CreateBlogs = () => {
       >
         <label
           htmlFor="thumbnail"
-          className="text-white mt-2 mb-4 cursor-pointer p-2 bg-white/10 text-center min-h-20 flex flex-col justify-center items-center rounded-xl font-bold tracking-wide"
+          className="text-xl text-white mt-2 mb-4 cursor-pointer p-2 bg-white/10 text-center min-h-20 flex flex-col justify-center items-center rounded-xl font-bold tracking-wider"
         >
           {thumbText}
           <img src={undefined} alt="" ref={imageRef} className="w-70 rounded-xl max-h-70" />
@@ -67,12 +67,12 @@ const CreateBlogs = () => {
           name="description"
           id=""
           rows={10}
-          className="bg-white/10 p-3 outline-0 border-1 border-white/20 rounded-md mb-5"
+          className="font-fauna bg-white/10 p-3 outline-0 border border-white/20 rounded-md mb-5"
         ></textarea>
         <input
           type="submit"
           value="Create"
-          className="bg-green-600 p-2 text-white font-bold tracking-wide rounded-full min-h-10 hover:bg-green-900 cursor-pointer transition duration-300"
+          className="text-xl bg-green-600 p-2 text-white font-bold tracking-widest rounded-full min-h-10 hover:bg-green-900 cursor-pointer transition duration-300"
         />
       </form>
     </div>

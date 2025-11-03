@@ -70,7 +70,7 @@ const AdminFetch = ({
         placeholder={`Search ${title} by name`}
         className="search h-12 w-full bg-white/10 border border-white/20 rounded-xl mt-3 pl-5 text-white placeholder:text-white/60 placeholder:tracking-wide mb-3 outline-0"
       />
-      <div className="items flex flex-col gap-2 overflow-hidden">
+      <div className={`items flex flex-col grow flex-wrap gap-2 overflow-hidden`}>
         {searchData.map((el: any, index: number) => {
           if (title == "products") {
             return <ProductsCard product={el} key={index} />;

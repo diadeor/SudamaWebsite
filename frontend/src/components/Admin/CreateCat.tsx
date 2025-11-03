@@ -17,11 +17,19 @@ const CreateCategory = () => {
     if (!form.current) return;
     const formData = new FormData(form.current);
     const { data, error } = await request(formData);
-    console.log(data, error);
+    if (error) {
+      setError(error);
+      setSuccess("");
+    } else {
+      setSuccess(data.message);
+      setError("");
+    }
   };
   return (
-    <div className="container">
-      <p className="title text-green-500 font-bold text-2xl">Create New Category</p>
+    <div className=" container">
+      <p className="font-lobster tracking-widest title text-green-500 font-bold text-2xl">
+        Create New Category
+      </p>
       {(error || success) && (
         <p
           className={`message ${
@@ -40,7 +48,7 @@ const CreateCategory = () => {
       >
         <label
           htmlFor="thumbnail"
-          className="text-white mt-2 mb-4 cursor-pointer p-2 bg-white/10 text-center min-h-20 flex flex-col justify-center items-center rounded-xl font-bold tracking-wide"
+          className="text-xl font-lobster text-white mt-2 mb-4 cursor-pointer p-2 bg-white/10 text-center min-h-20 flex flex-col justify-center items-center rounded-xl font-bold tracking-wider"
         >
           {thumbText}
           <img src={undefined} alt="" ref={imageRef} className="w-70 rounded-xl max-h-70" />
@@ -58,7 +66,7 @@ const CreateCategory = () => {
         <input
           type="submit"
           value="Create"
-          className="outline-0 bg-green-600 p-2 text-white font-bold tracking-wide rounded-full min-h-10 hover:bg-green-900 cursor-pointer transition duration-300"
+          className="font-lobster text-xl tracking-widest outline-0 bg-green-600 p-2 text-white font-bold rounded-full min-h-10 hover:bg-green-900 cursor-pointer transition duration-300"
         />
       </form>
     </div>

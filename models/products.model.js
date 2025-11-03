@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Category from "./categories.model.js";
 
 const productSchema = new mongoose.Schema(
   {
@@ -46,9 +45,8 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["okay"],
       required: true,
-      default: "Indoor",
+      trim: true,
     },
   },
   { timestamps: true },

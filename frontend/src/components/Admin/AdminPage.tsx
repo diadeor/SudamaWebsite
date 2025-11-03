@@ -1,4 +1,5 @@
 import { FaPenToSquare, FaTrash } from "react-icons/fa6";
+import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -9,11 +10,19 @@ const Ret = ({ title, value }: { title: string; value: any }) => {
     </p>
   );
 };
-const ActionButton = ({ children, onclick }: { children: any; onclick?: Function }) => {
+const ActionButton = ({
+  children,
+  onclick,
+  bg,
+}: {
+  children: any;
+  onclick?: Function;
+  bg: string;
+}) => {
   return (
     <button
       onClick={onclick ? (e) => onclick(e) : undefined}
-      className="edit bg-yellow-600 min-h-11 min-w-14 flex items-center justify-center rounded-lg cursor-pointer hover:border-2 duration-200 transition hover:scale-110"
+      className={`edit bg-${bg}-500 min-h-11 min-w-14 flex items-center justify-center rounded-lg cursor-pointer hover:border-2 duration-200 transition hover:scale-110`}
     >
       {children}
     </button>
@@ -65,12 +74,12 @@ export const ProductsCard = ({ product }: { product: Pd }) => {
       </div>
       <div className="action flex flex-col items-end justify-center gap-2 pr-2">
         <Link to={`/admin/products/edit/${product._id}`}>
-          <ActionButton>
+          <ActionButton bg="green">
             <FaPenToSquare className="regular" color="white" size="1.2em" />
           </ActionButton>
         </Link>
-        <ActionButton onclick={handleDelete}>
-          <FaTrash className="regular" color="white" size="1.2em" />
+        <ActionButton onclick={handleDelete} bg="red">
+          <IoTrashOutline className="regular" color="white" size="1.5em" />
         </ActionButton>
       </div>
     </div>
@@ -168,15 +177,13 @@ export const BlogCard = ({ blog }: { blog: Blog }) => {
 
 export const CategoryCard = ({ name, thumbnail }: { name: string; thumbnail: Object }) => {
   return (
-    <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
+    <div className=" bg-white/20 flex flex-row gap-4 p-3 rounded-lg text-white hover:scale-95 transition duration-300">
       <img
         src={`http://localhost:5000/${thumbnail}`}
         alt=""
-        className="min-w-15 w-15 h-15 rounded-xl"
+        className="min-w-15 w-15 h-15 rounded-xl bg-white"
       />
-      <div className="right flex flex-col flex-wrap">
-        <p className="title font-bold text-xl wrap-normal font-poppins">{name}</p>
-      </div>
+      <p className="title font-bold text-md wrap-normal font-poppins">{name}</p>
     </div>
   );
 };

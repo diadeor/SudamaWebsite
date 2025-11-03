@@ -24,7 +24,7 @@ export const FormInput = ({
       ref={refer ? refer : null}
       required={req}
       defaultValue={value ? value : undefined}
-      className="min-h-12 pl-3 pr-3 border-1 border-white/20 bg-white/10 rounded-md mb-5 outline-0 text-white"
+      className="font-fauna min-h-12 pl-3 pr-3 border border-white/20 bg-white/10 rounded-md mb-5 outline-0 text-white"
     />
   );
 };
@@ -38,7 +38,10 @@ export const FormLabel = ({
   labelFor?: string;
 }) => {
   return (
-    <label htmlFor={labelFor ? labelFor : name} className="capitalize pb-2 text-white">
+    <label
+      htmlFor={labelFor ? labelFor : name}
+      className="capitalize pb-2 text-white font-lobster tracking-widest font-bold"
+    >
       {name}
       <span className="text-red-300">{` ${req ? "*" : ""}`}</span>
     </label>

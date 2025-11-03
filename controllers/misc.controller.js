@@ -2,6 +2,7 @@ import Customer from "../models/users.model.js";
 import Product from "../models/products.model.js";
 import Order from "../models/orders.model.js";
 import Blog from "../models/blogs.model.js";
+import Category from "../models/categories.model.js";
 
 export const getCount = async (req, res, next) => {
   try {
@@ -9,6 +10,9 @@ export const getCount = async (req, res, next) => {
     const productCount = await Product.countDocuments();
     const orderCount = await Order.countDocuments();
     const blogCount = await Blog.countDocuments();
+    const catCount = await Category.countDocuments();
+    // const visitersCount = await
+    console.log(await Category.find({}, "name"));
 
     res.json({
       success: true,
@@ -16,6 +20,7 @@ export const getCount = async (req, res, next) => {
       productCount,
       orderCount,
       blogCount,
+      catCount,
     });
   } catch (error) {
     next(error);

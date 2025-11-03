@@ -1,5 +1,5 @@
 const errorHandle = async (err, req, res, next) => {
-  console.log(err);
+  // console.log(err);
   try {
     res.status(err.statusCode || 400).json({
       success: false,

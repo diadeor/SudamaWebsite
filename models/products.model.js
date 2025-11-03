@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 import Category from "./categories.model.js";
 
-const getCategories = async () => {
-  const categories = await Category.find({});
-};
-
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -50,7 +46,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Indoor", "Outdoor", "Fruits"],
+      enum: ["okay"],
       required: true,
       default: "Indoor",
     },

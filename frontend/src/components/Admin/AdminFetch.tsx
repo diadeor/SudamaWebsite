@@ -1,6 +1,6 @@
 import { useState, useEffect, type ReactNode } from "react";
 import useFetch from "../../hooks/useFetch";
-import { BlogCard, OrderCard, ProductsCard, UserCard } from "./AdminPage";
+import { BlogCard, CategoryCard, OrderCard, ProductsCard, UserCard } from "./AdminPage";
 
 const AdminFetch = ({
   title,
@@ -80,6 +80,8 @@ const AdminFetch = ({
             return <OrderCard cart={el} item={el.items} key={index} />;
           } else if (title == "blogs") {
             return <BlogCard blog={el} key={index} />;
+          } else if (title == "categories") {
+            return <CategoryCard cat={el} key={index} />;
           }
         })}
       </div>

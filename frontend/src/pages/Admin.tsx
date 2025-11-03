@@ -16,31 +16,31 @@ const Admin = () => {
   const [result, setResult] = useState("");
   const [data, setData] = useState(Object);
   const { user } = useAuth();
-  const userCount = useFetch("/api/v1/stats");
+  const stats = useFetch("/api/v1/stats");
   const [count, setCount] = useState(3);
   const nav = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await userCount();
+      const { data, error } = await stats();
       data ? setErr("") : setResult("");
       setData(data);
       setErr(error);
     })();
-  }, []);
-  if (user.role != "admin") {
-    const noAccessTimeout = setTimeout(() => {
-      setCount(count - 1);
-    }, 1000);
-    if (count == 0) {
-      clearTimeout(noAccessTimeout);
-      nav("/profile");
+    if (user == null) {
+      nav("/login");
+    } else if (user.role != "admin") {
+      const noAccessTimeout = setTimeout(() => {
+        setCount(count - 1);
+      }, 1000);
+      if (count == 0) {
+        clearTimeout(noAccessTimeout);
+        nav("/profile");
+      }
     }
-  } else if (user == null) {
-    nav("/login");
-  }
+  }, []);
 
-  return user.role == "admin" ? (
+  return user && user.role == "admin" ? (
     <div className="admin-container p-5 flex flex-col items-center min-h-screen pt-5 pb-15">
       <h2 className="font-lobster font-bold text-center text-3xl text-white mb-10">
         Howdy,
@@ -74,6 +74,22 @@ const Admin = () => {
         <AdminCard
           icon={<FaFilePen />}
           title="Blogs"
+          value={data?.blogCount}
+          subTitle="Last 7 days"
+          subValue={400}
+          toUrl="/admin/blogs"
+        />
+        <AdminCard
+          icon={<FaFilePen />}
+          title="Categories"
+          value={data?.catCount}
+          subTitle="Last 7 days"
+          subValue={400}
+          toUrl="/admin/cats"
+        />
+        <AdminCard
+          icon={<FaFilePen />}
+          title="Visits"
           value={data?.blogCount}
           subTitle="Last 7 days"
           subValue={400}
@@ -130,6 +146,18 @@ const Admin = () => {
                 url="/api/v1/blogs"
                 errFunc={setErr}
                 option={<Option url="/admin/blogs/create" />}
+              />
+            }
+          />
+          <Route
+            path="/cats"
+            element={
+              <AdminFetch
+                icon={<FaFilePen />}
+                title="categories"
+                url="/api/v1/categories"
+                errFunc={setErr}
+                option={<Option url="/admin/categories/create" />}
               />
             }
           />

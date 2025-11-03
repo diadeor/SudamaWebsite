@@ -8,7 +8,8 @@ import Create from "../components/Admin/CreatePd";
 import EditOrders from "../components/Admin/EditOrders";
 import EditProducts from "../components/Admin/EditProducts";
 import CreateBlogs from "../components/Admin/CreateBlogs";
-import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen } from "react-icons/fa6";
+import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen, FaEye } from "react-icons/fa6";
+import CreateCategory from "../components/Admin/CreateCat";
 // import usePost from "../hooks/usePost";
 
 const Admin = () => {
@@ -46,7 +47,7 @@ const Admin = () => {
         Howdy,
         <br /> <span className="text-yellow-500 text-4xl">{user.name}</span>
       </h2>
-      <div className="data flex flex-row flex-wrap gap-2 justify-center">
+      <div className="data flex flex-row flex-wrap gap-2 justify-center max-w-185">
         <AdminCard
           icon={<FaUsers />}
           title="users"
@@ -88,7 +89,7 @@ const Admin = () => {
           toUrl="/admin/cats"
         />
         <AdminCard
-          icon={<FaFilePen />}
+          icon={<FaEye />}
           title="Visits"
           value={data?.blogCount}
           subTitle="Last 7 days"
@@ -157,7 +158,7 @@ const Admin = () => {
                 title="categories"
                 url="/api/v1/categories"
                 errFunc={setErr}
-                option={<Option url="/admin/categories/create" />}
+                option={<Option url="/admin/cats/create" />}
               />
             }
           />
@@ -165,6 +166,7 @@ const Admin = () => {
           <Route path="/products/edit/:id" element={<EditProducts />} />
           <Route path="/orders/edit/:tx" element={<EditOrders />} />
           <Route path="/blogs/create/" element={<CreateBlogs />} />
+          <Route path="/cats/create/" element={<CreateCategory />} />
         </Routes>
       </div>
     </div>

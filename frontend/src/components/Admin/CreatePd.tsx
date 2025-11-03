@@ -1,6 +1,7 @@
 import { FormInput, FormLabel } from "../Form";
 import { useRef, useState } from "react";
 import usePost from "../../hooks/usePost";
+import useFile from "../../hooks/useFile";
 
 const Create = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -8,8 +9,7 @@ const Create = () => {
   const [thumbText, setThumbText] = useState("Choose a thumbnail");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-
-  // console.log(imageRef);
+  const file = useFile(setThumbText);
   const request = usePost("/api/v1/products/create");
 
   const handleSubmit = async (e: any) => {
@@ -23,18 +23,6 @@ const Create = () => {
     } else {
       setError("");
       setSuccess(data.message);
-    }
-  };
-  const handleFile = (e: any) => {
-    const file = e.target.files[0];
-    // console.log(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        imageRef.current && imageRef.current.setAttribute("src", e.target.result);
-        setThumbText("");
-      };
-      reader.readAsDataURL(file);
     }
   };
   return (
@@ -68,7 +56,7 @@ const Create = () => {
           name="thumbnail"
           id="thumbnail"
           accept="image/*"
-          onChange={(e) => handleFile(e)}
+          onChange={(e) => file(e, imageRef)}
           className="bg-white/10 p-10 rounded-lg text-white text-center cursor-pointer mb-5 hidden"
         />
         <FormLabel name="name" />
@@ -83,7 +71,7 @@ const Create = () => {
         <select
           name="category"
           id="category"
-          className="bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border-1 border-white/10 focus:bg-black/50 mb-5"
+          className="bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
         >
           <option value="Indoor" className="bg-black/70">
             Indoor
@@ -98,7 +86,7 @@ const Create = () => {
           name="description"
           id="description"
           rows={5}
-          className="p-2 outline-0 text-white border-1 border-white/10 bg-white/10 rounded-lg mb-5"
+          className="p-2 outline-0 text-white border border-white/10 bg-white/10 rounded-lg mb-5"
         ></textarea>
         <input
           type="submit"

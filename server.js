@@ -12,6 +12,7 @@ import orderRouter from "./routes/orders.route.js";
 import cartRouter from "./routes/carts.route.js";
 import authUser from "./middlewares/auth.middleware.js";
 import blogRouter from "./routes/blogs.route.js";
+import catRouter from "./routes/cat.routes.js";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/api/v1/products", productRouter);
 app.use("/api/v1/orders", authUser, orderRouter);
 app.use("/api/v1/blogs", blogRouter);
 app.use("/api/v1/carts", cartRouter);
+app.use("/api/v1/categories", catRouter);
 
 // Error Middleware
 app.use(errorHandle);

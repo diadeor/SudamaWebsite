@@ -166,15 +166,17 @@ export const BlogCard = ({ blog }: { blog: Blog }) => {
   );
 };
 
-type Category = {
-  thumbnail: string;
-  name: string;
-};
-export const CategoryCard = ({ cat }: { cat: Category }) => {
-  <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
-    <img src="" alt="" className="min-w-30 w-30 h-30 rounded-xl" />
-    <div className="right flex flex-col flex-wrap">
-      <p className="title font-bold text-xl wrap-normal font-poppins">{cat.name}</p>
+export const CategoryCard = ({ name, thumbnail }: { name: string; thumbnail: Object }) => {
+  return (
+    <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
+      <img
+        src={`http://localhost:5000/${thumbnail}`}
+        alt=""
+        className="min-w-15 w-15 h-15 rounded-xl"
+      />
+      <div className="right flex flex-col flex-wrap">
+        <p className="title font-bold text-xl wrap-normal font-poppins">{name}</p>
+      </div>
     </div>
-  </div>;
+  );
 };

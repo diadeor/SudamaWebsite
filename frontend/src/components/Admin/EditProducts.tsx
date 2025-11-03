@@ -1,6 +1,6 @@
 import { FormInput, FormLabel } from "../Form";
 import { useEffect, useRef, useState } from "react";
-import { data, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import usePut from "../../hooks/usePut";
 
@@ -11,16 +11,26 @@ const EditProducts = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [product, setProduct] = useState(Object);
+  const [catOptions, setCatOptions] = useState<Array<string>>([]);
   const { id } = useParams();
   const getProduct = useFetch(`/api/v1/products/${id}`);
   const request = usePut(`/api/v1/products/update/${id}`);
+  const getCategories = useFetch("/api/v1/categories");
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchVals = async () => {
       const { data, error } = await getProduct();
+      const { data: cats, error: err } = await getCategories();
       data ? setProduct(data.product) : setError(error);
+      if (err) {
+        setError("Error fetching categories");
+        setSuccess("");
+      } else {
+        const categories = cats.categories.map((item: any) => item.name);
+        setCatOptions(categories);
+      }
     };
-    fetchProduct();
+    fetchVals();
   }, []);
 
   const imagePath = product && `http://localhost:5000/${product.thumbnail}`;
@@ -98,13 +108,26 @@ const EditProducts = () => {
           name="category"
           id="category"
           defaultValue={product.category}
-          className="bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border-1 border-white/10 focus:bg-black/50 mb-5"
+          className="font-lobster tracking-widest bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
         >
-          <option value="Indoor" className="bg-black/70">
-            Indoor
-          </option>
-          <option value="Outdoor">Outdoor</option>
-          <option value="Fruits">Fruits</option>
+          {catOptions.map((cat, index) => {
+            return (
+              <option value={cat} key={index}>
+                {cat}
+              </option>
+            );
+          })}
+        </select>
+        <FormLabel name="badge" />
+        <select
+          name="badge"
+          id="badge"
+          defaultValue={product.badge}
+          className="font-lobster tracking-widest bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
+        >
+          <option value="Sale">On Sale</option>
+          <option value="Featured">Featured</option>
+          <option value="New">New</option>
         </select>
         <label htmlFor="description" className="text-white pb-2">
           Description
@@ -114,7 +137,7 @@ const EditProducts = () => {
           id="description"
           rows={5}
           defaultValue={product.description}
-          className="p-2 outline-0 text-white border-1 border-white/10 bg-white/10 rounded-lg mb-5"
+          className="p-2 outline-0 text-white border border-white/10 bg-white/10 rounded-lg mb-5"
         ></textarea>
         <input
           type="submit"

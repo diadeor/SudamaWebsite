@@ -1,7 +1,8 @@
 import { FormInput, FormLabel } from "../Form";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import usePost from "../../hooks/usePost";
 import useFile from "../../hooks/useFile";
+import useFetch from "../../hooks/useFetch";
 
 const Create = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -9,8 +10,23 @@ const Create = () => {
   const [thumbText, setThumbText] = useState("Choose a thumbnail");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [catOptions, setCatOptions] = useState<Array<string>>([]);
   const file = useFile(setThumbText);
   const request = usePost("/api/v1/products/create");
+  const catRequest = useFetch("/api/v1/categories");
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await catRequest();
+      if (error) {
+        setError("Could not fetch categories");
+        setSuccess("");
+      } else {
+        const cats = data.categories.map((item: any) => item.name);
+        setCatOptions(cats);
+      }
+    })();
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -73,11 +89,23 @@ const Create = () => {
           id="category"
           className="bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
         >
-          <option value="Indoor" className="bg-black/70">
-            Indoor
-          </option>
-          <option value="Outdoor">Outdoor</option>
-          <option value="Fruits">Fruits</option>
+          {catOptions.map((cat, index) => {
+            return (
+              <option value={cat} key={index}>
+                {cat}
+              </option>
+            );
+          })}
+        </select>
+        <FormLabel name="badge" />
+        <select
+          name="badge"
+          id="badge"
+          className="bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
+        >
+          <option value="Sale">On Sale</option>
+          <option value="Featured">Featured</option>
+          <option value="New">New</option>
         </select>
         <label htmlFor="description" className="text-white pb-2">
           Description

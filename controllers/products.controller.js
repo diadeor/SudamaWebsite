@@ -1,6 +1,7 @@
 import path from "path";
 import { rename } from "fs";
 import Product from "../models/products.model.js";
+import Category from "../models/categories.model.js";
 import mongoose from "mongoose";
 
 export const getProducts = async (req, res, next) => {
@@ -18,21 +19,32 @@ export const getProducts = async (req, res, next) => {
 export const getProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    if (id.length > 10) {
-      const product = await Product.findById(id);
-      if (!product) throw new Error("Invalid ID");
-      res.json({
-        success: true,
-        product,
-      });
+    const { category } = req.query;
+    if (id) {
+      if (id.length > 10) {
+        const product = await Product.findById(id);
+        if (!product) throw new Error("Invalid ID");
+        res.json({
+          success: true,
+          product,
+        });
+      } else {
+        const badgeList = ["Sale", "Featured", "New"];
+        if (!badgeList.includes(id)) throw new Error("Invalid Badge");
+        const products = await Product.find({ badge: id });
+        res.json({
+          success: true,
+          products,
+        });
+      }
+    } else if (category) {
+      const cats = await Category.find({}, "name -_id");
+      const catList = cats.map((item) => item.name);
+      if (!catList.includes(category)) throw new Error("Category does not exist");
+      const products = await Product.find({ category });
+      res.json({ success: true, products });
     } else {
-      const badgeList = ["Sale", "Featured", "New"];
-      if (!badgeList.includes(id)) throw new Error("Invalid Badge");
-      const products = await Product.find({ badge: id });
-      res.json({
-        success: true,
-        products,
-      });
+      throw new Error("Invalid Param or Query");
     }
   } catch (error) {
     next(error);
@@ -139,23 +151,6 @@ export const updateProduct = async (req, res, next) => {
       data: {
         product,
       },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const getProductByCat = async (req, res, next) => {
-  try {
-    const { badge } = req.body;
-    const badgeList = ["Sale", "Featured", "New"];
-    if (!badgeList.includes(badge)) throw new Error("Invalid Badge");
-
-    const products = await Product.find({ badge });
-
-    res.json({
-      success: true,
-      products,
     });
   } catch (error) {
     next(error);

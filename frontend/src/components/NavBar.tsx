@@ -29,9 +29,28 @@ const NavBar = () => {
       <div
         className={`${
           menu ? "flex" : "hidden"
-        } menu right-0 left-0 top-18 absolute bg-black/30 p-5 rounded-b-xl text-white font-lobster`}
+        } items-center justify-center menu right-0 left-0 top-18 absolute bg-black/60 p-3 rounded-b-xl text-white font-lobster transition-all duration-500`}
       >
-        <p>hi THere</p>
+        <ul className="flex flex-row gap-3 items-center text-xl">
+          <li>Home</li>
+          <li>Shop</li>
+          <li>Blog</li>
+          <li>
+            {user ? (
+              <Link to={user.role == "admin" ? "/admin" : "/profile"}>
+                <button className="p-2 pl-4 pr-4 bg-green-600 rounded-sm cursor-pointer hover:scale-107 transition duration-200 font-medium">
+                  {user.role != "admin" ? `Hi, ${user.name.split(" ")[0]}` : "Hi, admin"}
+                </button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <button className="p-2 pl-4 pr-4 bg-yellow-600 rounded-sm cursor-pointer hover:scale-107 transition duration-200 font-medium">
+                  Login
+                </button>
+              </Link>
+            )}
+          </li>
+        </ul>
       </div>
       <ul className="font-lobster tracking-widest flex-row gap-5 text-white font-bold text-xl items-center hidden sm:flex">
         <li>

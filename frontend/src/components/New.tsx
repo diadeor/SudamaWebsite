@@ -6,7 +6,7 @@ import Product from "./Product";
 const New = () => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
-  const request = useFetch("/api/v1/products");
+  const request = useFetch("/api/v1/products/New");
   useEffect(() => {
     request().then(({ data, error }) => {
       data ? setData(data.products) : setErr(error);

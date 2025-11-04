@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
     },
     badge: {
       type: String,
-      enum: ["Sale", "Featured", "New", ""],
+      enum: ["sale", "featured", "new", ""],
       default: "",
     },
     description: {

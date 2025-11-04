@@ -1,6 +1,6 @@
 import { FaCartPlus } from "react-icons/fa6";
 import usePost from "../hooks/usePost";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -11,10 +11,13 @@ type product = {
   name: string;
   category: string;
   thumbnail: string;
+  badge: string;
 };
 
 const Product = ({ pd }: { pd: product }) => {
   const [success, setSuccess] = useState("");
+  const bgColor =
+    pd.badge == "featured" ? "bg-yellow-700" : pd.badge == "new" ? "bg-green-700" : "bg-rose-900";
   const { setCart } = useCart();
   const request = usePost("/api/v1/carts/add");
   const { user } = useAuth();
@@ -38,10 +41,21 @@ const Product = ({ pd }: { pd: product }) => {
       <img
         src={`http://localhost:5000/${pd.thumbnail}`}
         alt=""
-        className=" w-40 hover:scale-120 transition duration-400"
+        className="hover:z-15 w-40 h-40 rounded-xl hover:scale-115 transition duration-300 mb-2"
       />
-      <p className="font-jetbrains extra absolute bg-rose-900 tracking-wide font-bold text-white p-1 px-3 text-center min-w-15 text-sm rounded-full">
-        -{Math.floor(((pd.regularPrice - pd.salePrice) / pd.salePrice) * 100)}%{/* New */}
+      <p className={` extra absolute font-bold text-white text-center text-sm`}>
+        {pd.badge != "sale" && (
+          <span
+            className={`tracking-widest min-w-15 p-1 px-3 rounded-sm mr-1 capitalize font-lobster ${bgColor}`}
+          >
+            {pd.badge}
+          </span>
+        )}
+        {pd.badge == "sale" && (
+          <span className="bg-rose-800 p-1 px-3 rounded-sm font-jetbrains">
+            -{Math.floor(((pd.regularPrice - pd.salePrice) / pd.salePrice) * 100)}%
+          </span>
+        )}
       </p>
       <p className="font-fauna title text-md border-t border-white/20 pt-1">{pd.name}</p>
       <p className="font-jetbrains text-xs">{pd.category}</p>

@@ -29,9 +29,9 @@ export const getProduct = async (req, res, next) => {
           product,
         });
       } else {
-        const badgeList = ["Sale", "Featured", "New"];
-        if (!badgeList.includes(id)) throw new Error("Invalid Badge");
-        const products = await Product.find({ badge: id });
+        const badgeList = ["sale", "featured", "new"];
+        if (!badgeList.includes(id.toLowerCase())) throw new Error("Invalid Badge");
+        const products = await Product.find({ badge: id.toLowerCase() });
         res.json({
           success: true,
           products,
@@ -53,7 +53,7 @@ export const getProduct = async (req, res, next) => {
 
 export const createProduct = async (req, res, next) => {
   try {
-    const { name, category, regularPrice, salePrice, description, stock } = req.body;
+    const { name, category, regularPrice, salePrice, description, stock, badge } = req.body;
     const thumbnail = req.file;
     if ((!name, !category, !salePrice, !stock)) throw new Error("Required fields are not given");
     const itemExists = await Product.findOne({ name });
@@ -80,6 +80,7 @@ export const createProduct = async (req, res, next) => {
     const product = await Product.create({
       _id: genId,
       name,
+      badge,
       category,
       regularPrice,
       salePrice,
@@ -117,19 +118,27 @@ export const deleteProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, category, regularPrice, salePrice, description, stock } = req.body;
+    const { name, category, regularPrice, salePrice, description, stock, badge } = req.body;
     const thumbnail = req.file;
 
     if (!name || !category || !salePrice || !stock) throw new Error("Required fields are missing");
 
-    if (regularPrice && regularPrice < salePrice)
+    if (regularPrice && Number(salePrice) > Number(regularPrice)) {
       throw new Error("Sale price cannot be higher than regular price");
-
+    }
     if (stock < 1) throw new Error("Stock is less than 1");
 
     const item = await Product.findById(id);
 
     if (!item) throw new Error("Invalid product id");
+
+    const oldPath = req.file.path;
+    const newName = `${id}${path.extname(thumbnail.originalname)}`;
+    const newPath = `public/products/${newName}`;
+
+    rename(oldPath, newPath, (err) => {
+      if (err) throw new Error("File rename error");
+    });
 
     const product = await Product.findByIdAndUpdate(
       id,
@@ -140,7 +149,9 @@ export const updateProduct = async (req, res, next) => {
           regularPrice,
           salePrice,
           stock,
+          badge,
           description,
+          thumbnail: `products/${newName}`,
         },
       },
       { new: true },

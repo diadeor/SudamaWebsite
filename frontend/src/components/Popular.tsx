@@ -6,7 +6,7 @@ import Section from "./Sections";
 const Popular = () => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
-  const request = useFetch("/api/v1/products");
+  const request = useFetch("/api/v1/products/Featured");
   useEffect(() => {
     request().then(({ data, error }) => {
       data ? setData(data.products) : setErr(error);

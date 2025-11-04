@@ -125,9 +125,9 @@ const EditProducts = () => {
           defaultValue={product.badge}
           className="font-lobster tracking-widest bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
         >
-          <option value="Sale">On Sale</option>
-          <option value="Featured">Featured</option>
-          <option value="New">New</option>
+          <option value="sale">On Sale</option>
+          <option value="featured">Featured</option>
+          <option value="new">New</option>
         </select>
         <label htmlFor="description" className="text-white pb-2">
           Description

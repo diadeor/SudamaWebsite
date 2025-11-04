@@ -6,10 +6,10 @@ import Profile from "./pages/Profile.tsx";
 import Admin from "./pages/Admin.tsx";
 import Register from "./pages/Register.tsx";
 import Cart from "./pages/Cart.tsx";
-import { FaCartShopping } from "react-icons/fa6";
 import { IoCartOutline } from "react-icons/io5";
 import ThankYou from "./pages/ThankYou.tsx";
 import Footer from "./components/Footer.tsx";
+import ShopByCategory from "./pages/ShopByCategory.tsx";
 const App = () => {
   return (
     <Router>
@@ -19,15 +19,18 @@ const App = () => {
           <IoCartOutline size="1.5em" color="white" />
         </button>
       </Link>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/profile/*" element={<Profile />} />
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-      </Routes>
+      <div className="home-container flex flex-col items-center">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/category/*" element={<ShopByCategory />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/profile/*" element={<Profile />} />
+          <Route path="/admin/*" element={<Admin />} />
+          <Route path="/thank-you" element={<ThankYou />} />
+        </Routes>
+      </div>
       <Footer />
     </Router>
   );

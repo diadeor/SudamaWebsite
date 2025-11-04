@@ -6,11 +6,20 @@ import mongoose from "mongoose";
 
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({});
-    res.json({
-      success: true,
-      products,
-    });
+    const { category } = req.query;
+    if (category) {
+      const products = await Product.find({ category });
+      res.json({
+        success: true,
+        products,
+      });
+    } else {
+      const products = await Product.find({});
+      res.json({
+        success: true,
+        products,
+      });
+    }
   } catch (error) {
     next(error);
   }
@@ -19,32 +28,21 @@ export const getProducts = async (req, res, next) => {
 export const getProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { category } = req.query;
-    if (id) {
-      if (id.length > 10) {
-        const product = await Product.findById(id);
-        if (!product) throw new Error("Invalid ID");
-        res.json({
-          success: true,
-          product,
-        });
-      } else {
-        const badgeList = ["sale", "featured", "new"];
-        if (!badgeList.includes(id.toLowerCase())) throw new Error("Invalid Badge");
-        const products = await Product.find({ badge: id.toLowerCase() });
-        res.json({
-          success: true,
-          products,
-        });
-      }
-    } else if (category) {
-      const cats = await Category.find({}, "name -_id");
-      const catList = cats.map((item) => item.name);
-      if (!catList.includes(category)) throw new Error("Category does not exist");
-      const products = await Product.find({ category });
-      res.json({ success: true, products });
+    if (id.length > 10) {
+      const product = await Product.findById(id);
+      if (!product) throw new Error("Invalid ID");
+      res.json({
+        success: true,
+        product,
+      });
     } else {
-      throw new Error("Invalid Param or Query");
+      const badgeList = ["sale", "featured", "new"];
+      if (!badgeList.includes(id.toLowerCase())) throw new Error("Invalid Badge");
+      const products = await Product.find({ badge: id.toLowerCase() });
+      res.json({
+        success: true,
+        products,
+      });
     }
   } catch (error) {
     next(error);

@@ -8,7 +8,7 @@ type Cat = {
   thumbnail: string;
 };
 
-const ShopByCat = () => {
+const ShopByCat = ({ limit }: { limit: number }) => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
   const request = useFetch("/api/v1/categories");
@@ -22,7 +22,13 @@ const ShopByCat = () => {
       {data &&
         data.map((cat: Cat, index: number) => {
           return (
-            <Category name={cat.name} img={`http://localhost:5000/${cat.thumbnail}`} key={index} />
+            index < limit && (
+              <Category
+                name={cat.name}
+                img={`http://localhost:5000/${cat.thumbnail}`}
+                key={index}
+              />
+            )
           );
         })}
     </Section>

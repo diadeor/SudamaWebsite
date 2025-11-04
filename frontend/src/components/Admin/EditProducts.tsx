@@ -63,7 +63,9 @@ const EditProducts = () => {
   };
   return (
     <div className="edit">
-      <p className="title text-green-500 font-bold text-2xl">Edit product</p>
+      <p className="font-lobster tracking-wider title text-green-500 font-bold text-2xl">
+        Edit product
+      </p>
       {(error || success) && (
         <p
           className={`message ${

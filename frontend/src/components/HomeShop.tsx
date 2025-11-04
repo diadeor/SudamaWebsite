@@ -3,7 +3,7 @@ import Section from "./Sections";
 import useFetch from "../hooks/useFetch";
 import Product from "./Product";
 
-const HomeShop = () => {
+const HomeShop = ({ limit }: { limit: number }) => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
   const request = useFetch("/api/v1/products");
@@ -16,7 +16,7 @@ const HomeShop = () => {
     <Section title="Shop" subtitle="Here are our other items">
       {data &&
         data.map((pd: Object, index: number) => {
-          return <Product pd={pd} key={index} />;
+          return index < limit && <Product pd={pd} key={index} />;
         })}
     </Section>
   );

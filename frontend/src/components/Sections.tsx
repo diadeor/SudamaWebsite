@@ -10,7 +10,7 @@ const Section = ({
   children: ReactNode;
 }) => {
   return (
-    <section className="font-fauna section-boiler p-5 pb-20 text-white">
+    <section className="max-w-200 font-fauna section-boiler p-5 pb-20 text-white w-full">
       <p className="font-lobster sec-title text-yellow-500 text-4xl text-center font-bold tracking-wider">
         {title}
       </p>

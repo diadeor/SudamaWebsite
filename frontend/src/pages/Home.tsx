@@ -34,10 +34,10 @@ const Home = () => {
           <img src={home} alt="" className="" />
         </div>
       </main>
-      <ShopByCat />
-      <Popular />
-      <New />
-      <HomeShop />
+      <ShopByCat limit={4} />
+      <Popular limit={6} />
+      <New limit={6} />
+      <HomeShop limit={6} />
       <FindUs />
       <Socials />
     </>

@@ -1,5 +1,10 @@
 import home from "../assets/home.png";
+import FindUs from "../components/FindUs";
+import HomeShop from "../components/HomeShop";
+import New from "../components/New";
 import Popular from "../components/Popular";
+import ShopByCat from "../components/ShopByCat";
+import Socials from "../components/Socials";
 // import floral from "../assets/floral.png";
 const Home = () => {
   // console.log(floral);
@@ -29,7 +34,12 @@ const Home = () => {
           <img src={home} alt="" className="" />
         </div>
       </main>
+      <ShopByCat />
       <Popular />
+      <New />
+      <HomeShop />
+      <FindUs />
+      <Socials />
     </>
   );
 };

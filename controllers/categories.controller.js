@@ -49,6 +49,7 @@ export const updateCategory = async (req, res, next) => {
 
     res.json({
       success: true,
+      message: "Category updated",
       category,
     });
   } catch (error) {
@@ -81,6 +82,7 @@ export const createCategory = async (req, res, next) => {
     });
     res.json({
       success: true,
+      message: "New category created",
       category,
     });
   } catch (error) {

@@ -1,9 +1,9 @@
-import Product from "./Product";
-import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import Section from "./Sections";
+import useFetch from "../hooks/useFetch";
+import Product from "./Product";
 
-const Popular = () => {
+const New = () => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
   const request = useFetch("/api/v1/products");
@@ -12,15 +12,14 @@ const Popular = () => {
       data ? setData(data.products) : setErr(error);
     });
   }, []);
-
   return (
-    <Section title="Popular" subtitle="These are our most popular items">
+    <Section title="New Arrivals" subtitle="Here are the latest items">
       {data &&
-        data.map((el: Object, index: number) => {
-          return <Product key={index} pd={el} />;
+        data.map((pd: Object, index: number) => {
+          return <Product pd={pd} key={index} />;
         })}
     </Section>
   );
 };
 
-export default Popular;
+export default New;

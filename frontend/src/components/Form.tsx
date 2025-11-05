@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 export const FormInput = ({
   type,
@@ -73,6 +76,26 @@ export const Form = ({
   const [err, setErr] = useState("");
   const [success, setSuccess] = useState("");
   const nav = useNavigate();
+  const googleLoginUrl = "/api/v1/auth/google";
+  const { user, setUser } = useAuth();
+
+  const googleLoginSuccess = async (resp: any) => {
+    const token = resp.credential;
+
+    const { data } = await axios.post(
+      googleLoginUrl,
+      { token },
+      {
+        withCredentials: true,
+        validateStatus: () => true,
+      },
+    );
+    setUser(data.data.user);
+  };
+  const googleLoginError = async () => {
+    console.log("Google login error");
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const credentials = credFunc();
@@ -99,18 +122,16 @@ export const Form = ({
     >
       <div className="site-info flex flex-col items-center">
         {err && (
-          <p className="error mb-3 bg-red-900 w-[100%] text-center p-1 pl-3 pr-3 rounded-md">
-            {err}
-          </p>
+          <p className="error mb-3 bg-red-900 w-full text-center p-1 pl-3 pr-3 rounded-md">{err}</p>
         )}
         {success && (
-          <p className="error mb-3 bg-green-900 w-[100%] text-center p-1 pl-3 pr-3 rounded-md">
+          <p className="error mb-3 bg-green-900 w-full text-center p-1 pl-3 pr-3 rounded-md">
             {success}
           </p>
         )}
         {logo && <img src={logo} alt="" className="w-10 mb-5" />}
         {title && (
-          <p className="site-name font-[500] text-2xl mb-5 text-center">
+          <p className="site-name font-medium text-2xl mb-5 text-center">
             <span className="font-bold">{title}</span>{" "}
             {subTitle && (
               <span>
@@ -126,9 +147,21 @@ export const Form = ({
       <input
         type="submit"
         value={subVal}
-        className="font-bold tracking-wider bg-yellow-600 h-12 text-lg mt-5 rounded-lg hover:bg-yellow-800 transition duration-200"
+        className="font-bold tracking-wider bg-yellow-600 h-12 text-lg mt-2 rounded-lg hover:bg-yellow-800 transition duration-200"
       />
       {bottom}
+      <div className="google mt-5">
+        <GoogleLogin
+          theme="filled_blue"
+          size="large"
+          shape="pill"
+          type="standard"
+          text="continue_with"
+          onSuccess={googleLoginSuccess}
+          onError={googleLoginError}
+          useOneTap
+        />
+      </div>
     </form>
   );
 };

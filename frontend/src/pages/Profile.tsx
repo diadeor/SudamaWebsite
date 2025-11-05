@@ -65,7 +65,7 @@ const Profile = () => {
           <p
             className={`error mb-3 bg-${
               err ? "red" : "green"
-            }-900 w-[100%] text-center p-1 pl-3 pr-3 rounded-md`}
+            }-900 w-full text-center p-1 pl-3 pr-3 rounded-md`}
           >
             {err || result?.message}
           </p>
@@ -76,7 +76,7 @@ const Profile = () => {
           name="name"
           value={nameField}
           onChange={(e) => setNameField(e.target.value)}
-          className="h-12 text-yellow-600 bg-white/10 border-1 border-white/20 mb-7 pl-4"
+          className="h-12 text-yellow-600 bg-white/10 border border-white/20 mb-7 pl-4"
         />
         <label htmlFor="email">Email</label>
         <input
@@ -84,7 +84,7 @@ const Profile = () => {
           name="email"
           value={emailField}
           onChange={(e) => setEmailField(e.target.value)}
-          className="h-12 text-yellow-600 bg-white/10 border-1 border-white/20 mb-7 pl-4"
+          className="h-12 text-yellow-600 bg-white/10 border border-white/20 mb-7 pl-4"
         />
         <input
           type="submit"
@@ -113,8 +113,8 @@ const Profile = () => {
     );
   };
   return (
-    <div className="profile-container h-[calc(100vh-70px)] bg-green-950 p-10 tracking-wide flex flex-row justify-center items-center">
-      <div className="inner-container flex flex-col bg-black/40 p-10 pt-6 rounded-md">
+    <div className="profile-container h-[calc(100vh-70px)] w-full p-10 tracking-wide flex flex-row justify-center items-center">
+      <div className="inner-container flex flex-col bg-black/40 p-10 pt-6 rounded-md w-full">
         <h2 className="text-center text-white font-bold text-4xl mb-5">
           Welcome,
           <br />

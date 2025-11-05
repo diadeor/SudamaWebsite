@@ -25,7 +25,7 @@ const Login = () => {
     }
   }, [user]);
   return (
-    <div className="login-container h-screen p-5 tracking-wide flex flex-row justify-center items-center ">
+    <div className="login-container h-screen p-5 tracking-wide flex flex-row justify-center items-center w-full">
       <Form
         title="Sign in"
         navTo="/profile"
@@ -36,12 +36,14 @@ const Login = () => {
         elseFunction={elseFunc}
         credFunc={cFunc}
         bottom={
-          <p className="pt-3">
-            No account ?{" "}
-            <Link to="/register" className="font-bold">
-              Create one
-            </Link>
-          </p>
+          <>
+            <p className="pt-3">
+              No account ?{" "}
+              <Link to="/register" className="font-bold">
+                Create one
+              </Link>
+            </p>
+          </>
         }
       >
         <FormLabel name="email" />

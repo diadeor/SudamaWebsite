@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Section from "./Sections";
 import useFetch from "../hooks/useFetch";
 import Category from "./Category";
+import { Link } from "react-router-dom";
 
 type Cat = {
   name: string;
@@ -23,11 +24,9 @@ const ShopByCat = ({ limit }: { limit: number }) => {
         data.map((cat: Cat, index: number) => {
           return (
             index < limit && (
-              <Category
-                name={cat.name}
-                img={`http://localhost:5000/${cat.thumbnail}`}
-                key={index}
-              />
+              <Link to="/category" key={index}>
+                <Category name={cat.name} img={`http://localhost:5000/${cat.thumbnail}`} />
+              </Link>
             )
           );
         })}

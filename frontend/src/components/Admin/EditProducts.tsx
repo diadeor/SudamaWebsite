@@ -12,6 +12,8 @@ const EditProducts = () => {
   const [error, setError] = useState("");
   const [product, setProduct] = useState(Object);
   const [catOptions, setCatOptions] = useState<Array<string>>([]);
+  const [productCategory, setProductCategory] = useState("");
+  const [badge, setBadge] = useState("");
   const { id } = useParams();
   const getProduct = useFetch(`/api/v1/products/${id}`);
   const request = usePut(`/api/v1/products/update/${id}`);
@@ -28,6 +30,8 @@ const EditProducts = () => {
       } else {
         const categories = cats.categories.map((item: any) => item.name);
         setCatOptions(categories);
+        setProductCategory(data.product.category);
+        setBadge(data.product.badge);
       }
     };
     fetchVals();
@@ -109,7 +113,8 @@ const EditProducts = () => {
         <select
           name="category"
           id="category"
-          defaultValue={product.category}
+          value={productCategory}
+          onChange={(e) => setProductCategory(e.target.value)}
           className="font-lobster tracking-widest bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
         >
           {catOptions.map((cat, index) => {
@@ -124,14 +129,18 @@ const EditProducts = () => {
         <select
           name="badge"
           id="badge"
-          defaultValue={product.badge}
+          value={product.badge}
+          onChange={(e) => setBadge(e.target.value)}
           className="font-lobster tracking-widest bg-white/10 p-2 text-white min-h-12 pr-5 outline-0 rounded-md border border-white/10 focus:bg-black/50 mb-5"
         >
           <option value="sale">On Sale</option>
           <option value="featured">Featured</option>
           <option value="new">New</option>
         </select>
-        <label htmlFor="description" className="text-white pb-2">
+        <label
+          htmlFor="description"
+          className="font-lobster tracking-widest font-bold  text-white pb-2"
+        >
           Description
         </label>
         <textarea
@@ -139,7 +148,7 @@ const EditProducts = () => {
           id="description"
           rows={5}
           defaultValue={product.description}
-          className="p-2 outline-0 text-white border border-white/10 bg-white/10 rounded-lg mb-5"
+          className="font-fauna p-2 outline-0 text-white border border-white/10 bg-white/10 rounded-lg mb-5"
         ></textarea>
         <input
           type="submit"

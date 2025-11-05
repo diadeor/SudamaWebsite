@@ -3,13 +3,16 @@ import "./index.css";
 import App from "./App.tsx";
 import AuthProvider from "./contexts/AuthContext.tsx";
 import CartProvider from "./contexts/CartContext.tsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = document.getElementById("root");
 
 createRoot(root!).render(
-  <AuthProvider>
-    <CartProvider>
-      <App />
-    </CartProvider>
-  </AuthProvider>,
+  <GoogleOAuthProvider clientId="25488743017-mvo02kpmbl5rtto3tds3eli6kgv0ga18.apps.googleusercontent.com">
+    <AuthProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </AuthProvider>
+  </GoogleOAuthProvider>,
 );

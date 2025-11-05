@@ -1,7 +1,10 @@
 import Customer from "../models/users.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { JWT_EXPIRE, JWT_SECRET } from "../config/env.js";
+import { JWT_EXPIRE, JWT_SECRET, GOOGLE_CLIENT_ID } from "../config/env.js";
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 export const signUp = async (req, res, next) => {
   try {
@@ -62,8 +65,8 @@ export const signIn = async (req, res, next) => {
     const isValid = await bcrypt.compare(pass, user.password);
     if (!isValid) throw new Error("Password does not match");
 
-    const { name, role } = user;
-    const token = jwt.sign({ id: user._id, role }, JWT_SECRET, { expiresIn: JWT_EXPIRE });
+    const { name, role, _id: id } = user;
+    const token = jwt.sign({ id, role }, JWT_SECRET, { expiresIn: JWT_EXPIRE });
 
     res.cookie("token", token, {
       secure: false,
@@ -78,7 +81,7 @@ export const signIn = async (req, res, next) => {
       data: {
         token,
         user: {
-          id: user._id,
+          id,
           name,
           email,
           role,
@@ -99,6 +102,71 @@ export const signOut = async (req, res, next) => {
     res.json({
       success: true,
       message: "User logged out successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const googleLogin = async (req, res, next) => {
+  const { token } = req.body;
+  if (!token) throw new Error("Token is missing");
+  try {
+    const ticket = await client.verifyIdToken({ idToken: token, audience: GOOGLE_CLIENT_ID });
+    const payload = ticket.getPayload();
+
+    const { sub: googleId, name: googleName, email: googleEmail, picture } = payload;
+
+    if (!googleEmail) throw new Error("Email not provided by google");
+
+    let user = await Customer.findOne({ googleId });
+    const userWithEmail = await Customer.findOne({ email: googleEmail });
+
+    if (!user && userWithEmail) {
+      userWithEmail.googleId = googleId;
+      await userWithEmail.save();
+    }
+
+    const newUser =
+      !user && !userWithEmail
+        ? await Customer.create({
+            googleId,
+            name: googleName,
+            email: googleEmail,
+            role: "user",
+          })
+        : null;
+
+    // If user : user else if userWithEmail : userWithEmail else newUser
+    const { name, role, _id: id, email } = user ? user : userWithEmail ? userWithEmail : newUser;
+    const appToken = jwt.sign(
+      {
+        id,
+        role,
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRE },
+    );
+
+    res.cookie("token", appToken, {
+      secure: false,
+      httpOnly: true,
+      sameSite: "strict",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
+    res.json({
+      success: true,
+      message: "User logged in successfully",
+      data: {
+        appToken,
+        user: {
+          id,
+          name,
+          email,
+          role,
+          googleId,
+        },
+      },
     });
   } catch (error) {
     next(error);

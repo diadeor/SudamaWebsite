@@ -10,8 +10,8 @@ import {
 const orderRouter = Router();
 
 orderRouter.get("/", getOrders);
+orderRouter.get("/me", getUserOrders);
 orderRouter.get("/:tx", getOrder);
-orderRouter.get("/user", getUserOrders);
 orderRouter.post("/create", createOrder);
 orderRouter.post("/update/:tx", updateOrder);
 

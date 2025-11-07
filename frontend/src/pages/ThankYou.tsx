@@ -29,7 +29,7 @@ const ThankYou = () => {
   });
   return (
     order && (
-      <div className="thanks  min-h-[calc(100vh-70px)] p-10 text-white flex flex-row items-center justify-center">
+      <div className="thanks min-h-[calc(100svh-70px)] p-5 text-white flex flex-row items-center justify-center">
         <div className="inner-container flex flex-col items-center bg-black/50 w-full h-full p-5 rounded-xl max-w-190">
           <p className="font-bold text-green-400 flex flex-col items-center mt-5">
             <span>

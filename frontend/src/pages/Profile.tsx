@@ -8,13 +8,12 @@ import { FaRightFromBracket } from "react-icons/fa6";
 const Profile = () => {
   const { user, setUser } = useAuth();
   const [err, setErr] = useState("");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<string | Object>("");
   const [emailField, setEmailField] = useState(user?.email);
   const [nameField, setNameField] = useState(user?.name);
   const URI = `/api/v1/users/update/${user?.id}`;
   const req = usePost(URI);
   const getReq = useFetch("/api/v1/auth/logout");
-  const getOrders = useFetch("/api/v1/orders/me");
   const nav = useNavigate();
 
   useEffect(() => {
@@ -89,7 +88,7 @@ const Profile = () => {
         <input
           type="submit"
           value="Save"
-          className="bg-yellow-600 p-2.5 rounded-sm cursor-pointer hover:scale-95 transition duration-200"
+          className="text-lg bg-yellow-600 p-2 rounded-sm cursor-pointer hover:scale-95 transition duration-200"
         />
         <button
           onClick={(e) => handleLogout(e)}
@@ -109,7 +108,7 @@ const Profile = () => {
     useEffect(() => {
       const fetchOrders = async () => {
         try {
-          const { data, error } = await getOrders();
+          const { data } = await getOrders();
           // console.log(data.orders);
           data.success && setOrder(data.orders);
         } catch (error) {
@@ -153,7 +152,7 @@ const Profile = () => {
     );
   };
   return (
-    <div className="font-lobster profile-container min-h-screen w-full p-5 tracking-wide flex flex-row justify-center items-center">
+    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full p-5 tracking-wide flex flex-row justify-center items-center">
       <div className="inner-container flex flex-col bg-black/40 p-6 pt-6 rounded-md w-full">
         <h2 className="text-center text-white font-bold text-4xl mb-5">
           Welcome,

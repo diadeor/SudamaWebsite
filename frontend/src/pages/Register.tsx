@@ -20,14 +20,14 @@ const Register = () => {
       pass: passInput.current.value,
     };
   };
-  const elseFunc = ({ data }: { data: Object }) => {
+  const elseFunc = ({ data }: { data: { user: Object } }) => {
     setUser(data?.user);
   };
   useEffect(() => {
     if (user) nav(user.role == "admin" ? "/admin" : "/");
   }, [user]);
   return (
-    <div className="w-full signup-container h-svh p-5 tracking-wide flex flex-row justify-center items-center">
+    <div className="w-full signup-container h-[calc(100svh-70px)] p-5 tracking-wide flex flex-row justify-center items-center">
       <Form
         title="Sign Up"
         subTitle="Sudama Plant Store"
@@ -47,11 +47,11 @@ const Register = () => {
         }
       >
         <FormLabel name="name" />
-        <FormInput type="text" refer={nameInput} />
+        <FormInput type="text" refer={nameInput} name="name" />
         <FormLabel name="email" />
-        <FormInput type="email" refer={emailInput} />
+        <FormInput type="email" refer={emailInput} name="email" />
         <FormLabel name="password" />
-        <FormInput type="password" refer={passInput} />
+        <FormInput type="password" refer={passInput} name="password" />
       </Form>
     </div>
   );

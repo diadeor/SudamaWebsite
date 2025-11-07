@@ -38,7 +38,7 @@ const Product = ({ pd }: { pd: product | any }) => {
   return (
     <div className="min-w-46 product-card bg-black/50 text-white flex flex-col p-3 rounded-xl">
       {success && (
-        <p className="z-10 font-poppins msg bg-green-700 w-full rounded-full text-center relative font-bold text-md tracking-wide p-0.5 transition duration-300">
+        <p className="z-10 font-poppins msg bg-green-700 w-full rounded-full text-center relative font-bold text-sm tracking-wide p-0.5 transition duration-300">
           {success}
         </p>
       )}

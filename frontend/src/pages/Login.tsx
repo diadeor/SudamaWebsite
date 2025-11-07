@@ -13,7 +13,7 @@ const Login = () => {
   const req = usePost("/api/v1/auth/login");
   const nav = useNavigate();
 
-  const elseFunc = ({ data }: { data: Object }) => {
+  const elseFunc = ({ data }: { data: { user: Object } }) => {
     setUser(data?.user);
   };
   const cFunc = () => {
@@ -25,7 +25,7 @@ const Login = () => {
     }
   }, [user]);
   return (
-    <div className=" login-container h-svh p-5 tracking-wide flex flex-row justify-center items-center w-full">
+    <div className=" login-container h-[calc(100svh-70px)] p-5 tracking-wide flex flex-row justify-center items-center w-full">
       <Form
         title="Sign in"
         navTo="/profile"

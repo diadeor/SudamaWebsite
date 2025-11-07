@@ -102,7 +102,7 @@ const Cart = () => {
   const { user, setUser } = useAuth();
   const nav = useNavigate();
   const cart: Cart = data.cart ? data.cart : {};
-  const items: Array<Object> = cart ? cart?.items : null;
+  const items: Array<Object> | null = cart ? cart?.items : null;
   const checkoutRequest = usePost("/api/v1/orders/create");
 
   const handleCheckout = async () => {
@@ -117,9 +117,7 @@ const Cart = () => {
 
   return (
     <div
-      className={`cart-container p-5 flex flex-col items-center ${
-        !data.cart || data.cart.items.length == 0 ? "min-h-150" : "min-h-screen"
-      } pt-5`}
+      className={` w-full cart-container p-5 flex flex-col items-center min-h-[calc(100svh-70px)] pt-5`}
     >
       <h2 className="cart font-bold text-yellow-500 text-3xl mb-10 font-lobster tracking-widest">
         Shopping Cart
@@ -130,18 +128,19 @@ const Cart = () => {
             Products
           </p>
           <div className="items flex flex-col text-white gap-3 mb-5">
-            {items.map((item: any, index: number) => {
-              return (
-                <Item
-                  key={index}
-                  pid={item.product}
-                  name={item.name}
-                  price={item.price}
-                  subTotal={item.subTotal}
-                  qty={item.quantity}
-                />
-              );
-            })}
+            {items &&
+              items.map((item: any, index: number) => {
+                return (
+                  <Item
+                    key={index}
+                    pid={item.product}
+                    name={item.name}
+                    price={item.price}
+                    subTotal={item.subTotal}
+                    qty={item.quantity}
+                  />
+                );
+              })}
           </div>
           <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
             Order Summary

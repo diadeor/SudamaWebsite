@@ -31,7 +31,7 @@ const Home = () => {
             Shop Now
           </button>
         </div>
-        <div className="border-2 w-full max-w-md md:max-w-[50%] image text-center flex flex-row justify-center items-center">
+        <div className=" w-full max-w-md md:max-w-[50%] image text-center flex flex-row justify-center items-center">
           <img src={home} alt="" className="" />
         </div>
       </main>

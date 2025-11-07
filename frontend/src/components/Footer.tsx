@@ -2,23 +2,25 @@ import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-black/30 p-5 pb-0 backdrop-blur-xs flex flex-col justify-center items-center border-t-2 border-black/30">
-      <div className="site-info flex flex-col items-center justify-center mb-5">
-        <img src={logo} alt="" className="w-15" />
-        <p className="font-bold text-2xl font-lobster tracking-wide text-green-300">
-          Sudama Plant Store
+    <footer className="border-2 bg-black/30 backdrop-blur-xs flex flex-col justify-center items-center">
+      <div className="border-2 inner-footer w-full max-w-6xl">
+        <div className="site-info flex flex-col items-center justify-center mb-5">
+          <img src={logo} alt="" className="w-15" />
+          <p className="font-bold text-2xl font-lobster tracking-wide text-green-300">
+            Sudama Plant Store
+          </p>
+        </div>
+        <div className="font-fauna contact flex flex-col text-center items-center ">
+          <p className="font-black text-yellow-500 text-xl">Contact Us</p>
+          <p className="text-white">+977 9847440395</p>
+          <p className="text-white">gairesanjay70@gmail.com</p>
+          <p className="text-white">Kalika Chowk, Butwal</p>
+        </div>
+        <p className=" rounded-full text-white font-jetbrains mb-0 mt-5 w-full text-center">
+          &copy; 2024 Sudama Plant Store. All rights reserved
+          <br />
         </p>
       </div>
-      <div className="font-fauna contact flex flex-col text-center items-center ">
-        <p className="font-black text-yellow-500 text-xl">Contact Us</p>
-        <p className="text-white">+977 9847440395</p>
-        <p className="text-white">gairesanjay70@gmail.com</p>
-        <p className="text-white">Kalika Chowk, Butwal</p>
-      </div>
-      <p className=" rounded-full text-white font-jetbrains mb-0 mt-5 w-full text-center">
-        Copyright &copy; 2024. All rights reserved
-        <br />
-      </p>
     </footer>
   );
 };

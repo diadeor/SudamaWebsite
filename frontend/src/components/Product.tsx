@@ -43,7 +43,15 @@ const Product = ({ pd }: { pd: product }) => {
         alt=""
         className="hover:z-15 w-40 h-40 rounded-xl hover:scale-115 transition duration-300 mb-2"
       />
-      <p className={` extra absolute font-bold text-white text-center text-sm`}>
+      <p
+        className={`${
+          pd.badge && pd.badge == "new"
+            ? "animate-pulse"
+            : pd.badge == "featured"
+            ? "animate-bounce"
+            : ""
+        } extra absolute font-bold text-white text-center text-sm`}
+      >
         {pd.badge && pd.badge != "sale" && (
           <span
             className={`tracking-widest min-w-15 p-1 px-3 rounded-sm mr-1 capitalize font-lobster ${bgColor}`}

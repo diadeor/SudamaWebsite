@@ -36,9 +36,12 @@ body {
   /* background-color: #66c473; */
   background-attachment: fixed;
   background-size: contain;
-  background-position: bottom;
+  background-position: bottom left;
   background-repeat: no-repeat;
   background-blend-mode: multiply;
+}
+body.menu-is-open {
+  overflow: hidden;
 }
 
 /* footer {
@@ -50,5 +53,21 @@ body {
   background-repeat: no-repeat;
 } */
 
-footer {
+.menu {
+  background-image: url(../src/assets/leaf3.png), url(../src/assets/leaf3_rotated.png);
+  background-size: 250px;
+  background-position: -10px -10px, right -10px bottom -10px;
+
+  background-repeat: no-repeat;
+}
+.ind-section {
+  background-image: url(../src/assets/leaf5_rotated.png), url(../src/assets/leaf5.png);
+  background-size: 100px;
+  background-position: top left, right top;
+  background-repeat: no-repeat;
+}
+@keyframes showMenu {
+  to {
+    right: 0px;
+  }
 }

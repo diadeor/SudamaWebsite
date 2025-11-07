@@ -6,15 +6,16 @@ import Popular from "../components/Popular";
 import ShopByCat from "../components/ShopByCat";
 import Socials from "../components/Socials";
 // import floral from "../assets/floral.png";
+
 const Home = () => {
   // console.log(floral);
   return (
     <>
       <main
-        className={` hero-section h-screen flex flex-row flex-wrap justify-center wrap-normal pl-5 pr-5 pt-5`}
+        className={`w-full max-w-7xl hero-section h-screen flex flex-row flex-wrap justify-center wrap-normal p-5 md:items-center sm:bg-red-300 md:bg-red-500 lg:bg-red-700`}
       >
-        <div className="text">
-          <p className="hero font-bold text-white text-4xl mb-5 font-lobster tracking-wider">
+        <div className="text w-full md:max-w-[50%]">
+          <p className="hero font-bold text-white text-4xl mb-5 font-lobster tracking-wider grow md:text-4xl lg:text-6xl">
             <span className="text-yellow-500">Plants&nbsp;</span> make&nbsp; a<br />
             <span className="text-yellow-500">positive&nbsp;</span> impact&nbsp; on
             <br />
@@ -30,7 +31,7 @@ const Home = () => {
             Shop Now
           </button>
         </div>
-        <div className="image text-center flex flex-row justify-center items-center">
+        <div className="border-2 w-full max-w-md md:max-w-[50%] image text-center flex flex-row justify-center items-center">
           <img src={home} alt="" className="" />
         </div>
       </main>

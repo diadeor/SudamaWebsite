@@ -27,7 +27,7 @@ const Item = ({
   const updateRequest = usePost("/api/v1/carts/update");
 
   useEffect(() => {
-    if (qtyUser == 1 || qty == 1) {
+    if (qtyUser == 1) {
       setIsDisabled(true);
       setBgColor("bg-white/10");
       setCursor("cursor-auto");
@@ -36,17 +36,15 @@ const Item = ({
       setBgColor("bg-white/20");
       setCursor("cursor-pointer");
     }
+    updateRequest({ id: pid, qty: qtyUser }).then(({ data }) => setCart(data));
   }, [qtyUser]);
 
   const handleQtyChange = async (target: any) => {
     if (target.classList.contains("subtract")) {
-      qtyUser > 1 && setQtyUser(qtyUser - 1);
+      qtyUser >= 2 && setQtyUser(qtyUser - 1);
     } else {
       setQtyUser(qtyUser + 1);
     }
-    const currentQty = qtyUser;
-    const { data } = await updateRequest({ id: pid, qty: currentQty });
-    setCart(data);
   };
   return (
     <div className="bg-black/30 p-3 rounded-xl item flex flex-row min-h-20 items-center justify-center border-white/10">

@@ -4,10 +4,12 @@ import useFetch from "../hooks/useFetch";
 import axios from "axios";
 import Product from "../components/Product";
 
-const ShopByCategory = () => {
+const Shop = () => {
   const [cat, setCat] = useState<Array<Object>>([]);
   const [products, setProducts] = useState<Array<Object>>([]);
-  const [selectedCategory, setSelectedCategory] = useState("Sanjay Gaire");
+  const [searchProd, setSearchProd] = useState<Array<Object>>([]);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const catsRequest = useFetch("/api/v1/categories");
   useEffect(() => {
     catsRequest().then(({ data }) => {
@@ -25,22 +27,38 @@ const ShopByCategory = () => {
 
         const { data } = await axios(`/api/v1/products?${params}`);
 
-        if (data.success) setProducts(data.products);
+        if (data.success) {
+          setProducts(data.products);
+          setSearchProd(data.products);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     fetchProducts();
   }, [selectedCategory]);
-  console.log(selectedCategory);
+
+  useEffect(() => {
+    const filteredProducts = products.filter((prod) => {
+      const term = search.toLowerCase();
+      const names = prod.name.toLowerCase().split(" ");
+      const slicedArray = names.map((name: string) => {
+        const sliced = name.slice(0, search.length);
+        return sliced == term ? sliced : false;
+      });
+      return slicedArray.indexOf(term) == -1 ? false : true;
+    });
+    setSearchProd(filteredProducts);
+  }, [search]);
 
   return (
-    <div className="border-2 w-full font-lobster cat-shop-container p-5 flex flex-col items-center min-h-svh pt-5 pb-15 text-white max-w-6xl">
-      <h2 className="title font-bold text-yellow-500 text-3xl">Shop By Category</h2>
+    <div className="w-full font-lobster cat-shop-container p-5 flex flex-col items-center min-h-svh pb-15 text-white max-w-6xl">
+      <h2 className="title font-bold text-yellow-500 text-5xl">Shop</h2>
       <p className="subtitle font-fauna mb-10 mt-1 text-center">
         Choose any category to see items in that respective category
       </p>
       <div className="categories flex flex-row flex-wrap items-center justify-center gap-3 mb-10">
+        <Category name="All" setName={setSelectedCategory} img="null" />
         {cat &&
           cat.map((item: any, index: number) => {
             return (
@@ -58,11 +76,13 @@ const ShopByCategory = () => {
         name=""
         id=""
         placeholder="Search for products"
-        className="font-fauna h-12 w-full bg-white/20 placeholder:text-zinc-800 border border-white/20 pl-4 rounded-md mb-5 placeholder:text-lg tracking-wide outline-0"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="font-fauna h-12 w-full bg-white/20 placeholder:text-gray-100 border border-white/20 pl-4 rounded-md mb-5 placeholder:text-lg tracking-wide outline-0"
       />
       <div className="products-by-cat flex flex-row flex-wrap items-center justify-center gap-3">
-        {products &&
-          products.map((item, index) => {
+        {searchProd &&
+          searchProd.map((item, index) => {
             return <Product pd={item} key={index} />;
           })}
       </div>
@@ -70,4 +90,4 @@ const ShopByCategory = () => {
   );
 };
 
-export default ShopByCategory;
+export default Shop;

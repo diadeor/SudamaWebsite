@@ -24,7 +24,7 @@ const ShopByCat = ({ limit }: { limit: number }) => {
         data.map((cat: Cat, index: number) => {
           return (
             index < limit && (
-              <Link to="/category" key={index}>
+              <Link to="/shop" key={index}>
                 <Category name={cat.name} img={`http://localhost:5000/${cat.thumbnail}`} />
               </Link>
             )

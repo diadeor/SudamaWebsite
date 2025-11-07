@@ -9,7 +9,7 @@ import Cart from "./pages/Cart.tsx";
 import { IoCartOutline } from "react-icons/io5";
 import ThankYou from "./pages/ThankYou.tsx";
 import Footer from "./components/Footer.tsx";
-import ShopByCategory from "./pages/ShopByCategory.tsx";
+import Shop from "./pages/Shop.tsx";
 const App = () => {
   return (
     <Router>
@@ -22,7 +22,7 @@ const App = () => {
       <div className="home-container flex flex-col items-center">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/category" element={<ShopByCategory />} />
+          <Route path="/shop" element={<Shop />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />

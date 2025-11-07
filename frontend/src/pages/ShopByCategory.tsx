@@ -10,7 +10,7 @@ const ShopByCategory = () => {
   const [selectedCategory, setSelectedCategory] = useState("Sanjay Gaire");
   const catsRequest = useFetch("/api/v1/categories");
   useEffect(() => {
-    catsRequest().then(({ data, error }) => {
+    catsRequest().then(({ data }) => {
       if (data.success) {
         setCat(data.categories);
       }
@@ -35,7 +35,7 @@ const ShopByCategory = () => {
   console.log(selectedCategory);
 
   return (
-    <div className="w-full font-lobster cat-shop-container p-5 flex flex-col items-center min-h-screen pt-5 pb-15 text-white max-w-200">
+    <div className="border-2 w-full font-lobster cat-shop-container p-5 flex flex-col items-center min-h-svh pt-5 pb-15 text-white max-w-6xl">
       <h2 className="title font-bold text-yellow-500 text-3xl">Shop By Category</h2>
       <p className="subtitle font-fauna mb-10 mt-1 text-center">
         Choose any category to see items in that respective category

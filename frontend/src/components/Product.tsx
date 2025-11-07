@@ -1,6 +1,6 @@
 import { FaCartPlus } from "react-icons/fa6";
 import usePost from "../hooks/usePost";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -14,7 +14,7 @@ type product = {
   badge: string;
 };
 
-const Product = ({ pd }: { pd: product }) => {
+const Product = ({ pd }: { pd: product | any }) => {
   const [success, setSuccess] = useState("");
   const bgColor =
     pd.badge == "featured" ? "bg-yellow-700" : pd.badge == "new" ? "bg-green-700" : "bg-rose-900";
@@ -30,10 +30,15 @@ const Product = ({ pd }: { pd: product }) => {
       setCart(data);
     }
   };
+  if (success) {
+    setTimeout(() => {
+      setSuccess("");
+    }, 1000);
+  }
   return (
     <div className="min-w-46 product-card bg-black/50 text-white flex flex-col p-3 rounded-xl">
       {success && (
-        <p className="msg bg-green-700 w-60 rounded-full text-center relative font-bold text-md tracking-wide p-0.5">
+        <p className="z-10 font-poppins msg bg-green-700 w-full rounded-full text-center relative font-bold text-md tracking-wide p-0.5 transition duration-300">
           {success}
         </p>
       )}

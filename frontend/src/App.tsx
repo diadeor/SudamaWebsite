@@ -22,7 +22,7 @@ const App = () => {
       <div className="home-container flex flex-col items-center">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/category/*" element={<ShopByCategory />} />
+          <Route path="/category" element={<ShopByCategory />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />

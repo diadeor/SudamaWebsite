@@ -131,8 +131,8 @@ export const Form = ({
         )}
         {logo && <img src={logo} alt="" className="w-10 mb-5" />}
         {title && (
-          <p className="site-name font-medium text-2xl mb-5 text-center">
-            <span className="font-bold">{title}</span>{" "}
+          <p className="site-name font-medium text-2xl mb-5 text-center font-poppins">
+            <span className="font-bold font-lobster tracking-wider text-green-400">{title}</span>{" "}
             {subTitle && (
               <span>
                 to
@@ -147,14 +147,14 @@ export const Form = ({
       <input
         type="submit"
         value={subVal}
-        className="font-bold tracking-wider bg-yellow-600 h-12 text-lg mt-2 rounded-lg hover:bg-yellow-800 transition duration-200"
+        className="font-lobster font-bold tracking-widest bg-yellow-600 h-12 text-xl mt-2 rounded-lg hover:bg-yellow-800 transition duration-200"
       />
       {bottom}
       <div className="google mt-5">
         <GoogleLogin
-          theme="filled_blue"
+          theme="outline"
           size="large"
-          shape="pill"
+          shape="circle"
           type="standard"
           text="continue_with"
           onSuccess={googleLoginSuccess}

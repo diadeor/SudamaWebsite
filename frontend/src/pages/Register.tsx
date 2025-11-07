@@ -27,7 +27,7 @@ const Register = () => {
     if (user) nav(user.role == "admin" ? "/admin" : "/");
   }, [user]);
   return (
-    <div className="signup-container h-screen p-5 tracking-wide flex flex-row justify-center items-center">
+    <div className="w-full signup-container h-svh p-5 tracking-wide flex flex-row justify-center items-center">
       <Form
         title="Sign Up"
         subTitle="Sudama Plant Store"
@@ -38,9 +38,9 @@ const Register = () => {
         credFunc={cFunc}
         elseFunction={elseFunc}
         bottom={
-          <p className="pt-3">
+          <p className="pt-3 font-poppins">
             Have an account ?{" "}
-            <Link to="/login" className="font-bold">
+            <Link to="/login" className="font-bold text-yellow-500">
               Login
             </Link>
           </p>

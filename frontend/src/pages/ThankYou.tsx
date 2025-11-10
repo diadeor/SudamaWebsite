@@ -18,9 +18,9 @@ const ThankYou = () => {
   const { user } = useAuth();
   const nav = useNavigate();
   const order = user.order;
-  useEffect(() => {
-    !order && nav("/");
-  }, []);
+  // useEffect(() => {
+  //   !order && nav("/");
+  // }, []);
   const date = new Date(order?.createdAt);
   const created = date.toLocaleString("default", {
     month: "short",
@@ -42,7 +42,7 @@ const ThankYou = () => {
               We have received your order and will process it as soon as you make your payment
             </span>
           </p>
-          <div className="order flex flex-row bg-white/10 rounded-md mt-10 p-5 w-[85%]">
+          <div className="order flex flex-row bg-white/10 rounded-md mt-10 p-5 w-[90%]">
             <p className="order-id text-center border-r-2 min-w-[34%] border-white/20 flex flex-col gap-2">
               <span className="font-bold font-fauna">Order No.</span>
               <span className="font-bold text-yellow-300 tracking-wider text-lg font-jetbrains">
@@ -61,7 +61,7 @@ const ThankYou = () => {
           <p className=" mt-10 font-bold text-xl tracking-wider text-center text-yellow-500 mb-3 font-lobster">
             --- Order Items ---
           </p>
-          <div className="order-items flex flex-col w-[85%] font-fauna">
+          <div className="order-items flex flex-col w-[90%] font-fauna">
             <div className="title flex flex-row font-bold text-lg border-b-2 border-white/20 w-full mb-2">
               <p className="w-[60%]">Products</p>
               <p className="w-[40%] text-center border-l-2 border-white/20">Total</p>
@@ -87,6 +87,13 @@ const ThankYou = () => {
               <p className="second font-jetbrains text-lg">Rs.{order.amount}</p>
             </div>
           </div>
+          <button
+            // onClick={handleCheckout}
+            className="font-lobster text-xl mt-2 text-white bg-yellow-600 h-12 font-bold tracking-widest w-full rounded-full hover:bg-yellow-800 transition duration-300 hover:scale-102 flex flex-row items-center justify-center gap-2 cursor-pointer"
+          >
+            Proceed to payment
+            {/* <FaArrowRight /> */}
+          </button>
         </div>
       </div>
     )

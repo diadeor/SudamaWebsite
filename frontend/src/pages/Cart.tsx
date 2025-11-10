@@ -97,20 +97,13 @@ type Cart = {
 
 const Cart = () => {
   const { cart: data } = useCart();
-  const { user, setUser } = useAuth();
+  // const { user, setUser } = useAuth();
   const nav = useNavigate();
   const cart: Cart = data.cart ? data.cart : {};
   const items: Array<Object> | null = cart ? cart?.items : null;
-  const checkoutRequest = usePost("/api/v1/orders/create");
 
   const handleCheckout = async () => {
-    const { data } = await checkoutRequest({ cart });
-    const updatedUser = {
-      ...user,
-      order: data.order,
-    };
-    setUser(updatedUser);
-    nav("/thank-you");
+    nav("/checkout");
   };
 
   return (

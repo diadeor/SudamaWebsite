@@ -10,6 +10,7 @@ import { IoCartOutline } from "react-icons/io5";
 import ThankYou from "./pages/ThankYou.tsx";
 import Footer from "./components/Footer.tsx";
 import Shop from "./pages/Shop.tsx";
+import Billing from "./pages/Checkout.tsx";
 const App = () => {
   return (
     <Router>
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/profile/*" element={<Profile />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/checkout" element={<Billing />} />
         </Routes>
       </div>
       <Footer />

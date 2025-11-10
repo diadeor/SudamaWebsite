@@ -30,16 +30,17 @@ const Admin = () => {
     })();
     if (user == null) {
       nav("/login");
-    } else if (user.role != "admin") {
-      const noAccessTimeout = setTimeout(() => {
-        setCount(count - 1);
-      }, 1000);
-      if (count == 0) {
-        clearTimeout(noAccessTimeout);
-        nav("/profile");
-      }
     }
   }, []);
+  if (user.role != "admin") {
+    const noAccessTimeout = setTimeout(() => {
+      setCount(count - 1);
+    }, 1000);
+    if (count == 0) {
+      clearTimeout(noAccessTimeout);
+      nav("/profile");
+    }
+  }
 
   return user && user.role == "admin" ? (
     <div className="admin-container p-5 flex flex-col items-center min-h-screen pt-5 pb-15">
@@ -171,11 +172,11 @@ const Admin = () => {
       </div>
     </div>
   ) : (
-    <div className="no-access bg-green-950 h-[calc(100vh-70px)] flex flex-col justify-center items-center">
-      <p className="font-bold text-3xl text-yellow-600 text-center">
+    <div className="no-access h-[calc(100svh-70px)] flex flex-col justify-center items-center">
+      <p className="font-bold text-3xl text-yellow-400 text-center font-lobster tracking-widest">
         You can not access this page
         <br />{" "}
-        <span className="text-lg text-white">
+        <span className="text-lg text-white font-poppins tracking-normal">
           You will be redirected in
           {` ${count} `}
           seconds

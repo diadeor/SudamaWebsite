@@ -121,6 +121,7 @@ const Profile = () => {
     return (
       <div className=" text-white rounded-lg flex flex-col gap-2">
         {orders.map((order, index) => {
+          const payment = order.paymentStatus;
           return (
             <div className="item rounded-lg bg-white/10 p-3 flex flex-row gap-2" key={index}>
               <div className="left font-fauna">
@@ -129,6 +130,21 @@ const Profile = () => {
                   <span className="font-bold tracking-widest font-lobster">Total</span> <br />
                   <span className="">Rs.{order.total}</span>
                 </p>
+                {payment === "paid" && (
+                  <p className="font-poppins font-bold tracking-wider text-emerald-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
+                    PAID
+                  </p>
+                )}
+                {payment === "refunded" && (
+                  <p className="font-poppins font-bold tracking-wider text-red-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
+                    RE
+                  </p>
+                )}
+                {payment === "unpaid" && (
+                  <button className="cursor-pointer hover:scale-95 transition duration-200 w-full font-poppins font-bold tracking-wider text-white bg-green-600 p-2 rounded-sm text-center text-md mt-2">
+                    Pay
+                  </button>
+                )}
               </div>
               <div className="font-fauna right text-center w-full bg-white/10 rounded-md flex flex-col p-2 pt-0 pb-1">
                 <p className="font-lobster font-bold tracking-widest border-b-2 border-white/20">
@@ -152,7 +168,7 @@ const Profile = () => {
     );
   };
   return (
-    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full p-5 tracking-wide flex flex-row justify-center items-center">
+    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full max-w-6xl p-5 tracking-wide flex flex-row justify-center items-center">
       <div className="inner-container flex flex-col bg-black/40 p-6 pt-6 rounded-md w-full">
         <h2 className="text-center text-white font-bold text-4xl mb-5">
           Welcome,

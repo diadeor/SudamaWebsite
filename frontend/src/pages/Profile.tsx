@@ -137,7 +137,7 @@ const Profile = () => {
                 <p className=" text-lg text-yellow-500 font-bold">#{order.tx}</p>
                 <p className="bg-white/10 p-2 rounded-sm text-center text-sm">
                   <span className="font-bold tracking-widest font-lobster">Total</span> <br />
-                  <span className="">Rs.{order.total}</span>
+                  <span className="font-bold">Rs.{order.total}</span>
                 </p>
                 {payment === "paid" && (
                   <p className="font-poppins font-bold tracking-wider text-emerald-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
@@ -168,7 +168,7 @@ const Profile = () => {
                       <span className="tracking-normal text-left">
                         {item.name} x {item.quantity}
                       </span>
-                      <span className="spanrice">Rs.{item.subTotal}</span>
+                      <span className="font-bold">Rs.{item.subTotal}</span>
                     </p>
                   );
                 })}

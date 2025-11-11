@@ -54,8 +54,6 @@ export const updateUser = async (req, res, next) => {
       if (userExists._id != paramId) throw new Error("Email already exists");
       if (userExists.email == email && userExists.name == name) throw new Error("No changes made");
     }
-
-    console.log("Its still here");
     const user = await Customer.findByIdAndUpdate(
       paramId,
       { $set: { name, email } },

@@ -1,8 +1,8 @@
 import Customer from "../models/users.model.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import bcrypt, { hash } from "bcryptjs";
 import { JWT_EXPIRE, JWT_SECRET, GOOGLE_CLIENT_ID } from "../config/env.js";
-import { OAuth2Client } from "google-auth-library";
+import { OAuth2Client, PassThroughClient } from "google-auth-library";
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
@@ -62,7 +62,7 @@ export const signIn = async (req, res, next) => {
     const user = await Customer.findOne({ email });
     if (!user) throw new Error("Invalid Email");
 
-    const isValid = await bcrypt.compare(pass, user.password);
+    const isValid = bcrypt.compare(pass, user.password);
     if (!isValid) throw new Error("Password does not match");
 
     const { name, role, _id: id } = user;
@@ -103,6 +103,31 @@ export const signOut = async (req, res, next) => {
       success: true,
       message: "User logged out successfully",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const changePass = async (req, res, next) => {
+  const { id } = req.user;
+  const { old, newPass } = req.body;
+  if (!newPass) throw new Error("New password is required");
+
+  try {
+    const user = await Customer.findById(id);
+    if (user.password && !old) throw new Error("Old password is required");
+
+    if (user.password) {
+      const oldVerify = bcrypt.compare(old, user.password);
+      if (!oldVerify) throw new Error("Wrong password");
+    }
+
+    const salt = await bcrypt.genSalt(12);
+    const hashed = await bcrypt.hash(newPass, salt);
+
+    await Customer.findByIdAndUpdate(id, { $set: { password: hashed } }, { new: true });
+
+    res.json({ success: true, message: "Password updated" });
   } catch (error) {
     next(error);
   }

@@ -16,7 +16,6 @@ export const getOrders = async (req, res, next) => {
 export const getUserOrders = async (req, res, next) => {
   try {
     const id = req.user.id;
-    console.log(id);
     const orders = await Order.find({ userId: id });
 
     res.json({

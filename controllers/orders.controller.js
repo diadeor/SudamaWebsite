@@ -51,7 +51,7 @@ const generateTx = async () => {
 export const createOrder = async (req, res, next) => {
   try {
     const id = req.user.id;
-    const { cart } = req.body;
+    const { cart, shipping } = req.body;
     const tx = await generateTx();
 
     const order = await Order.create({
@@ -61,7 +61,14 @@ export const createOrder = async (req, res, next) => {
       total: cart.total,
       amount: cart.amount,
       discount: cart.discount,
-      shipping: "Bhelai",
+      shipping: {
+        name: shipping.name,
+        email: shipping.email,
+        mobile: shipping.mobile,
+        street: shipping.street,
+        maps: shipping.maps,
+        landmark: shipping.landmark,
+      },
     });
 
     const carts = await Cart.findOneAndUpdate({ _id: id }, { $set: { items: [] } }, { new: true });

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { FaBarsStaggered, FaCircleXmark, FaUserTie } from "react-icons/fa6";
+import { FaBarsStaggered, FaCircleXmark, FaMagnifyingGlass, FaUserTie } from "react-icons/fa6";
 import {
   IoCallOutline,
   IoPersonOutline,
@@ -38,6 +38,7 @@ const ListItem = ({
 const NavBar = () => {
   const { user } = useAuth();
   const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const handleMenu = () => {
     setMenu(!menu);
@@ -48,16 +49,35 @@ const NavBar = () => {
     <nav className="justify-center flex flex-row bg-green-300/15">
       <div className="w-full max-w-6xl inner-menu font-poppins flex flex-row items-center justify-between px-5 h-[70px] border-b-2 border-green-300/20">
         <Link to="tel:+977 9847440395" className="sm:hidden">
-          <IoCallOutline size="1.5em" className="text-yellow-400" />
+          <IoCallOutline size="1.5em" className="text-yellow-500" />
         </Link>
-        <Link to="/">
+        <Link to="/" className="pl-5 sm:pl-0 border">
           <img src={logo} alt="" className="w-8" />
         </Link>
-        <FaBarsStaggered
-          className="text-yellow-400 sm:hidden cursor-pointer"
-          size="1.5em"
-          onClick={handleMenu}
-        />
+        <div className="flex flex-row items-center gap-5">
+          <FaMagnifyingGlass
+            size="1.3em"
+            className="text-yellow-500 cursor-pointer sm:hidden"
+            onClick={() => setSearch(!search)}
+          />
+          <FaBarsStaggered
+            className="sm:hidden cursor-pointer text-yellow-500"
+            size="1.5em"
+            onClick={handleMenu}
+          />
+        </div>
+        <div
+          className={`searchInput absolute bg-green-300/15 h-19 ${
+            search ? "top-18" : "-top-20"
+          } w-full left-0 right-0 flex flex-row items-center justify-center p-3 transition-all text-white font-poppins backdrop-blur-lg`}
+        >
+          <input
+            type="text"
+            name=""
+            id=""
+            className="bg-white/10 outline-0 border border-white/20 py-2 px-4 h-full w-full rounded-md"
+          />
+        </div>
         <div
           className={` menu-overlay h-screen w-full fixed top-0 left-0 border-white ${
             menu ? "block" : "hidden"
@@ -100,33 +120,32 @@ const NavBar = () => {
             )}
           </ul>
         </div>
-        <ul className="font-lobster tracking-widest flex-row gap-5 text-white font-bold text-xl items-center hidden sm:flex">
-          <li>
+        <ul className="font-poppins flex-row gap-5 text-white text-xl items-center hidden sm:flex">
+          <li className="hover:font-bold">
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="#popular">Popular</Link>
+          <li className="hover:font-bold">
+            <Link to="/shop">Shop</Link>
           </li>
-          <li>
-            <Link to="/blog">Blog</Link>
+          <li className="hover:font-bold">
+            <Link to="/about">About</Link>
           </li>
-          <li>
+          <li className="hover:font-bold">
             {user ? (
-              <Link to={user.role == "admin" ? "/admin" : "/profile"}>
-                <button className="p-2 pl-4 pr-4 bg-green-600 rounded-sm cursor-pointer hover:scale-107 transition duration-200 font-medium">
-                  {user.role != "admin" ? `Hi, ${user.name.split(" ")[0]}` : "Hi, admin"}
-                </button>
-              </Link>
+              <Link to="/profile">Profile</Link>
             ) : (
-              <Link to="/login">
-                <button className="p-2 pl-4 pr-4 bg-yellow-600 rounded-sm cursor-pointer hover:scale-107 transition duration-200 font-medium">
-                  Login
-                </button>
+              <Link to="/login" className="bg-yellow-600 p-2 px-5 rounded-sm font-semibold">
+                Login
               </Link>
             )}
           </li>
         </ul>
 
+        <FaMagnifyingGlass
+          size="1.3em"
+          className="text-yellow-500 cursor-pointer hidden sm:flex"
+          onClick={() => setSearch(!search)}
+        />
         <IoCallOutline size="1.5em" className="text-yellow-400 hidden sm:block" />
       </div>
     </nav>

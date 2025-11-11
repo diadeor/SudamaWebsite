@@ -3,15 +3,17 @@ import { FormInput, FormLabel } from "../components/Form";
 import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
 import usePost from "../hooks/usePost";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const { cart } = useCart().cart;
   const item = cart.items;
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bgColor, setBgColor] = useState<string>("bg-zinc-500");
   const form = useRef<HTMLFormElement>(null);
   const checkoutRequest = usePost("/api/v1/orders/create");
+  const nav = useNavigate();
 
   const handleFormChange = () => {
     if (!form.current) return;
@@ -28,7 +30,31 @@ const Checkout = () => {
   };
 
   const handlePayment = async () => {
-    const { data } = await checkoutRequest({ cart });
+    if (!form.current) return;
+    const formData = new FormData(form.current);
+    const [name, email, mobile, street, maps, landmark] = [
+      formData.get("name"),
+      formData.get("email"),
+      formData.get("mobile"),
+      formData.get("street"),
+      formData.get("maps"),
+      formData.get("landmark"),
+    ];
+
+    const shipping = {
+      name,
+      email,
+      mobile,
+      street,
+      maps,
+      landmark,
+    };
+
+    const { data, error } = await checkoutRequest({ cart, shipping });
+    if (data.success) {
+      setUser({ ...user, order: data.order });
+      nav("/thank-you");
+    }
   };
 
   return (
@@ -99,7 +125,7 @@ const Checkout = () => {
               </div>
               <div className="grand flex flex-row text-white p-3 pl-6">
                 <p className=" grow text-center font-bold text-xl">Grand Total</p>
-                <p className="w-35 tefffxt-yellow-500 font-jetbrains grand text-center font-bold text-xl border-l-2 border-white/30">
+                <p className="w-35 text-yellow-500 font-poppins grand text-center font-bold text-xl border-l-2 border-white/30">
                   Rs.{cart.amount}
                 </p>
               </div>

@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import qr from "../assets/qr.jpeg";
 import { useAuth } from "../contexts/AuthContext";
 import { FaCircleCheck } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
 
 const OrderItem = ({ item }: { item: any }) => {
   return (
@@ -16,7 +15,6 @@ const OrderItem = ({ item }: { item: any }) => {
 
 const ThankYou = () => {
   const { user } = useAuth();
-  const nav = useNavigate();
   const order = user.order;
   // useEffect(() => {
   //   !order && nav("/");
@@ -42,7 +40,7 @@ const ThankYou = () => {
               We have received your order and will process it as soon as you make your payment
             </span>
           </p>
-          <div className="order flex flex-row bg-white/10 rounded-md mt-10 p-5 w-[90%]">
+          <div className="order flex flex-row bg-white/10 rounded-md mt-10 p-4 w-full">
             <p className="order-id text-center border-r-2 min-w-[34%] border-white/20 flex flex-col gap-2">
               <span className="font-bold font-fauna">Order No.</span>
               <span className="font-bold text-yellow-300 tracking-wider text-lg font-jetbrains">
@@ -55,13 +53,55 @@ const ThankYou = () => {
             </p>
             <p className="order-id text-center min-w-[33%] border-white/20 flex flex-col gap-3">
               <span className="font-bold font-fauna">Total</span>
-              <span className="font-jetbrains">Rs.{order.amount}</span>
+              <span className="font-poppins text-lg font-bold text-yellow-500 ">
+                Rs.{order.amount}
+              </span>
             </p>
           </div>
-          <p className=" mt-10 font-bold text-xl tracking-wider text-center text-yellow-500 mb-3 font-lobster">
+          <div className="payment flex flex-row flex-wrap w-full mt-5 font-poppins bg-white/10 rounded-lg p-3 justify-center gap-3">
+            <img src={qr} alt="" className="rounded-xl w-60" />
+            <div className="instructions p-3 rounded-md w-full bg-white/10 text-lg">
+              <p className="text-center font-bold text-xl text-green-300">How to pay ?</p>
+              <p className="w-full flex flex-col border-b-2 border-white/30 py-2">
+                <span className="text-xl font-bold ">Step 1:</span>
+                <span>Scan the qr code</span>
+              </p>
+              <p className=" flex flex-col text-right border-b-2 border-white/30 py-2">
+                <span className="text-xl font-bold">Step 2:</span>
+                <span>
+                  Enter the amount i.e{" "}
+                  <span className="font-bold text-yellow-500"> "{order.amount}"</span> and click
+                  continue
+                </span>
+              </p>
+              <p className=" flex flex-col border-b-2 border-white/30 py-2">
+                <span className="text-xl font-bold">Step 3:</span>
+                <span>Choose "Personal Use" for purpose</span>
+              </p>
+              <p className=" flex flex-col text-right border-b-2 border-white/30 py-2">
+                <span className="text-xl font-bold">Step 4:</span>
+                <span>
+                  Enter your order number in remarks i.e{" "}
+                  <span className="font-bold text-yellow-500">{order.tx}</span>
+                </span>
+              </p>
+              <p className=" flex flex-col py-2">
+                <span className="text-xl font-bold">Step 5:</span>
+                <span>Click continue and confirm</span>
+              </p>
+            </div>
+            <p className="font-bold text-red-300 text-center">
+              Note: Order number in remarks is mandatory
+              <br /> <span className="text-xl">{order.tx}</span>
+            </p>
+            <p className="text-center font-bold ">
+              Wait for us to confirm the payment and update the order
+            </p>
+          </div>
+          <p className=" mt-5 font-bold text-xl tracking-wider text-center text-yellow-500 mb-3 font-lobster">
             --- Order Items ---
           </p>
-          <div className="order-items flex flex-col w-[90%] font-fauna">
+          <div className="order-items flex flex-col w-full p-5 rounded-lg font-fauna bg-white/10">
             <div className="title flex flex-row font-bold text-lg border-b-2 border-white/20 w-full mb-2">
               <p className="w-[60%]">Products</p>
               <p className="w-[40%] text-center border-l-2 border-white/20">Total</p>
@@ -82,18 +122,22 @@ const ThankYou = () => {
               </p>
               <p className="second w-[40%] text-center ">-Rs.{order.discount}</p>
             </div>
-            <div className="totals flex flex-col items-center text-yellow-500 justify-center w-full pt-2 pb-2 font-bold">
-              <p className="first font-lobster tracking-widest text-2xl">Order Total</p>
-              <p className="second font-jetbrains text-lg">Rs.{order.amount}</p>
-            </div>
           </div>
-          <button
-            // onClick={handleCheckout}
-            className="font-lobster text-xl mt-2 text-white bg-yellow-600 h-12 font-bold tracking-widest w-full rounded-full hover:bg-yellow-800 transition duration-300 hover:scale-102 flex flex-row items-center justify-center gap-2 cursor-pointer"
-          >
-            Proceed to payment
-            {/* <FaArrowRight /> */}
-          </button>
+          <p className=" mt-5 font-bold text-xl tracking-wider text-center text-yellow-500 mb-3 font-lobster">
+            --- Shipping Details ---
+          </p>
+          <div className="shipping flex flex-col justify-center w-full bg-white/10 p-5 rounded-lg">
+            <p>{order.shipping.name}</p>
+            <p>{order.shipping.email}</p>
+            <p>{order.shipping.mobile}</p>
+            <p>{order.shipping.street}</p>
+            <p>{order.shipping.maps}</p>
+            <p>{order.shipping.landmark}</p>
+          </div>
+          <div className="totals flex flex-col items-center text-yellow-500 justify-center w-full pt-2 pb-2 font-bold">
+            <p className="first font-lobster tracking-widest text-3xl">Order Total</p>
+            <p className="second font-jetbrains text-lg">Rs.{order.amount}</p>
+          </div>
         </div>
       </div>
     )

@@ -5,9 +5,14 @@ import usePost from "../hooks/usePost";
 import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import { FaRightFromBracket } from "react-icons/fa6";
 
+type Order = {
+  paymentStatus: string;
+};
+
 const Profile = () => {
   const { user, setUser } = useAuth();
   const [err, setErr] = useState("");
+  const [tab, setTab] = useState("profile");
   const [result, setResult] = useState<string | Object>("");
   const [emailField, setEmailField] = useState(user?.email);
   const [nameField, setNameField] = useState(user?.name);
@@ -117,6 +122,10 @@ const Profile = () => {
       };
       fetchOrders();
     }, []);
+    const handlePay = (order: any) => {
+      setUser({ ...user, order });
+      nav("/thank-you");
+    };
 
     return (
       <div className=" text-white rounded-lg flex flex-col gap-2">
@@ -141,7 +150,10 @@ const Profile = () => {
                   </p>
                 )}
                 {payment === "unpaid" && (
-                  <button className="cursor-pointer hover:scale-95 transition duration-200 w-full font-poppins font-bold tracking-wider text-white bg-green-600 p-2 rounded-sm text-center text-md mt-2">
+                  <button
+                    onClick={() => handlePay(order)}
+                    className="cursor-pointer hover:scale-95 transition duration-200 w-full font-poppins font-bold tracking-wider text-white bg-green-600 p-2 rounded-sm text-center text-md mt-2"
+                  >
                     Pay
                   </button>
                 )}
@@ -168,7 +180,7 @@ const Profile = () => {
     );
   };
   return (
-    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full max-w-6xl p-5 tracking-wide flex flex-row justify-center items-center">
+    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full max-w-6xl p-5 tracking-wide flex flex-row justify-center">
       <div className="inner-container flex flex-col bg-black/40 p-6 pt-6 rounded-md w-full">
         <h2 className="text-center text-white font-bold text-4xl mb-5">
           Welcome,
@@ -176,14 +188,19 @@ const Profile = () => {
           <span className="text-yellow-500 tracking-wider">{user?.name}</span>
         </h2>
 
-        <div className="font-poppins tracking-wider tabs flex flex-row grow w-full mb-5 bg-white/10 text-center rounded-md overflow-hidden cursor-pointer text-white font-bold">
-          <Link to="/profile" className="grow bg-white/30 p-3">
+        <div
+          className={`bar relative h-12 top-12 rounded-md bg-white/20 w-[33%] ${
+            tab == "orders" ? "left-[33%]" : tab == "password" ? "left-[67%]" : "left-0"
+          } transition-all duration-200`}
+        ></div>
+        <div className="font-poppins tracking-wider tabs flex flex-row w-full mb-5 bg-white/10 text-center rounded-md overflow-hidden cursor-pointer text-white font-bold">
+          <Link to="/profile" className=" p-3 w-[33%]" onClick={() => setTab("profile")}>
             <p className="">Profile</p>
           </Link>
-          <Link to="/profile/orders" className="grow p-3">
+          <Link to="/profile/orders" className=" p-3 w-[33%]" onClick={() => setTab("orders")}>
             <p className="">Orders</p>
           </Link>
-          <Link to="/profile/password" className="grow p-3">
+          <Link to="/profile/password" className=" p-3 w-[33%]" onClick={() => setTab("password")}>
             <p className="">Password</p>
           </Link>
         </div>

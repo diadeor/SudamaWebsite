@@ -86,7 +86,35 @@ const orderSchema = new mongoose.Schema(
       default: "unpaid",
     },
     shipping: {
-      type: String,
+      name: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      email: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      mobile: {
+        type: Number,
+        required: true,
+      },
+      street: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      maps: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      landmark: {
+        type: String,
+        required: false,
+        trim: true,
+      },
     },
   },
   { timestamps: true },

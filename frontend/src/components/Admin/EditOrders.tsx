@@ -32,6 +32,14 @@ type Order = {
   createdAt: string;
   discount: number;
   amount: number;
+  shipping: {
+    street: string;
+    name: string;
+    email: string;
+    mobile: string;
+    landmark: string;
+    maps: string;
+  };
 };
 
 const EditOrders = () => {
@@ -135,8 +143,19 @@ const EditOrders = () => {
             <span className="w-[30%] font-jetbrains ">Rs.{data.amount}</span>
           </p>
         </div>
+        <div className="shipping flex flex-col bg-white/10 p-3 text-white rounded-lg">
+          <p className="font-fauna text-center font-bold text-lg border-b-2 border-white/10 pb-1 mb-2">
+            Shipping Details
+          </p>
+          <p className="name">{data.shipping.name}</p>
+          <p className="name">{data.shipping.email}</p>
+          <p className="name">{data.shipping.mobile}</p>
+          <p className="name">{data.shipping.street}</p>
+          <p className="name">{data.shipping.maps}</p>
+          <p className="name">{data.shipping.landmark}</p>
+        </div>
         <div className="status flex flex-row justify-center gap-3">
-          <div className="order-status bg-white/10 rounded-lg p-3 text-center text-white min-w-[50%]">
+          <div className="order-status bg-white/10 rounded-lg p-3 grow text-center text-white min-w-[45%]">
             <p className="font-bold text-lg font-fauna ">Order Status</p>
             <select
               name="order-status"
@@ -152,7 +171,7 @@ const EditOrders = () => {
               <option value="cancelled">Cancelled</option>
             </select>
           </div>
-          <div className="payment-status bg-white/10 rounded-lg p-3 text-center text-white min-w-[50%]">
+          <div className="payment-status bg-white/10 rounded-lg p-3 grow text-center text-white min-w-[45%]">
             <p className="font-bold font-fauna text-lg">Payment Status</p>
             <select
               name="payment-status"

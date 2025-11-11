@@ -62,7 +62,7 @@ export const signIn = async (req, res, next) => {
     const user = await Customer.findOne({ email });
     if (!user) throw new Error("Invalid Email");
 
-    const isValid = bcrypt.compare(pass, user.password);
+    const isValid = await bcrypt.compare(pass, user.password);
     if (!isValid) throw new Error("Password does not match");
 
     const { name, role, _id: id } = user;
@@ -109,19 +109,18 @@ export const signOut = async (req, res, next) => {
 };
 
 export const changePass = async (req, res, next) => {
-  const { id } = req.user;
-  const { old, newPass } = req.body;
-  if (!newPass) throw new Error("New password is required");
-
   try {
+    const { id } = req.user;
+    const { old, newPass } = req.body;
+    if (!newPass) throw new Error("New password is required");
+
     const user = await Customer.findById(id);
     if (user.password && !old) throw new Error("Old password is required");
 
     if (user.password) {
-      const oldVerify = bcrypt.compare(old, user.password);
+      const oldVerify = await bcrypt.compare(old, user.password);
       if (!oldVerify) throw new Error("Wrong password");
     }
-
     const salt = await bcrypt.genSalt(12);
     const hashed = await bcrypt.hash(newPass, salt);
 

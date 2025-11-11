@@ -1,13 +1,10 @@
 import { useAuth } from "../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import usePost from "../hooks/usePost";
 import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import { FaRightFromBracket } from "react-icons/fa6";
-
-type Order = {
-  paymentStatus: string;
-};
+import { FormInput, FormLabel } from "../components/Form";
 
 const Profile = () => {
   const { user, setUser } = useAuth();
@@ -93,7 +90,7 @@ const Profile = () => {
         <input
           type="submit"
           value="Save"
-          className="text-lg bg-yellow-600 p-2 rounded-sm cursor-pointer hover:scale-95 transition duration-200"
+          className="text-xl font-poppins bg-yellow-600 p-2 rounded-sm cursor-pointer hover:scale-95 transition duration-200"
         />
         <button
           onClick={(e) => handleLogout(e)}
@@ -179,6 +176,67 @@ const Profile = () => {
       </div>
     );
   };
+
+  const Password = () => {
+    const isSetup = user.password;
+    const [success, setSuccess] = useState("");
+    const [err, setErr] = useState("");
+    const form = useRef<HTMLFormElement>(null);
+    const passRequest = usePost("/api/v1/auth/pass");
+
+    const handlePass = async (e: any) => {
+      e.preventDefault();
+      if (!form.current) return;
+      const formData = new FormData(form.current);
+      const [old, newPass, confirm] = [
+        formData.get("old"),
+        formData.get("newPass"),
+        formData.get("confirm"),
+      ];
+      if (newPass !== confirm) {
+        setErr("Passwords do not match");
+        return;
+      }
+
+      const { data, error } = await passRequest({ old, newPass });
+      if (data) {
+        setSuccess(data.message);
+        setErr("");
+      } else {
+        setErr(error);
+      }
+    };
+
+    return (
+      <form ref={form} className="flex flex-col" onSubmit={(e) => handlePass(e)}>
+        {(err || success) && (
+          <p
+            className={`text-center text-white font-poppins p-1 ${
+              success ? "bg-green-700" : "bg-red-800"
+            } font-bold rounded-full text-sm`}
+          >
+            {success ? success : err}
+          </p>
+        )}
+        {isSetup && (
+          <>
+            <FormLabel name="Old Password" labelFor="old" />
+            <FormInput name="old" type="password" />
+          </>
+        )}
+        <FormLabel name="New Password" labelFor="new" />
+        <FormInput name="newPass" type="password" />
+        <FormLabel name="Confirm New Password" labelFor="confirm" />
+        <FormInput name="confirm" type="password" />
+        <input
+          type="submit"
+          value="Change Password"
+          className="font-bold text-white bg-yellow-600 text-xl font-poppins p-2 rounded-sm cursor-pointer hover:scale-95 transition duration-200"
+        />
+      </form>
+    );
+  };
+
   return (
     <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full max-w-6xl p-5 tracking-wide flex flex-row justify-center">
       <div className="inner-container flex flex-col bg-black/40 p-6 pt-6 rounded-md w-full">
@@ -207,6 +265,7 @@ const Profile = () => {
         <Routes>
           <Route path="/" element={<Form />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/password" element={<Password />} />
         </Routes>
       </div>
     </div>

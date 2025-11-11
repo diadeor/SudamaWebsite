@@ -22,7 +22,7 @@ export const getUsers = async (req, res, next) => {
 
 export const getUser = async (req, res, next) => {
   const { id } = req.user;
-  const { name, role, email } = await Customer.findById(id);
+  const { name, role, email, password } = await Customer.findById(id);
 
   res.json({
     success: true,
@@ -31,6 +31,7 @@ export const getUser = async (req, res, next) => {
       name,
       email,
       role,
+      password: password ? true : false,
     },
   });
 };

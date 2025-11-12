@@ -37,7 +37,7 @@ const Item = ({
       setBgColor("bg-white/20");
       setCursor("cursor-pointer");
     }
-    updateRequest({ id: pid, qty: qtyUser }).then(({ data }) => setCart(data));
+    updateRequest({ id: pid, qty: qtyUser }).then(({ data }) => data && setCart(data.cart));
   }, [qtyUser]);
 
   const handleQtyChange = async (target: any) => {
@@ -53,7 +53,7 @@ const Item = ({
     if (confirm) {
       const { data, error } = await removeRequest({ prod: pid });
       if (!error) {
-        setCart(data);
+        setCart(data.cart);
       }
     } else {
       null;
@@ -112,11 +112,11 @@ type Cart = {
 };
 
 const Cart = () => {
-  const { cart: data } = useCart();
+  const { cart } = useCart();
   // const { user, setUser } = useAuth();
   const nav = useNavigate();
-  const cart: Cart = data.cart ? data.cart : {};
-  const items: Array<Object> | null = cart ? cart?.items : null;
+  const items: Array<Object> | null = cart ? cart.items : null;
+  // console.log(cart.items);
 
   const handleCheckout = async () => {
     nav("/checkout");
@@ -127,7 +127,7 @@ const Cart = () => {
       className={` w-full max-w-6xl cart-container p-5 flex flex-col items-center min-h-[calc(100svh-70px)]`}
     >
       <Top title="Shopping Cart" sub={false} />
-      {data.cart && data.cart.items.length != 0 && (
+      {cart && cart.items.length != 0 && (
         <div className="items-container w-full max-w-6xl flex flex-row flex-wrap gap-3">
           <div className="prods w-full md:max-w-[calc(49%)]">
             <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
@@ -183,7 +183,7 @@ const Cart = () => {
           </div>
         </div>
       )}
-      {(!data.cart || data.cart.items.length == 0) && (
+      {(!cart || cart.items.length == 0) && (
         <p className="h-40 bg-black/30 flex flex-row gap-3 justify-center items-center w-full max-w-180 text-xl font-bold rounded-xl tracking-wide text-red-300">
           <FaCircleExclamation size="1.5em" /> No items in cart
         </p>

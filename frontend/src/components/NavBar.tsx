@@ -133,6 +133,9 @@ const NavBar = () => {
             <Link to="/about">About</Link>
           </li>
           <li className="hover:font-bold">
+            <Link to="/blogs">Blogs</Link>
+          </li>
+          <li className="hover:font-bold">
             {user ? (
               <Link to="/profile">Profile</Link>
             ) : (

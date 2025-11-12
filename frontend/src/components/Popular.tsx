@@ -1,17 +1,12 @@
 import Product from "./Product";
-import useFetch from "../hooks/useFetch";
-import { useEffect, useState } from "react";
 import Section from "./Sections";
+import { useItem } from "../contexts/ItemContext";
 
 const Popular = ({ limit }: { limit: number }) => {
-  const [data, setData] = useState<any>();
-  const [err, setErr] = useState("");
-  const request = useFetch("/api/v1/products/featured");
-  useEffect(() => {
-    request().then(({ data, error }) => {
-      data ? setData(data.products) : setErr(error);
-    });
-  }, []);
+  const { products } = useItem();
+  const data = products.filter((prod: { badge: string }) => {
+    return prod.badge === "featured";
+  });
 
   return (
     <Section title="Popular" subtitle="These are our most popular items">

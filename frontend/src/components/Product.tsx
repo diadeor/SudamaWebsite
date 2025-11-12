@@ -28,7 +28,7 @@ const Product = ({ pd }: { pd: product | any }) => {
     const { data } = await request({ pid: pd._id });
     if (data.success) {
       setSuccess(data.message);
-      setCart(data);
+      setCart(data.cart);
     }
   };
   if (success) {

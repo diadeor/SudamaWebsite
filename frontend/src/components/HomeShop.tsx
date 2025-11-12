@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
 import Section from "./Sections";
-import useFetch from "../hooks/useFetch";
+import { useItem } from "../contexts/ItemContext";
 import Product from "./Product";
 
 const HomeShop = ({ limit }: { limit: number }) => {
-  const [data, setData] = useState<any>();
-  const [err, setErr] = useState("");
-  const request = useFetch("/api/v1/products");
-  useEffect(() => {
-    request().then(({ data, error }) => {
-      data ? setData(data.products) : setErr(error);
-    });
-  }, []);
+  const { products } = useItem();
   return (
     <Section title="Shop" subtitle="Here are our other items">
-      {data &&
-        data.map((pd: Object, index: number) => {
+      {products &&
+        products.map((pd: Object, index: number) => {
           return index < limit && <Product pd={pd} key={index} />;
         })}
     </Section>

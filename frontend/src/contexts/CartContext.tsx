@@ -15,8 +15,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     (async () => {
       try {
         const { data, error } = await request();
-        if (data) {
-          setCart(data);
+        if (!error) {
+          setCart(data.cart);
         }
       } catch (error) {
         setCart(undefined);

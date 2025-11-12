@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import Category from "../components/Category";
 import useFetch from "../hooks/useFetch";
-import axios from "axios";
+import { useItem } from "../contexts/ItemContext";
 import Product from "../components/Product";
 import Top from "../components/Top";
 
 const Shop = () => {
   const [cat, setCat] = useState<Array<Object>>([]);
-  const [products, setProducts] = useState<Array<Object>>([]);
-  const [searchProd, setSearchProd] = useState<Array<Object>>([]);
+  const { products } = useItem();
+  const [searchProd, setSearchProd] = useState(products);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const catsRequest = useFetch("/api/v1/categories");
+
   useEffect(() => {
     catsRequest().then(({ data }) => {
       if (data.success) {
@@ -21,26 +22,15 @@ const Shop = () => {
   }, []);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const params = new URLSearchParams();
-        params.append("category", selectedCategory);
-
-        const { data } = await axios(`/api/v1/products?${params}`);
-
-        if (data.success) {
-          setProducts(data.products);
-          setSearchProd(data.products);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProducts();
+    console.log(selectedCategory);
+    const data = products.filter((prod: any) => {
+      return prod.category === selectedCategory;
+    });
+    setSearchProd(selectedCategory ? data : products);
   }, [selectedCategory]);
 
   useEffect(() => {
-    const filteredProducts = products.filter((prod) => {
+    const filteredProducts = products.filter((prod: any) => {
       const term = search.toLowerCase();
       const names = prod.name.toLowerCase().split(" ");
       const slicedArray = names.map((name: string) => {
@@ -80,7 +70,7 @@ const Shop = () => {
       />
       <div className="products-by-cat flex flex-row flex-wrap items-center justify-center gap-3">
         {searchProd &&
-          searchProd.map((item, index) => {
+          searchProd.map((item: Object, index: number) => {
             return <Product pd={item} key={index} />;
           })}
       </div>

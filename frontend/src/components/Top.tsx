@@ -22,9 +22,11 @@ const Top = ({
         <h2 className="text-center text-white font-bold">
           <span className="font-poppins text-3xl">{title}</span>
           <br />
-          <span className="text-yellow-500 tracking-wider font-lobster text-4xl">
-            {title_new_line}
-          </span>
+          {title_new_line && (
+            <span className="text-yellow-500 tracking-wider font-lobster text-4xl">
+              {title_new_line}
+            </span>
+          )}
         </h2>
       )}
       {sub && <p className="font-poppins mt-3 text-center">{subtitle}</p>}

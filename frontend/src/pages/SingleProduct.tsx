@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
 import usePost from "../hooks/usePost";
 import { FaCartPlus } from "react-icons/fa6";
 import { useCart } from "../contexts/CartContext";
-import { useAuth } from "../contexts/AuthContext";
+import { useItem } from "../contexts/ItemContext";
+// import { useAuth } from "../contexts/AuthContext";
 
 type Product = {
   name: string;
@@ -16,30 +16,24 @@ type Product = {
 };
 
 const Single = () => {
+  const { products } = useItem();
   const { id } = useParams();
-  const prodReq = useFetch(`/api/v1/products/${id}`);
   const [product, setProduct] = useState<Product>();
   const [qtyDisabled, setQtyDisabled] = useState(true);
   const [qtyUser, setQtyUser] = useState(1);
   const [bgColor, setBgColor] = useState("bg-white/20");
   const [cursor, setCursor] = useState("auto");
-  const updateRequest = usePost("/api/v1/carts/update");
   const request = usePost("/api/v1/carts/add");
   const { setCart } = useCart();
-  const { user } = useAuth();
 
   if (!id) return;
   const valid = id?.length > 20;
 
   useEffect(() => {
-    const fetchProd = async () => {
-      const { data, error } = await prodReq();
-      if (!error) {
-        setProduct(data.product);
-      }
-    };
-
-    valid && fetchProd();
+    if (valid) {
+      const temp = products.find((prod: { _id: string }) => prod._id === id);
+      setProduct(temp);
+    }
   }, []);
 
   useEffect(() => {
@@ -58,7 +52,7 @@ const Single = () => {
     // !user && setSuccess("User not logged in");
     const { data } = await request({ pid: id, qty: qtyUser });
     if (data.success) {
-      setCart(data);
+      setCart(data.cart);
     }
   };
 

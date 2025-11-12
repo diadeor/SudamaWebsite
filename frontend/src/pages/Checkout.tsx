@@ -8,7 +8,7 @@ import Top from "../components/Top";
 
 const Checkout = () => {
   const { user, setUser } = useAuth();
-  const { cart } = useCart().cart;
+  const { cart } = useCart();
   const item = cart.items;
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bgColor, setBgColor] = useState<string>("bg-zinc-500");

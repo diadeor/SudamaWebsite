@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
 import Section from "./Sections";
-import useFetch from "../hooks/useFetch";
 import Product from "./Product";
+import { useItem } from "../contexts/ItemContext";
 
 const New = ({ limit }: { limit: number }) => {
-  const [data, setData] = useState<any>();
-  const [err, setErr] = useState("");
-  const request = useFetch("/api/v1/products/New");
-  useEffect(() => {
-    request().then(({ data, error }) => {
-      data ? setData(data.products) : setErr(error);
-    });
-  }, []);
+  const { products } = useItem();
+
+  const data = products.filter((prod: any) => {
+    return prod.badge === "new";
+  });
   return (
     <Section title="New Arrivals" subtitle="Here are the latest items">
       {data &&

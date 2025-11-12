@@ -8,6 +8,7 @@ import {
   IoHomeOutline,
   IoStorefrontOutline,
   IoLogInOutline,
+  IoReaderOutline,
 } from "react-icons/io5";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
@@ -106,6 +107,7 @@ const NavBar = () => {
             <ListItem title="Home" Icon={IoHomeOutline} link="/" />
             <ListItem title="Shop" Icon={IoStorefrontOutline} link="/shop" />
             <ListItem title="About" Icon={IoBookOutline} link="/" />
+            <ListItem title="Blogs" Icon={IoReaderOutline} link="/blogs" />
             {user && <ListItem title="Profile" Icon={IoPersonOutline} link="/profile" />}
             {!user && (
               <ListItem

@@ -5,6 +5,7 @@ import usePost from "../hooks/usePost";
 import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import { FaRightFromBracket } from "react-icons/fa6";
 import { FormInput, FormLabel } from "../components/Form";
+import Top from "../components/Top";
 
 const Profile = () => {
   const { user, setUser } = useAuth();
@@ -238,30 +239,29 @@ const Profile = () => {
   };
 
   return (
-    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full max-w-6xl p-5 tracking-wide flex flex-row justify-center">
-      <div className="inner-container flex flex-col bg-black/40 p-6 pt-6 rounded-md w-full">
-        <h2 className="text-center text-white font-bold text-4xl mb-5">
-          Welcome,
-          <br />
-          <span className="text-yellow-500 tracking-wider">{user?.name}</span>
-        </h2>
-
+    <div className="font-lobster profile-container min-h-[calc(100svh-70px)] w-full max-w-6xl p-5 tracking-wide flex flex-col items-center">
+      <Top title="Welcome," oneLine={false} sub={false} title_new_line={user?.name} />
+      <div className="relative font-poppins tracking-wider tabs flex flex-row items-center w-full mb-5 bg-black/20 text-center rounded-md overflow-hidden cursor-pointer text-white font-bold">
         <div
-          className={`bar relative h-12 top-12 rounded-md bg-white/20 w-[33%] ${
+          className={` bar absolute h-12 rounded-md bg-black/20 w-[33%] max-w-md ${
             tab == "orders" ? "left-[33%]" : tab == "password" ? "left-[67%]" : "left-0"
           } transition-all duration-200`}
         ></div>
-        <div className="font-poppins tracking-wider tabs flex flex-row w-full mb-5 bg-white/10 text-center rounded-md overflow-hidden cursor-pointer text-white font-bold">
-          <Link to="/profile" className=" p-3 w-[33%]" onClick={() => setTab("profile")}>
-            <p className="">Profile</p>
-          </Link>
-          <Link to="/profile/orders" className=" p-3 w-[33%]" onClick={() => setTab("orders")}>
-            <p className="">Orders</p>
-          </Link>
-          <Link to="/profile/password" className=" p-3 w-[33%]" onClick={() => setTab("password")}>
-            <p className="">Password</p>
-          </Link>
-        </div>
+        <Link to="/profile" className="z-10 p-3 w-[33%]" onClick={() => setTab("profile")}>
+          <p className="">Profile</p>
+        </Link>
+        <Link to="/profile/orders" className="z-10 p-3 w-[33%]" onClick={() => setTab("orders")}>
+          <p className="">Orders</p>
+        </Link>
+        <Link
+          to="/profile/password"
+          className="z-10 p-3 w-[33%]"
+          onClick={() => setTab("password")}
+        >
+          <p className="">Password</p>
+        </Link>
+      </div>
+      <div className="inner-container flex flex-col bg-black/40 p-6 pt-6 rounded-md w-full">
         <Routes>
           <Route path="/" element={<Form />} />
           <Route path="/orders" element={<Orders />} />

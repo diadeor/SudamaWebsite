@@ -3,8 +3,8 @@ import { FaArrowRight, FaCircleExclamation } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 import { useCart } from "../contexts/CartContext";
 import usePost from "../hooks/usePost";
-import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Top from "../components/Top";
 
 const Item = ({
   name,
@@ -25,6 +25,7 @@ const Item = ({
   const [bgColor, setBgColor] = useState("bg-white/20");
   const [cursor, setCursor] = useState("auto");
   const updateRequest = usePost("/api/v1/carts/update");
+  const removeRequest = usePost("/api/v1/carts/remove");
 
   useEffect(() => {
     if (qtyUser == 1) {
@@ -44,6 +45,18 @@ const Item = ({
       qtyUser >= 2 && setQtyUser(qtyUser - 1);
     } else {
       setQtyUser(qtyUser + 1);
+    }
+  };
+
+  const handleRemove = async (pid: string) => {
+    const confirm = window.confirm("Do you really want to remove this product from cart ?");
+    if (confirm) {
+      const { data, error } = await removeRequest({ prod: pid });
+      if (!error) {
+        setCart(data);
+      }
+    } else {
+      null;
     }
   };
   return (
@@ -80,7 +93,10 @@ const Item = ({
       </div>
       <div className="qty flex flex-col items-end justify-center min-w-20 min-h-full gap-5">
         <p className="total text-center font-bold font-jetbrains">Rs.{subTotal}</p>
-        <p className="delete p-2 bg-red-400 rounded-sm">
+        <p
+          className="delete p-2 bg-red-400 rounded-sm cursor-pointer hover:scale-95 transition"
+          onClick={() => handleRemove(pid)}
+        >
           <IoTrashOutline size="1.2em" />
         </p>
       </div>
@@ -108,61 +124,63 @@ const Cart = () => {
 
   return (
     <div
-      className={` w-full cart-container p-5 flex flex-col items-center min-h-[calc(100svh-70px)] pt-5`}
+      className={` w-full max-w-6xl cart-container p-5 flex flex-col items-center min-h-[calc(100svh-70px)]`}
     >
-      <h2 className="cart font-bold text-yellow-500 text-3xl mb-10 font-lobster tracking-widest">
-        Shopping Cart
-      </h2>
+      <Top title="Shopping Cart" sub={false} />
       {data.cart && data.cart.items.length != 0 && (
-        <div className="items-container w-full max-w-190 flex flex-col">
-          <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
-            Products
-          </p>
-          <div className="items flex flex-col text-white gap-3 mb-5">
-            {items &&
-              items.map((item: any, index: number) => {
-                return (
-                  <Item
-                    key={index}
-                    pid={item.product}
-                    name={item.name}
-                    price={item.price}
-                    subTotal={item.subTotal}
-                    qty={item.quantity}
-                  />
-                );
-              })}
-          </div>
-          <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
-            Order Summary
-          </p>
-          <div className="totals flex flex-col bg-black/40 rounded-xl font-lobster tracking-widest">
-            <div className="subtotal flex flex-row text-white p-3 pl-6">
-              <p className="grow text-center text-xl">SubTotal</p>
-              <p className="subTotal w-35 text-center text-xl border-l-2 border-white/30 font-jetbrains">
-                {cart?.total}
-              </p>
-            </div>
-            <div className="discount flex flex-row text-white p-3 pl-6">
-              <p className="grow text-center text-xl">Discount</p>
-              <p className="font-jetbrains discount w-35 text-center text-xl border-l-2 border-white/30">
-                -{cart.discount}
-              </p>
-            </div>
-            <div className="grand flex flex-row text-white p-3 pl-6">
-              <p className=" grow text-center font-bold text-xl">Grand Total</p>
-              <p className="w-35 text-yellow-500 font-jetbrains grand text-center font-bold text-xl border-l-2 border-white/30">
-                Rs.{cart.amount}
-              </p>
+        <div className="items-container w-full max-w-6xl flex flex-row flex-wrap gap-3">
+          <div className="prods w-full md:max-w-[calc(49%)]">
+            <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
+              Products
+            </p>
+            <div className="items flex flex-col text-white gap-3">
+              {items &&
+                items.map((item: any, index: number) => {
+                  return (
+                    <Item
+                      key={index}
+                      pid={item.product}
+                      name={item.name}
+                      price={item.price}
+                      subTotal={item.subTotal}
+                      qty={item.quantity}
+                    />
+                  );
+                })}
             </div>
           </div>
-          <button
-            onClick={handleCheckout}
-            className="font-poppins mt-2 text-white bg-yellow-600 h-12 font-bold text-lg tracking-wide w-full rounded-full hover:bg-yellow-800 transition duration-300 hover:scale-102 flex flex-row items-center justify-center gap-2 cursor-pointer"
-          >
-            Proceed to checkout
-            <FaArrowRight />
-          </button>
+          <div className="summary w-full md:max-w-[calc(49%)] grow">
+            <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
+              Order Summary
+            </p>
+            <div className="totals flex flex-col bg-black/40 rounded-xl font-lobster tracking-widest">
+              <div className="subtotal flex flex-row text-white p-3 pl-6">
+                <p className="grow text-center text-xl">SubTotal</p>
+                <p className="subTotal w-35 text-center text-xl border-l-2 border-white/30 font-jetbrains">
+                  {cart?.total}
+                </p>
+              </div>
+              <div className="discount flex flex-row text-white p-3 pl-6">
+                <p className="grow text-center text-xl">Discount</p>
+                <p className="font-jetbrains discount w-35 text-center text-xl border-l-2 border-white/30">
+                  -{cart.discount}
+                </p>
+              </div>
+              <div className="grand flex flex-row text-white p-3 pl-6">
+                <p className=" grow text-center font-bold text-xl">Grand Total</p>
+                <p className="w-35 text-yellow-500 font-jetbrains grand text-center font-bold text-xl border-l-2 border-white/30">
+                  Rs.{cart.amount}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={handleCheckout}
+              className="font-poppins mt-2 text-white bg-yellow-600 h-12 font-bold text-lg tracking-wide w-full rounded-full hover:bg-yellow-800 transition duration-300 hover:scale-102 flex flex-row items-center justify-center gap-2 cursor-pointer"
+            >
+              Proceed to checkout
+              <FaArrowRight />
+            </button>
+          </div>
         </div>
       )}
       {(!data.cart || data.cart.items.length == 0) && (

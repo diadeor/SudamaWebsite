@@ -3,6 +3,7 @@ import Category from "../components/Category";
 import useFetch from "../hooks/useFetch";
 import axios from "axios";
 import Product from "../components/Product";
+import Top from "../components/Top";
 
 const Shop = () => {
   const [cat, setCat] = useState<Array<Object>>([]);
@@ -53,10 +54,7 @@ const Shop = () => {
 
   return (
     <div className="w-full font-lobster cat-shop-container p-5 flex flex-col items-center min-h-svh pb-15 text-white max-w-6xl">
-      <h2 className="title font-bold text-yellow-500 text-5xl">Shop</h2>
-      <p className="subtitle font-fauna mb-10 mt-1 text-center">
-        Choose any category to see items in that respective category
-      </p>
+      <Top title="Shop" subtitle="Choose any category to see items in that respective category" />
       <div className="categories flex flex-row flex-wrap items-center justify-center gap-3 mb-10">
         <Category name="All" setName={setSelectedCategory} img="null" />
         {cat &&

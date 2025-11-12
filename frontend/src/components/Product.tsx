@@ -3,6 +3,7 @@ import usePost from "../hooks/usePost";
 import { useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 type product = {
   _id: string;
@@ -70,15 +71,19 @@ const Product = ({ pd }: { pd: product | any }) => {
           </span>
         )}
       </p>
-      <p className="font-fauna title text-md border-t border-white/20 pt-1">{pd.name}</p>
-      <p className="font-jetbrains text-xs">{pd.category}</p>
+      <Link to={`/products/${pd._id}`}>
+        <p className="font-fauna title text-md border-t border-white/20 pt-1">{pd.name}</p>
+        <p className="font-jetbrains text-xs">{pd.category}</p>
+      </Link>
       <div className="action-row flex flex-col justify-center">
-        <p className="font-jetbrains price font-bold text-lg w-[50%] text-yellow-500 mb-2">
-          Rs.{pd.salePrice}
-          <sub className="line-through relative -top-px text-sm font-normal pl-1">
-            {pd.regularPrice}
-          </sub>
-        </p>
+        <Link to={`/products/${pd._id}`}>
+          <p className="font-jetbrains price font-bold text-lg w-[50%] text-yellow-500 mb-2">
+            Rs.{pd.salePrice}
+            <sub className="line-through relative -top-px text-sm font-normal pl-1">
+              {pd.regularPrice}
+            </sub>
+          </p>
+        </Link>
         <button
           onClick={addToCart}
           className="font-fauna gap-2 add-to-cart text-sm uppercase font-bold bg-green-600 rounded-sm w-full h-9 text-center items-center justify-center flex flex-row cursor-pointer transition duration-300 hover:bg-green-800 hover:scale-105"

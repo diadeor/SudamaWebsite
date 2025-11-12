@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useCart } from "../contexts/CartContext";
 import usePost from "../hooks/usePost";
 import { useNavigate } from "react-router-dom";
+import Top from "../components/Top";
 
 const Checkout = () => {
   const { user, setUser } = useAuth();
@@ -59,10 +60,10 @@ const Checkout = () => {
 
   return (
     <div className="w-full font-lobster cat-shop-container p-5 flex flex-col items-center min-h-svh pb-15 text-white max-w-6xl">
-      <h2 className="title font-bold text-yellow-500 text-4xl">Checkout</h2>
-      <p className="subtitle font-fauna mb-10 mt-1 text-center">
-        Please fill all the mandatory fields to proceed with your order
-      </p>
+      <Top
+        title="Checkout"
+        subtitle="Please fill all the mandatory fields to proceed with your order"
+      />
       <div className="gap-5 items-container w-full flex flex-row flex-wrap">
         <div className="w-full md:max-w-[48%]">
           <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">

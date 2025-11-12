@@ -11,6 +11,8 @@ import ThankYou from "./pages/ThankYou.tsx";
 import Footer from "./components/Footer.tsx";
 import Shop from "./pages/Shop.tsx";
 import Billing from "./pages/Checkout.tsx";
+import Single from "./pages/SingleProduct.tsx";
+import Blogs from "./pages/Blogs.tsx";
 const App = () => {
   return (
     <Router>
@@ -31,6 +33,8 @@ const App = () => {
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<Billing />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/products/:id" element={<Single />} />
         </Routes>
       </div>
       <Footer />

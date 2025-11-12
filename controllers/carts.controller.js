@@ -28,7 +28,8 @@ export const getCart = async (req, res, next) => {
 export const addToCart = async (req, res, next) => {
   try {
     const user = req.user.id;
-    const { pid } = req.body;
+    const { pid, qty } = req.body;
+    const quantity = qty ? Number(qty) : null;
 
     const cartExists = await Cart.findById(user);
 
@@ -38,7 +39,7 @@ export const addToCart = async (req, res, next) => {
       const index = products.indexOf(pid);
 
       if (index != -1) {
-        items[index]["quantity"] += 1;
+        items[index]["quantity"] += quantity ? quantity : 1;
         const cart = await Cart.findOneAndUpdate(
           { _id: user },
           { $set: { items, total: 0, amount: 0 } },
@@ -52,7 +53,7 @@ export const addToCart = async (req, res, next) => {
       } else {
         items.push({
           product: pid,
-          quantity: 1,
+          quantity: quantity ? quantity : 1,
         });
         const cart = await Cart.findOneAndUpdate(
           { _id: user },
@@ -71,7 +72,7 @@ export const addToCart = async (req, res, next) => {
         items: [
           {
             product: pid,
-            quantity: 1,
+            quantity: quantity ? quantity : 1,
           },
         ],
       });
@@ -104,6 +105,26 @@ export const updateQuantity = async (req, res, next) => {
       success: true,
       cart: updatedCart,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteItem = async (req, res, next) => {
+  try {
+    const id = req.user.id;
+    const { prod } = req.body;
+
+    const cart = await Cart.findById(id);
+
+    const products = cart.items.map((item) => String(item.product));
+    if (products.indexOf(prod) == -1) throw new Error("Product does not exist");
+
+    const newItems = cart.items.filter((item) => String(item.product) != prod);
+
+    const newCart = await Cart.findByIdAndUpdate(id, { $set: { items: newItems } }, { new: true });
+
+    res.json({ success: true, cart: newCart });
   } catch (error) {
     next(error);
   }

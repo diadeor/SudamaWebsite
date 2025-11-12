@@ -66,6 +66,14 @@ body.menu-is-open {
   background-position: top left, right top;
   background-repeat: no-repeat;
 }
+.top {
+  background-image: url(../src/assets/leaf5_rotated.png), url(../src/assets/leaf5.png),
+    url(../src/assets/leaf-bottom-left.png), url(../src/assets/leaf5-bottom-right.png);
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: top left, top right, bottom left, bottom right;
+}
+
 @keyframes showMenu {
   to {
     right: 0px;

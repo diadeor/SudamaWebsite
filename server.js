@@ -30,7 +30,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/orders", authUser, orderRouter);
 app.use("/api/v1/blogs", blogRouter);
-app.use("/api/v1/carts", cartRouter);
+app.use("/api/v1/carts", authUser, cartRouter);
 app.use("/api/v1/categories", catRouter);
 
 // Error Middleware

@@ -11,7 +11,8 @@ import {
   IoReaderOutline,
 } from "react-icons/io5";
 import { useAuth } from "../contexts/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useItem } from "../contexts/ItemContext";
 
 const ListItem = ({
   title,
@@ -36,15 +37,42 @@ const ListItem = ({
   );
 };
 
+type Item = {
+  _id: string;
+  name: string;
+  title: string;
+  description: string;
+  salePrice: number;
+  regularPrice: number;
+};
+
 const NavBar = () => {
   const { user } = useAuth();
+  const { products, blogs } = useItem();
+  const items = [...products, ...blogs];
   const [menu, setMenu] = useState(false);
-  const [search, setSearch] = useState(false);
+  const [searchToggle, setSearchToggle] = useState(false);
+  const [searchInput, setSearchInput] = useState<string>();
+  const [searchProd, setSearchProd] = useState<Array<Item>>();
 
   const handleMenu = () => {
     setMenu(!menu);
     document.body.classList.toggle("menu-is-open");
   };
+
+  const toggleSearch = () => {
+    setSearchToggle(!searchToggle);
+    setSearchInput("");
+  };
+
+  useEffect(() => {
+    const temp = items.filter((item: any) => {
+      const lowerName = `${item.title ? item.title : item.name}`.toLowerCase();
+      const lowerSearch = searchInput?.toLowerCase();
+      return lowerSearch && lowerName.includes(lowerSearch);
+    });
+    setSearchProd(temp);
+  }, [searchInput]);
 
   return (
     <nav className="justify-center flex flex-row bg-green-300/15">
@@ -59,7 +87,7 @@ const NavBar = () => {
           <FaMagnifyingGlass
             size="1.3em"
             className="text-yellow-500 cursor-pointer sm:hidden"
-            onClick={() => setSearch(!search)}
+            onClick={toggleSearch}
           />
           <FaBarsStaggered
             className="sm:hidden cursor-pointer text-yellow-500"
@@ -68,16 +96,44 @@ const NavBar = () => {
           />
         </div>
         <div
-          className={`searchInput absolute bg-green-300/15 h-19 ${
-            search ? "top-18" : "-top-20"
-          } w-full left-0 right-0 flex flex-row items-center justify-center p-3 transition-all text-white font-poppins backdrop-blur-lg`}
+          className={`searchInput absolute bg-green-300/15 ${
+            searchToggle ? "top-18" : "-top-20"
+          } w-full left-0 right-0 flex flex-col items-center justify-center p-3 transition-all text-white font-poppins backdrop-blur-lg`}
         >
           <input
             type="text"
             name=""
             id=""
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="bg-white/10 outline-0 border border-white/20 py-2 px-4 h-full w-full rounded-md"
           />
+          <div className="items flex flex-col w-full gap-2 mt-2">
+            {searchProd &&
+              searchProd.map((item) => {
+                return (
+                  <Link
+                    to={item.name ? `/products/${item._id}` : `/blogs/${item._id}`}
+                    onClick={toggleSearch}
+                  >
+                    <div
+                      className={`flex flex-row p-3 border-2 border-white/20 rounded-md ${
+                        item.name ? "bg-green-700/30" : "bg-gray-500/30"
+                      } hover:scale-95 transition duration-300`}
+                    >
+                      <div className="info">
+                        <p className="font-bold">{item.title ? item.title : item.name}</p>
+                        <p className="">
+                          {item.salePrice
+                            ? `Rs.${item.salePrice}`
+                            : `${item.description.slice(0, 35)}...`}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+          </div>
         </div>
         <div
           className={` menu-overlay h-screen w-full fixed top-0 left-0 border-white ${
@@ -149,7 +205,7 @@ const NavBar = () => {
         <FaMagnifyingGlass
           size="1.3em"
           className="text-yellow-500 cursor-pointer hidden sm:flex"
-          onClick={() => setSearch(!search)}
+          onClick={() => setSearchToggle(!searchToggle)}
         />
         <IoCallOutline size="1.5em" className="text-yellow-400 hidden sm:block" />
       </div>

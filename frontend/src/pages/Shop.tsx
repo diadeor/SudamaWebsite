@@ -31,13 +31,9 @@ const Shop = () => {
 
   useEffect(() => {
     const filteredProducts = products.filter((prod: any) => {
-      const term = search.toLowerCase();
-      const names = prod.name.toLowerCase().split(" ");
-      const slicedArray = names.map((name: string) => {
-        const sliced = name.slice(0, search.length);
-        return sliced == term ? sliced : false;
-      });
-      return slicedArray.indexOf(term) == -1 ? false : true;
+      const lowerName: string = prod.name.toLowerCase();
+      const lowerSearch: string = search.toLowerCase();
+      return lowerName.includes(lowerSearch);
     });
     setSearchProd(filteredProducts);
   }, [search]);

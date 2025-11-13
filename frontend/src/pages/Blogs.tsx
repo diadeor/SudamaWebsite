@@ -14,7 +14,12 @@ const Blogs = () => {
   const [search, setSearch] = useState("");
   const [filterBlogs, setFilterBlogs] = useState<Array<Blog>>(blogs);
 
-  useEffect(() => {}, [search]);
+  useEffect(() => {
+    const filteredBlogs = blogs.filter((blog: { title: string }) =>
+      blog.title.toLowerCase().includes(search.toLowerCase()),
+    );
+    setFilterBlogs(filteredBlogs);
+  }, [search]);
 
   return (
     <div className="blog-container w-full max-w-6xl flex flex-col min-h-[calc(100svh-70px)] p-5">

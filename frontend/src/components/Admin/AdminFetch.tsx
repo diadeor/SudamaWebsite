@@ -35,17 +35,9 @@ const AdminFetch = ({
 
   useEffect(() => {
     const searchList = data.filter((el: any) => {
-      const name = `${title == "orders" ? el.user : el.name}`.toLowerCase().split(" ");
-      const slicedArray = name.map((el: any) => {
-        const sliced: string = el.slice(0, search.length);
-        return sliced == search.toLowerCase() ? sliced : false;
-      });
-      return slicedArray.indexOf(search.toLowerCase()) != -1 ? true : false;
-      // const sliced: string = name[0].slice(0, search.length);
-      // console.log(name, sliced);
-
-      // const sliced: string = name.slice(0, search.length);
-      // return sliced.toLowerCase() == search.toLowerCase();
+      return `${title == "orders" ? el.user : title === "blogs" ? el.title : el.name}`
+        .toLowerCase()
+        .includes(search.toLowerCase());
     });
     setSearchData(searchList);
   }, [search]);

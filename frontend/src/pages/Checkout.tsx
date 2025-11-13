@@ -52,7 +52,7 @@ const Checkout = () => {
     };
 
     const { data, error } = await checkoutRequest({ cart, shipping });
-    if (data.success) {
+    if (!error) {
       setUser({ ...user, order: data.order });
       nav("/thank-you");
     }

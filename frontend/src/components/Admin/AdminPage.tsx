@@ -1,4 +1,4 @@
-import { FaPenToSquare, FaTrash } from "react-icons/fa6";
+import { FaPenToSquare } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";

@@ -76,11 +76,11 @@ const NavBar = () => {
 
   return (
     <nav className="justify-center flex flex-row bg-green-300/15">
-      <div className="w-full max-w-6xl inner-menu font-poppins flex flex-row items-center justify-between px-5 h-[70px] border-b-2 border-green-300/20">
+      <div className="w-full max-w-6xl inner-menu font-poppins flex flex-row items-center justify-between px-5 h-[70px] border-b-2 border-green-300/20 md:justify-start">
         <Link to="tel:+977 9847440395" className="sm:hidden">
           <IoCallOutline size="1.5em" className="text-yellow-500" />
         </Link>
-        <Link to="/" className="pl-5 sm:pl-0 border">
+        <Link to="/" className="pl-5 sm:pl-0 md:w-1/20">
           <img src={logo} alt="" className="w-8" />
         </Link>
         <div className="flex flex-row items-center gap-5">
@@ -110,6 +110,7 @@ const NavBar = () => {
           />
           <div className="items flex flex-col w-full gap-2 mt-2">
             {searchProd &&
+              searchToggle &&
               searchProd.map((item) => {
                 return (
                   <Link
@@ -178,7 +179,7 @@ const NavBar = () => {
             )}
           </ul>
         </div>
-        <ul className="font-poppins flex-row gap-5 text-white text-xl items-center hidden sm:flex">
+        <ul className=" px-2 justify-center font-poppins flex-row gap-3 text-white text-xl items-center hidden sm:flex md:w-1/2">
           <li className="hover:font-bold">
             <Link to="/">Home</Link>
           </li>
@@ -201,13 +202,57 @@ const NavBar = () => {
             )}
           </li>
         </ul>
-
-        <FaMagnifyingGlass
-          size="1.3em"
-          className="text-yellow-500 cursor-pointer hidden sm:flex"
-          onClick={() => setSearchToggle(!searchToggle)}
-        />
-        <IoCallOutline size="1.5em" className="text-yellow-400 hidden sm:block" />
+        <div className="hidden md:flex flex-row flex-wrap relative min-w-4/10 px-2">
+          <input
+            type="text"
+            name=""
+            id=""
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search for products or blogs"
+            className=" text-white bg-white/10 outline-0 border-2 border-white/50 py-2 px-4 h-full w-full grow rounded-md"
+          />
+          <div
+            className={`bg-black/40 ${
+              searchInput ? "flex" : "hidden"
+            } backdrop-blur-lg rounded-md p-2 text-white top-10 absolute items flex-col w-full gap-2 mt-2`}
+          >
+            {searchProd &&
+              searchProd.map((item) => {
+                return (
+                  <Link
+                    to={item.name ? `/products/${item._id}` : `/blogs/${item._id}`}
+                    onClick={toggleSearch}
+                  >
+                    <div
+                      className={`flex flex-row p-3 border-2 border-white/20 rounded-md ${
+                        item.name ? "bg-green-700/30" : "bg-gray-500/30"
+                      } hover:scale-95 transition duration-300`}
+                    >
+                      <div className="info">
+                        <p className="font-bold">{item.title ? item.title : item.name}</p>
+                        <p className="">
+                          {item.salePrice
+                            ? `Rs.${item.salePrice}`
+                            : `${item.description.slice(0, 35)}...`}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+          </div>
+        </div>
+        <div className="hidden sm:flex flex-row items-center gap-5 md:w-[calc(5%)] md:justify-center">
+          <FaMagnifyingGlass
+            size="1.3em"
+            className="text-yellow-500 cursor-pointer hidden sm:flex md:hidden"
+            onClick={() => setSearchToggle(!searchToggle)}
+          />
+          <Link to="tel:+977 9847440395">
+            <IoCallOutline size="1.5em" className="text-yellow-400 hidden sm:block" />
+          </Link>
+        </div>
       </div>
     </nav>
   );

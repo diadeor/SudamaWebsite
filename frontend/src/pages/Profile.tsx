@@ -11,7 +11,7 @@ const Profile = () => {
   const { user, setUser } = useAuth();
   const [err, setErr] = useState("");
   const [tab, setTab] = useState("profile");
-  const [result, setResult] = useState<string | Object>("");
+  const [result, setResult] = useState<string | { message: string }>("");
   const [emailField, setEmailField] = useState(user?.email);
   const [nameField, setNameField] = useState(user?.name);
   const URI = `/api/v1/users/update/${user?.id}`;

@@ -13,6 +13,7 @@ import Shop from "./pages/Shop.tsx";
 import Billing from "./pages/Checkout.tsx";
 import Single from "./pages/SingleProduct.tsx";
 import Blogs from "./pages/Blogs.tsx";
+import Blog from "./pages/SingleBlog.tsx";
 const App = () => {
   return (
     <Router>
@@ -34,7 +35,7 @@ const App = () => {
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<Billing />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs:id" element={<Blogs />} />
+          <Route path="/blogs/:id" element={<Blog />} />
           <Route path="/products/:id" element={<Single />} />
         </Routes>
       </div>

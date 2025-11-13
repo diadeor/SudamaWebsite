@@ -163,7 +163,7 @@ const NavBar = () => {
           >
             <ListItem title="Home" Icon={IoHomeOutline} link="/" />
             <ListItem title="Shop" Icon={IoStorefrontOutline} link="/shop" />
-            <ListItem title="About" Icon={IoBookOutline} link="/" />
+            {/* <ListItem title="About" Icon={IoBookOutline} link="/" /> */}
             <ListItem title="Blogs" Icon={IoReaderOutline} link="/blogs" />
             {user && <ListItem title="Profile" Icon={IoPersonOutline} link="/profile" />}
             {!user && (
@@ -186,9 +186,7 @@ const NavBar = () => {
           <li className="hover:font-bold">
             <Link to="/shop">Shop</Link>
           </li>
-          <li className="hover:font-bold">
-            <Link to="/about">About</Link>
-          </li>
+          <li className="hover:font-bold">{/* <Link to="/about">About</Link> */}</li>
           <li className="hover:font-bold">
             <Link to="/blogs">Blogs</Link>
           </li>

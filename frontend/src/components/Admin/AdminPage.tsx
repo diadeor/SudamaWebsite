@@ -60,7 +60,7 @@ export const ProductsCard = ({ product }: { product: Pd }) => {
   return (
     <div className="font-fauna item bg-white/20 flex flex-row justify-between p-2 pl-4 rounded-lg text-white gap-3">
       <div className="product-image max-w-[30%] min-w-auto flex flex-row items-center">
-        <img src={imagePath} alt="" className="w-30 h-30 rounded-xl" />
+        <img src={imagePath} alt="" className="w-30 rounded-xl aspect-square" />
       </div>
       <div className="details min-w-[50%] grow">
         <p className="name text-yellow-600 font-bold text-xl">{product.name}</p>

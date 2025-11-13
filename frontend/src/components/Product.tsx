@@ -72,8 +72,10 @@ const Product = ({ pd }: { pd: product | any }) => {
         )}
       </p>
       <Link to={`/products/${pd._id}`}>
-        <p className="font-fauna title text-md border-t border-white/20 pt-1">{pd.name}</p>
-        <p className="font-jetbrains text-xs">{pd.category}</p>
+        <p className="font-poppins font-bold title text-md border-t border-white/20 pt-1">
+          {pd.name}
+        </p>
+        <p className="font-fauna text-xs">{pd.category}</p>
       </Link>
       <div className="action-row flex flex-col justify-center">
         <Link to={`/products/${pd._id}`}>
@@ -86,7 +88,7 @@ const Product = ({ pd }: { pd: product | any }) => {
         </Link>
         <button
           onClick={addToCart}
-          className="font-fauna gap-2 add-to-cart text-sm uppercase font-bold bg-green-600 rounded-sm w-full h-9 text-center items-center justify-center flex flex-row cursor-pointer transition duration-300 hover:bg-green-800 hover:scale-105"
+          className="font-poppins gap-2 add-to-cart text-sm uppercase font-bold bg-green-600 rounded-sm w-full h-9 text-center items-center justify-center flex flex-row cursor-pointer transition duration-300 hover:bg-green-800 hover:scale-105"
         >
           Add to cart
           <FaCartPlus />

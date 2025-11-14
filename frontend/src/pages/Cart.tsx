@@ -129,7 +129,7 @@ const Cart = () => {
       <Top title="Shopping Cart" sub={false} />
       {cart && cart.items.length != 0 && (
         <div className="items-container w-full max-w-6xl flex flex-row flex-wrap gap-3">
-          <div className="prods w-full md:max-w-[calc(49%)]">
+          <div className="prods w-full md:max-w-1/2 md:flex-1">
             <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
               Products
             </p>
@@ -149,7 +149,7 @@ const Cart = () => {
                 })}
             </div>
           </div>
-          <div className="summary w-full md:max-w-[calc(49%)] grow">
+          <div className="summary w-full md:max-w-1/2 md:flex-1">
             <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
               Order Summary
             </p>

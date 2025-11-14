@@ -204,7 +204,6 @@ const NavBar = () => {
           <input
             type="text"
             name=""
-            id=""
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search for products or blogs"

@@ -65,7 +65,7 @@ const Checkout = () => {
         subtitle="Please fill all the mandatory fields to proceed with your order"
       />
       <div className="gap-5 items-container w-full flex flex-row flex-wrap">
-        <div className="w-full md:max-w-[48%]">
+        <div className="w-full md:max-w-1/2, flex-1">
           <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
             Billing & Shipping
           </p>
@@ -88,7 +88,7 @@ const Checkout = () => {
             <FormInput name="landmark" type="text" />
           </form>
         </div>
-        <div className="w-full md:max-w-[49%] items-container flex flex-col">
+        <div className="w-full md:max-w-1/2, flex-1 items-container flex flex-col">
           <p className="text-white font-bold text-2xl font-lobster tracking-widest mb-3">
             Order Items
           </p>

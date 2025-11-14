@@ -92,10 +92,10 @@ const Admin = () => {
         <AdminCard
           icon={<FaEye />}
           title="Visits"
-          value={data?.blogCount}
+          value={data?.visitCount}
           subTitle="Last 7 days"
           subValue={400}
-          toUrl=""
+          toUrl="/admin/visits"
         />
       </div>
 
@@ -155,12 +155,18 @@ const Admin = () => {
             path="/cats"
             element={
               <AdminFetch
-                icon={<FaFilePen />}
+                icon={<FaList />}
                 title="categories"
                 url="/api/v1/categories"
                 errFunc={setErr}
                 option={<Option url="/admin/cats/create" />}
               />
+            }
+          />
+          <Route
+            path="/visits"
+            element={
+              <AdminFetch icon={<FaEye />} title="visits" url="/api/v1/visits" errFunc={setErr} />
             }
           />
           <Route path="/products/create" element={<Create />} />

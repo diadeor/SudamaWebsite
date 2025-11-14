@@ -192,3 +192,23 @@ export const CategoryCard = ({ name, thumbnail }: { name: string; thumbnail: Obj
     </div>
   );
 };
+
+export const VisitCard = (visit: any) => {
+  const visits = visit.visit;
+  return (
+    <div className="font-poppins flex flex-row items-center justify-between text-white bg-white/20 p-2 rounded-md">
+      <div className="left">
+        {visits.name && <p className="text-xl font-bold text-yellow-500">{visits.name}</p>}
+        {visits.session &&
+          visits.session.map((item, index) => {
+            return (
+              <p key={index} className="text-sm">
+                {item}
+              </p>
+            );
+          })}
+      </div>
+      <p className="font-bold text-lg p-2 rounded-md bg-white/20 px-4">{visits.views}</p>
+    </div>
+  );
+};

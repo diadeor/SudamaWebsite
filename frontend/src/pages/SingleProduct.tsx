@@ -65,15 +65,15 @@ const Single = () => {
   };
 
   return (
-    <div className="prod-container flex flex-row justify-center flex-wrap min-h-[calc(100svh-70px)] p-5 max-w-6xl w-full">
+    <div className="prod-container justify-center flex-wrap min-h-[calc(100svh-70px)] p-5 max-w-6xl w-full">
       {valid && product ? (
-        <div className="prod w-full flex flex-row flex-wrap justify-center gap-5">
+        <div className=" prod flex flex-row flex-wrap justify-center gap-3">
           <img
             src={`http://localhost:5000/${product.thumbnail}`}
             alt=""
-            className="w-100 h-100 border-2"
+            className="flex-1 w-full max-w-120 md:max-w-1/2 aspect-square  bg-black/20 rounded-md"
           />
-          <div className="border-2 details bg-black/20 p-3 rounded-md text-white backdrop-blur-md w-[calc(100vw - 200px)]">
+          <div className="flex-1 w-full md:w-1/2 flex flex-col details bg-black/20 p-3 rounded-md text-white backdrop-blur-md w-[calc(100vw - 200px)]">
             <p className="text-yellow-500 font-bold text-2xl font-poppins tracking-wide">
               {product.name}
             </p>
@@ -91,7 +91,7 @@ const Single = () => {
                 <button
                   disabled={qtyDisabled}
                   onClick={(e) => handleQtyChange(e.target)}
-                  className={`subtract font-bold text-2xl ${cursor} ${bgColor} pl-2 pr-2 border border-r-0 border-white/30 rounded-l-md ${
+                  className={`subtract font-bold text-2xl ${cursor} ${bgColor} pl-2 pr-2 border border-r-0 border-white/30 rounded-l-sm ${
                     qtyDisabled ? "" : "hover:bg-white/30"
                   }`}
                 >
@@ -107,7 +107,7 @@ const Single = () => {
                 />
                 <button
                   onClick={(e) => handleQtyChange(e.target)}
-                  className="addition font-bold text-2xl bg-white/20 pl-2 pr-2 border border-l-0 border-white/30 rounded-r-md hover:bg-white/30 transition duration-300"
+                  className="addition font-bold text-2xl bg-white/20 pl-2 pr-2 border border-l-0 border-white/30 rounded-r-sm hover:bg-white/30 transition duration-300"
                 >
                   +
                 </button>

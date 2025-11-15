@@ -77,7 +77,7 @@ export const Form = ({
   const [success, setSuccess] = useState("");
   const nav = useNavigate();
   const googleLoginUrl = "/api/v1/auth/google";
-  const { user, setUser } = useAuth();
+  const { setUser } = useAuth();
 
   const googleLoginSuccess = async (resp: any) => {
     const token = resp.credential;

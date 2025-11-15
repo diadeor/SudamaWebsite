@@ -1,8 +1,8 @@
 import Customer from "../models/users.model.js";
 import jwt from "jsonwebtoken";
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { JWT_EXPIRE, JWT_SECRET, GOOGLE_CLIENT_ID } from "../config/env.js";
-import { OAuth2Client, PassThroughClient } from "google-auth-library";
+import { OAuth2Client } from "google-auth-library";
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 

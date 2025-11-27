@@ -104,7 +104,7 @@ const EditCat = () => {
           <FormInput type="text" name="name" value={category?.name} />
           <input
             type="submit"
-            value="Save"
+            value="Update"
             className="font-poppins bg-green-600 p-2 text-white font-bold tracking-wide rounded-full min-h-10 hover:bg-green-900 cursor-pointer transition duration-300"
           />
         </form>

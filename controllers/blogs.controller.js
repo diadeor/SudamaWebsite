@@ -56,3 +56,37 @@ export const createBlog = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateBlog = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+    const thumbnail = req.file;
+
+    const blogExists = await Blog.findOne({ title });
+    if (blogExists && blogExists._id !== id)
+      throw new Error("A blog with that title already exists");
+
+    const oldPath = req.file.path;
+    const newName = `${id}${path.extname(thumbnail.originalname)}`;
+    const newPath = `public/blogs/${newName}`;
+
+    rename(oldPath, newPath, (err) => {
+      if (err) throw new Error("File rename error");
+    });
+
+    const blog = await Blog.findByIdAndUpdate(
+      id,
+      { $set: { title, description, thumbnail: `blogs/${newName}` } },
+      { new: true },
+    );
+
+    res.json({
+      success: true,
+      message: "Blog updated successfully",
+      blog,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

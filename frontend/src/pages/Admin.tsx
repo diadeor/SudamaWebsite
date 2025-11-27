@@ -11,6 +11,7 @@ import CreateBlogs from "../components/Admin/CreateBlogs";
 import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen, FaEye, FaList } from "react-icons/fa6";
 import CreateCategory from "../components/Admin/CreateCat";
 import EditCat from "../components/Admin/EditCat";
+import EditBlogs from "../components/Admin/EditBlogs";
 // import usePost from "../hooks/usePost";
 
 const Admin = () => {
@@ -141,7 +142,7 @@ const Admin = () => {
             }
           />
           <Route
-            path="/blogs"
+            path="/blogs/*"
             element={
               <AdminFetch
                 icon={<FaFilePen />}
@@ -153,7 +154,7 @@ const Admin = () => {
             }
           />
           <Route
-            path="/cats"
+            path="/cats/*"
             element={
               <AdminFetch
                 icon={<FaList />}
@@ -175,6 +176,7 @@ const Admin = () => {
           <Route path="/cats/edit/:id" element={<EditCat />} />
           <Route path="/orders/edit/:tx" element={<EditOrders />} />
           <Route path="/blogs/create/" element={<CreateBlogs />} />
+          <Route path="/blogs/edit/:id" element={<EditBlogs />} />
           <Route path="/cats/create/" element={<CreateCategory />} />
         </Routes>
       </div>

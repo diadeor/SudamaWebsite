@@ -157,6 +157,7 @@ export const OrderCard = ({ cart, item }: { cart: order; item: Array<OrderItem> 
   );
 };
 type Blog = {
+  _id: string;
   thumbnail: string;
   title: string;
   description: string;
@@ -165,13 +166,15 @@ type Blog = {
 export const BlogCard = ({ blog }: { blog: Blog }) => {
   const imageSrc = `http://localhost:5000/${blog.thumbnail}`;
   return (
-    <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
-      <img src={imageSrc} alt="" className="min-w-30 w-30 h-30 rounded-xl" />
-      <div className="right flex flex-col flex-wrap">
-        <p className="title font-bold text-xl wrap-normal font-poppins">{blog.title}</p>
-        <p className="desc font-fauna">{blog.description}</p>
+    <Link to={`/admin/blogs/edit/${blog._id}`}>
+      <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
+        <img src={imageSrc} alt="" className="min-w-30 w-30 h-30 rounded-xl" />
+        <div className="right flex flex-col flex-wrap">
+          <p className="title font-bold text-xl wrap-normal font-poppins">{blog.title}</p>
+          <p className="desc font-fauna">{blog.description}</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -210,7 +213,7 @@ export const VisitCard = (visit: any) => {
       <div className="left">
         {visits.name && <p className="text-xl font-bold text-yellow-500">{visits.name}</p>}
         {visits.session &&
-          visits.session.map((item, index) => {
+          visits.session.map((item: string, index: number) => {
             return (
               <p key={index} className="text-sm">
                 {item}

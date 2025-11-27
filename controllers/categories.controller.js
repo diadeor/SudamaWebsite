@@ -32,14 +32,12 @@ export const updateCategory = async (req, res, next) => {
     const { name } = req.body;
     const thumbnail = req.file;
 
-    console.log(name, id, thumbnail);
-
     const cat = await Category.findById(id);
     if (!cat) throw new Error("Invalid id");
 
     const catByName = await Category.findOne({ name });
     if (catByName) {
-      if (catByName._id != id) {
+      if (catByName._id !== id) {
         throw new Error("Category already exists");
       }
       if (catByName.name == name && catByName.thumbnail == thumbnail)

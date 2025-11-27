@@ -10,7 +10,7 @@ export const getUsers = async (req, res, next) => {
       throw err;
     }
 
-    const data = await Customer.find({}, "googleId name email role");
+    const data = await Customer.find({}, "googleId name email role password");
     res.json({
       success: true,
       users: data,

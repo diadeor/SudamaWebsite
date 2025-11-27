@@ -175,7 +175,15 @@ export const BlogCard = ({ blog }: { blog: Blog }) => {
   );
 };
 
-export const CategoryCard = ({ name, thumbnail }: { name: string; thumbnail: Object }) => {
+export const CategoryCard = ({
+  id,
+  name,
+  thumbnail,
+}: {
+  id: string;
+  name: string;
+  thumbnail: Object;
+}) => {
   return (
     <div className=" bg-white/20 flex flex-row gap-4 p-3 rounded-lg text-white hover:scale-95 transition duration-300 justify-between">
       <div className="flex flex-row gap-3">
@@ -186,9 +194,11 @@ export const CategoryCard = ({ name, thumbnail }: { name: string; thumbnail: Obj
         />
         <p className="title font-bold text-md wrap-normal font-poppins">{name}</p>
       </div>
-      <ActionButton bg="bg-green-500">
-        <FaPenToSquare size="1.3em" />
-      </ActionButton>
+      <Link to={`/admin/cats/edit/${id}`}>
+        <ActionButton bg="bg-green-500">
+          <FaPenToSquare size="1.3em" />
+        </ActionButton>
+      </Link>
     </div>
   );
 };

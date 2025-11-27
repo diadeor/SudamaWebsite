@@ -5,6 +5,7 @@ import {
   getCategories,
   updateCategory,
   createCategory,
+  getCategory,
 } from "../controllers/categories.controller.js";
 
 const catRouter = Router();
@@ -19,6 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 catRouter.get("/", getCategories);
+catRouter.get("/:id", getCategory);
 catRouter.post("/create", upload.single("thumbnail"), createCategory);
 catRouter.put("/update/:id", upload.single("thumbnail"), updateCategory);
 

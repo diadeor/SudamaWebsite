@@ -73,7 +73,7 @@ const AdminFetch = ({
           } else if (title == "blogs") {
             return <BlogCard blog={el} key={index} />;
           } else if (title == "categories") {
-            return <CategoryCard name={el.name} thumbnail={el.thumbnail} key={index} />;
+            return <CategoryCard id={el._id} name={el.name} thumbnail={el.thumbnail} key={index} />;
           } else if (title == "visits") {
             return <VisitCard visit={el} key={index} />;
           }

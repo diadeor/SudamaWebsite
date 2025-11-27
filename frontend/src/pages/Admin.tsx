@@ -10,6 +10,7 @@ import EditProducts from "../components/Admin/EditProducts";
 import CreateBlogs from "../components/Admin/CreateBlogs";
 import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen, FaEye, FaList } from "react-icons/fa6";
 import CreateCategory from "../components/Admin/CreateCat";
+import EditCat from "../components/Admin/EditCat";
 // import usePost from "../hooks/usePost";
 
 const Admin = () => {
@@ -171,6 +172,7 @@ const Admin = () => {
           />
           <Route path="/products/create" element={<Create />} />
           <Route path="/products/edit/:id" element={<EditProducts />} />
+          <Route path="/cats/edit/:id" element={<EditCat />} />
           <Route path="/orders/edit/:tx" element={<EditOrders />} />
           <Route path="/blogs/create/" element={<CreateBlogs />} />
           <Route path="/cats/create/" element={<CreateCategory />} />

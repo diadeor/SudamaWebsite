@@ -1,12 +1,12 @@
 import Visit from "../models/visits.model.js";
-import Customer from "../models/users.model.js";
+import User from "../models/users.model.js";
 
 export const updateVisit = async (req, res, next) => {
   try {
     const { session, user } = req.body;
     // console.log(req.body);
     if (user) {
-      const userExists = await Customer.findById(user);
+      const userExists = await User.findById(user);
       if (!userExists) throw new Error("User does not exist");
 
       const visitExists = await Visit.findOne({ user });

@@ -1,4 +1,4 @@
-import Customer from "../models/users.model.js";
+import User from "../models/users.model.js";
 
 export const getUsers = async (req, res, next) => {
   try {
@@ -10,7 +10,7 @@ export const getUsers = async (req, res, next) => {
       throw err;
     }
 
-    const data = await Customer.find({}, "googleId name email role password");
+    const data = await User.find({}, "googleId name email role password");
     res.json({
       success: true,
       users: data,
@@ -22,7 +22,7 @@ export const getUsers = async (req, res, next) => {
 
 export const getUser = async (req, res, next) => {
   const { id } = req.user;
-  const { name, role, email, password } = await Customer.findById(id);
+  const { name, role, email, password } = await User.findById(id);
 
   res.json({
     success: true,
@@ -45,7 +45,7 @@ export const updateUser = async (req, res, next) => {
     if (id !== paramId && role !== "admin")
       throw new Error("Unauthorized: Can not modify someone else's account");
 
-    const userExists = await Customer.findOne({ email });
+    const userExists = await User.findOne({ email });
     // console.log(userExists);
     if (userExists && userExists._id != paramId) {
       throw new Error("Email already exists");
@@ -55,7 +55,7 @@ export const updateUser = async (req, res, next) => {
       if (userExists._id != paramId) throw new Error("Email already exists");
       if (userExists.email == email && userExists.name == name) throw new Error("No changes made");
     }
-    const user = await Customer.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
       paramId,
       { $set: { name, email } },
       { new: true },

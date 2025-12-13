@@ -1,4 +1,4 @@
-import Customer from "../models/users.model.js";
+import User from "../models/users.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { JWT_EXPIRE, JWT_SECRET, GOOGLE_CLIENT_ID } from "../config/env.js";
@@ -17,12 +17,12 @@ export const signUp = async (req, res, next) => {
     // Log
     console.log("Signup route", { body: req.body });
 
-    const userExists = await Customer.findOne({ email });
+    const userExists = await User.findOne({ email });
     const salt = await bcrypt.genSalt(12);
     const hashed = await bcrypt.hash(pass, salt);
     if (userExists) throw new Error("User already exists");
 
-    const newUser = await Customer.create({
+    const newUser = await User.create({
       name,
       email,
       password: hashed,
@@ -61,7 +61,7 @@ export const signIn = async (req, res, next) => {
     if (!email) throw new Error("Email is required; Field: email");
     if (!pass) throw new Error("Password is required; Field: pass");
 
-    const user = await Customer.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) throw new Error("Invalid Email");
 
     const isValid = await bcrypt.compare(pass, user.password);
@@ -119,7 +119,7 @@ export const changePass = async (req, res, next) => {
     const { old, newPass } = req.body;
     if (!newPass) throw new Error("New password is required");
 
-    const user = await Customer.findById(id);
+    const user = await User.findById(id);
     if (user.password && !old) throw new Error("Old password is required");
 
     if (user.password) {
@@ -129,7 +129,7 @@ export const changePass = async (req, res, next) => {
     const salt = await bcrypt.genSalt(12);
     const hashed = await bcrypt.hash(newPass, salt);
 
-    await Customer.findByIdAndUpdate(id, { $set: { password: hashed } }, { new: true });
+    await User.findByIdAndUpdate(id, { $set: { password: hashed } }, { new: true });
 
     res.json({ success: true, message: "Password updated" });
   } catch (error) {
@@ -148,8 +148,8 @@ export const googleLogin = async (req, res, next) => {
 
     if (!googleEmail) throw new Error("Email not provided by google");
 
-    let user = await Customer.findOne({ googleId });
-    const userWithEmail = await Customer.findOne({ email: googleEmail });
+    let user = await User.findOne({ googleId });
+    const userWithEmail = await User.findOne({ email: googleEmail });
 
     if (!user && userWithEmail) {
       userWithEmail.googleId = googleId;
@@ -158,7 +158,7 @@ export const googleLogin = async (req, res, next) => {
 
     const newUser =
       !user && !userWithEmail
-        ? await Customer.create({
+        ? await User.create({
             googleId,
             name: googleName,
             email: googleEmail,

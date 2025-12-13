@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Customer from "./users.model.js";
+import User from "./users.model.js";
 
 const itemSchema = new mongoose.Schema(
   {
@@ -47,7 +47,7 @@ const orderSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "Customer",
+      ref: "User",
     },
     user: {
       type: String,
@@ -122,7 +122,7 @@ const orderSchema = new mongoose.Schema(
 
 orderSchema.pre("validate", async function (next) {
   try {
-    const user = await Customer.findById(this.userId);
+    const user = await User.findById(this.userId);
     this.user = user.name;
     this.email = user.email;
     next();

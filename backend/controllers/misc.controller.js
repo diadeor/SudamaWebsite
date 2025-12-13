@@ -1,4 +1,4 @@
-import Customer from "../models/users.model.js";
+import User from "../models/users.model.js";
 import Product from "../models/products.model.js";
 import Order from "../models/orders.model.js";
 import Blog from "../models/blogs.model.js";
@@ -8,7 +8,7 @@ import Visit from "../models/visits.model.js";
 export const getCount = async (req, res, next) => {
   try {
     const { id, role } = req.user;
-    const userCount = await Customer.countDocuments();
+    const userCount = await User.countDocuments();
     const productCount = await Product.countDocuments();
     const orderCount = await Order.countDocuments();
     const blogCount = await Blog.countDocuments();

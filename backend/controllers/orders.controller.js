@@ -3,6 +3,10 @@ import Cart from "../models/carts.model.js";
 
 export const getOrders = async (req, res, next) => {
   try {
+    const { id, role } = req.user;
+    if (role !== "admin") throw new Error("Unauthorized");
+
+    console.log("Get orders route by ", id);
     const orders = await Order.find({});
     res.json({
       success: true,
@@ -29,8 +33,14 @@ export const getUserOrders = async (req, res, next) => {
 
 export const getOrder = async (req, res, next) => {
   try {
+    const { id, role } = req.user;
+    console.log("Get order route by ", id);
+
     const { tx } = req.params;
     const order = await Order.findOne({ tx });
+
+    if (order.userId !== id || role !== "admin") throw new Error("Unauthorized");
+
     res.json({
       success: true,
       order,
@@ -49,9 +59,11 @@ const generateTx = async () => {
 
 export const createOrder = async (req, res, next) => {
   try {
-    const id = req.user.id;
+    const { id } = req.user;
     const { cart, shipping } = req.body;
     const tx = await generateTx();
+
+    if (!cart || !shipping) throw new Error("Required fields missing");
 
     const order = await Order.create({
       tx,

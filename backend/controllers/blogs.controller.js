@@ -66,8 +66,14 @@ export const createBlog = async (req, res, next) => {
 export const updateBlog = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const { role } = req.user;
+
+    if (role !== "admin") throw new Error("Unauthorized");
     const { title, description } = req.body;
     const thumbnail = req.file;
+
+    // Log
+    console.log("Update blog route", { user: req.user });
 
     const blogExists = await Blog.findOne({ title });
     if (blogExists && blogExists._id !== id)

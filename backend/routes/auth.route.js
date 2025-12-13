@@ -18,6 +18,6 @@ authRouter.post("/google", googleLogin);
 
 authRouter.post("/pass", authUser, changePass);
 
-authRouter.get("/logout", authUser, signOut);
+authRouter.get("/logout", signOut);
 
 export default authRouter;

@@ -51,6 +51,13 @@ export const getProduct = async (req, res, next) => {
 
 export const createProduct = async (req, res, next) => {
   try {
+    const { id, role } = req.user;
+
+    if (role !== "admin") throw new Error("Unauthorized");
+
+    // Log
+    console.log("Create product route by", id);
+
     const { name, category, regularPrice, salePrice, description, stock, badge } = req.body;
     const thumbnail = req.file;
     if ((!name, !category, !salePrice, !stock)) throw new Error("Required fields are not given");
@@ -101,6 +108,12 @@ export const createProduct = async (req, res, next) => {
 
 export const deleteProduct = async (req, res, next) => {
   try {
+    const { id: userId, role } = req.user;
+
+    if (role !== "admin") throw new Error("Unauthorized");
+
+    // Log
+    console.log("Delete product route by", userId);
     const { id } = req.params;
 
     const product = Product.findById(id);
@@ -115,6 +128,12 @@ export const deleteProduct = async (req, res, next) => {
 
 export const updateProduct = async (req, res, next) => {
   try {
+    const { id: userId, role } = req.user;
+
+    if (role !== "admin") throw new Error("Unauthorized");
+
+    // Log
+    console.log("Update product route by", userId);
     const { id } = req.params;
     const { name, category, regularPrice, salePrice, description, stock, badge } = req.body;
     const thumbnail = req.file;

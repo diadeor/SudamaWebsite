@@ -31,9 +31,10 @@ export const updateCategory = async (req, res, next) => {
     const { id } = req.params;
     const { name } = req.body;
     const thumbnail = req.file;
-    const user = req.user;
+    const { role } = req.user;
+    if (role !== "admin") throw new Error("Unauthorized");
 
-    if (user.role !== "admin") throw new Error("Unauthorized");
+    console.log("Update category route");
 
     const cat = await Category.findById(id);
     if (!cat) throw new Error("Invalid id");
@@ -77,9 +78,10 @@ export const createCategory = async (req, res, next) => {
   try {
     const { name } = req.body;
     const thumbnail = req.file;
-    const { id, role } = req.user;
-
+    const { role } = req.user;
     if (role !== "admin") throw new Error("Unauthorized");
+
+    console.log("Create category route");
 
     const generateID = new mongoose.Types.ObjectId();
     const oldPath = req.file.path;

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-
+import authUser from "../middlewares/auth.middleware.js";
 import {
   getCategories,
   updateCategory,
@@ -21,7 +21,7 @@ const upload = multer({ storage });
 
 catRouter.get("/", getCategories);
 catRouter.get("/:id", getCategory);
-catRouter.post("/create", upload.single("thumbnail"), createCategory);
-catRouter.put("/update/:id", upload.single("thumbnail"), updateCategory);
+catRouter.post("/create", authUser, upload.single("thumbnail"), createCategory);
+catRouter.put("/update/:id", authUser, upload.single("thumbnail"), updateCategory);
 
 export default catRouter;

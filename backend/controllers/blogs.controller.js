@@ -26,6 +26,12 @@ export const getBlog = async (req, res, next) => {
 
 export const createBlog = async (req, res, next) => {
   try {
+    const { id, role } = req.user;
+    if (role !== "admin") throw new Error("Unauthorized");
+
+    // Log
+    console.log("Create blog route", { user: req.user });
+
     const { title, description } = req.body;
     const thumbnail = req.file;
 

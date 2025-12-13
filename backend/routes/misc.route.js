@@ -3,6 +3,6 @@ import { getCount } from "../controllers/misc.controller.js";
 
 const miscRouter = Router();
 
-miscRouter.get("/stats", getCount);
+miscRouter.get("/", getCount);
 
 export default miscRouter;

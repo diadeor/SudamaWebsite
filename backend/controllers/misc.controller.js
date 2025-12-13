@@ -7,6 +7,7 @@ import Visit from "../models/visits.model.js";
 
 export const getCount = async (req, res, next) => {
   try {
+    const { id, role } = req.user;
     const userCount = await Customer.countDocuments();
     const productCount = await Product.countDocuments();
     const orderCount = await Order.countDocuments();
@@ -14,6 +15,11 @@ export const getCount = async (req, res, next) => {
     const catCount = await Category.countDocuments();
     const visitCount = await Visit.countDocuments();
     // const visitersCount = await
+
+    if (role !== "admin") throw new Error("Unauthorized");
+
+    // Log
+    console.log("Stats route", { id, role });
 
     res.json({
       success: true,

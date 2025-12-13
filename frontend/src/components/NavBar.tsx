@@ -4,7 +4,6 @@ import { FaBarsStaggered, FaCircleXmark, FaMagnifyingGlass, FaUserTie } from "re
 import {
   IoCallOutline,
   IoPersonOutline,
-  IoBookOutline,
   IoHomeOutline,
   IoStorefrontOutline,
   IoLogInOutline,
@@ -105,6 +104,7 @@ const NavBar = () => {
             name=""
             id=""
             value={searchInput}
+            placeholder="Search for products..."
             onChange={(e) => setSearchInput(e.target.value)}
             className="bg-white/10 outline-0 border border-white/20 py-2 px-4 h-full w-full rounded-md"
           />

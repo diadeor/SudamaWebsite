@@ -4,7 +4,6 @@ import HomeShop from "../components/HomeShop";
 import New from "../components/New";
 import Popular from "../components/Popular";
 import ShopByCat from "../components/ShopByCat";
-import Socials from "../components/Socials";
 // import floral from "../assets/floral.png";
 import { Link } from "react-router-dom";
 
@@ -13,10 +12,10 @@ const Home = () => {
   return (
     <>
       <main
-        className={`w-full max-w-7xl hero-section h-screen flex flex-row flex-wrap justify-center wrap-normal p-5 md:items-center `}
+        className={`w-full max-w-7xl hero-section h-auto flex flex-row flex-wrap justify-center wrap-normal p-5 md:items-center `}
       >
         <div className="text w-full md:max-w-[50%]">
-          <p className="hero font-bold text-white text-4xl mb-5 font-lobster tracking-wider grow md:text-4xl lg:text-6xl">
+          <p className="hero font-bold text-white text-4xl mb-5 mt-5 font-lobster tracking-wider grow md:text-4xl lg:text-6xl">
             <span className="text-yellow-500">Plants&nbsp;</span> make&nbsp; a<br />
             <span className="text-yellow-500">positive&nbsp;</span> impact&nbsp; on
             <br />

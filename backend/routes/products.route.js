@@ -7,6 +7,7 @@ import {
   deleteProduct,
   updateProduct,
 } from "../controllers/products.controller.js";
+import authUser from "../middlewares/auth.middleware.js";
 
 const productRouter = Router();
 const storage = multer.diskStorage({
@@ -21,8 +22,8 @@ const upload = multer({ storage });
 
 productRouter.get("/", getProducts);
 productRouter.get("/:id", getProduct);
-productRouter.post("/create", upload.single("thumbnail"), createProduct);
-productRouter.delete("/:id", deleteProduct);
-productRouter.put("/update/:id", upload.single("thumbnail"), updateProduct);
+productRouter.post("/create", authUser, upload.single("thumbnail"), createProduct);
+productRouter.delete("/:id", authUser, deleteProduct);
+productRouter.put("/update/:id", authUser, upload.single("thumbnail"), updateProduct);
 
 export default productRouter;

@@ -14,6 +14,8 @@ export const signUp = async (req, res, next) => {
     if (!pass) throw new Error("Password is required; Field: pass");
 
     const role = "user";
+    // Log
+    console.log("Signup route", { body: req.body });
 
     const userExists = await Customer.findOne({ email });
     const salt = await bcrypt.genSalt(12);
@@ -64,6 +66,9 @@ export const signIn = async (req, res, next) => {
 
     const isValid = await bcrypt.compare(pass, user.password);
     if (!isValid) throw new Error("Password does not match");
+
+    // Log
+    console.log("Signin route", { body: req.body });
 
     const { name, role, _id: id } = user;
     const token = jwt.sign({ id, role }, JWT_SECRET, { expiresIn: JWT_EXPIRE });

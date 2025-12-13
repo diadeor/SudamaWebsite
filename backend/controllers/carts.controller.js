@@ -2,6 +2,13 @@ import Cart from "../models/carts.model.js";
 
 export const getCarts = async (req, res, next) => {
   try {
+    const { id, role } = req.user;
+
+    if (role !== "admin") throw new Error("Unauthorized");
+    // Log
+    console.log("get carts route", { user: req.user });
+    console.log(`User with id: ${id} tried to access the get cart route`);
+
     const carts = await Cart.find({});
     res.json({
       success: true,

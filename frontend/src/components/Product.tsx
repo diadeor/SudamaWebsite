@@ -37,7 +37,7 @@ const Product = ({ pd }: { pd: product | any }) => {
     }, 1000);
   }
   return (
-    <div className="min-w-46 product-card bg-black/50 text-white flex flex-col p-3 rounded-xl">
+    <div className="w-46  product-card bg-black/50 text-white flex flex-col p-3 rounded-xl">
       {success && (
         <p className="z-10 font-poppins msg bg-green-700 w-full rounded-full text-center relative font-bold text-sm tracking-wide p-0.5 transition duration-300">
           {success}
@@ -47,7 +47,7 @@ const Product = ({ pd }: { pd: product | any }) => {
       <img
         src={`http://localhost:5000/${pd.thumbnail}`}
         alt=""
-        className="hover:z-15 w-40 h-40 rounded-xl hover:scale-115 transition duration-300 mb-2"
+        className="hover:z-15 w-40 h-40 rounded-xl hover:scale-105 transition duration-300 mb-2"
       />
       <p
         className={`${

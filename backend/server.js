@@ -21,19 +21,20 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// This serves 'public' at the '/public' path
+
+app.get("/", (req, res, next) => res.send("Correct endpoint"));
 
 // Routes
 app.use(express.static("./public"));
-app.use("/api/v1", miscRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/products", productRouter);
-app.use("/api/v1/orders", authUser, orderRouter);
-app.use("/api/v1/blogs", blogRouter);
-app.use("/api/v1/carts", authUser, cartRouter);
-app.use("/api/v1/categories", catRouter);
-app.use("/api/v1/visits", visitRouter);
+app.use("/api/stats", authUser, miscRouter);
+app.use("/api/users", authUser, userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/products", productRouter);
+app.use("/api/orders", authUser, orderRouter);
+app.use("/api/blogs", blogRouter);
+app.use("/api/carts", authUser, cartRouter);
+app.use("/api/categories", catRouter);
+app.use("/api/visits", visitRouter);
 
 // Error Middleware
 app.use(errorHandle);

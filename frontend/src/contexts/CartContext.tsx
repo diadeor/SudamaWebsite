@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import useFetch from "../hooks/useFetch";
+import { baseUrl } from "./AuthContext";
 
 export const CartContext: any = createContext("");
 
@@ -9,7 +10,7 @@ export const useCart: any = () => useContext(CartContext);
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Array<Object>>();
   const [loading, setLoading] = useState(true);
-  const request = useFetch("/api/carts/me");
+  const request = useFetch(`${baseUrl}/carts/me`);
 
   useEffect(() => {
     (async () => {

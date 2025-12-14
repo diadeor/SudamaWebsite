@@ -4,6 +4,7 @@ import { Form, FormInput, FormLabel } from "../components/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/Sudama.png";
+import { baseUrl } from "../contexts/AuthContext";
 
 const Register = () => {
   const nameInput: any = useRef("");
@@ -11,7 +12,7 @@ const Register = () => {
   const passInput: any = useRef("");
   const nav = useNavigate();
   const { user, setUser } = useAuth();
-  const req = usePost("/api/auth/register");
+  const req = usePost(`${baseUrl}/auth/register`);
 
   const cFunc = () => {
     return {

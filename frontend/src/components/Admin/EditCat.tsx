@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { FormInput, FormLabel } from "../Form";
 import useFetch from "../../hooks/useFetch";
 import usePut from "../../hooks/usePut";
+import { baseUrl } from "../../contexts/AuthContext";
 
 type Category = {
   id: string;
@@ -18,8 +19,8 @@ const EditCat = () => {
   const [category, setCategory] = useState<Category>();
   const imageRef = useRef<HTMLImageElement>(null);
   const form = useRef<HTMLFormElement>(null);
-  const getCat = useFetch(`/api/categories/${id}`);
-  const setCat = usePut(`/api/categories/update/${id}`);
+  const getCat = useFetch(`${baseUrl}/categories/${id}`);
+  const setCat = usePut(`${baseUrl}/categories/update/${id}`);
 
   useEffect(() => {
     try {
@@ -63,7 +64,7 @@ const EditCat = () => {
       reader.readAsDataURL(file);
     }
   };
-  const imagePath = category && `http://localhost:5000/${category.thumbnail}`;
+  const imagePath = category && `https://sudamawebsite.onrender.com/${category.thumbnail}`;
 
   return (
     <div className="edit">

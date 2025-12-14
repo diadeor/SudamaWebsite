@@ -1,6 +1,6 @@
 import Section from "./Sections";
-import { FaFacebook, FaTiktok, FaInstagram, FaWhatsapp } from "react-icons/fa6";
-import { IoLogoTiktok, IoLogoInstagram, IoLogoFacebook } from "react-icons/io5";
+import { FaFacebook } from "react-icons/fa6";
+import { IoLogoTiktok, IoLogoInstagram } from "react-icons/io5";
 
 const Socials = () => {
   return (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+import { baseUrl } from "../contexts/AuthContext";
 
 export const FormInput = ({
   type,
@@ -76,7 +77,7 @@ export const Form = ({
   const [err, setErr] = useState("");
   const [success, setSuccess] = useState("");
   const nav = useNavigate();
-  const googleLoginUrl = "/api/auth/google";
+  const googleLoginUrl = `${baseUrl}/auth/google`;
   const { setUser } = useAuth();
 
   const googleLoginSuccess = async (resp: any) => {

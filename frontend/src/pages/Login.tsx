@@ -5,12 +5,13 @@ import { useAuth } from "../contexts/AuthContext";
 import usePost from "../hooks/usePost";
 import { FormInput, FormLabel, Form } from "../components/Form";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../contexts/AuthContext";
 
 const Login = () => {
   const emailInput: any = useRef("");
   const passInput: any = useRef("");
   const { user, setUser } = useAuth();
-  const req = usePost("/api/auth/login");
+  const req = usePost(`${baseUrl}/auth/login`);
   const nav = useNavigate();
 
   const elseFunc = ({ data }: { data: { user: Object } }) => {

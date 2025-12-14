@@ -22,7 +22,7 @@ const Blog = () => {
       {blog && (
         <div className="blog flex flex-col gap-5 items-center">
           <img
-            src={`http://localhost:5000/${blog.thumbnail}`}
+            src={`https://sudamawebsite.onrender.com/${blog.thumbnail}`}
             alt=""
             className="w-full max-w-150 rounded-xl aspect-square"
           />

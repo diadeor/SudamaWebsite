@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { FormLabel, FormInput } from "../Form";
 import useFile from "../../hooks/useFile";
 import usePost from "../../hooks/usePost";
+import { baseUrl } from "../../contexts/AuthContext";
 
 const CreateBlogs = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -10,7 +11,7 @@ const CreateBlogs = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const handleFile = useFile(setThumbText);
-  const request = usePost("/api/blogs/create");
+  const request = usePost(`${baseUrl}/blogs/create`);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

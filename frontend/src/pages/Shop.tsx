@@ -4,6 +4,7 @@ import useFetch from "../hooks/useFetch";
 import { useItem } from "../contexts/ItemContext";
 import Product from "../components/Product";
 import Top from "../components/Top";
+import { baseUrl } from "../contexts/AuthContext";
 
 const Shop = () => {
   const [cat, setCat] = useState<Array<Object>>([]);
@@ -11,7 +12,7 @@ const Shop = () => {
   const [searchProd, setSearchProd] = useState(products);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const catsRequest = useFetch("/api/categories");
+  const catsRequest = useFetch(`${baseUrl}/categories`);
 
   useEffect(() => {
     catsRequest().then(({ data }) => {
@@ -47,7 +48,7 @@ const Shop = () => {
           cat.map((item: any, index: number) => {
             return (
               <Category
-                img={`http://localhost:5000/${item.thumbnail}`}
+                img={`https://sudamawebsite.onrender.com/${item.thumbnail}`}
                 name={item.name}
                 setName={setSelectedCategory}
                 key={index}

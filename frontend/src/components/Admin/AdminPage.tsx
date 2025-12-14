@@ -2,6 +2,7 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { baseUrl } from "../../contexts/AuthContext";
 
 const Ret = ({ title, value }: { title: string; value: any }) => {
   return (
@@ -40,7 +41,7 @@ type Pd = {
 };
 
 export const ProductsCard = ({ product }: { product: Pd }) => {
-  const imagePath = `http://localhost:5000/${product.thumbnail}`;
+  const imagePath = `https://sudamawebsite.onrender.com/${product.thumbnail}`;
   const handleDelete = () => {
     const firstConfirmation = prompt(
       `Do you really want to delete ${product.name} from products ?\n\nType "yes" if you are sure`,
@@ -50,7 +51,7 @@ export const ProductsCard = ({ product }: { product: Pd }) => {
     if (!secondConfirmation) return;
     if (firstConfirmation && secondConfirmation) {
       axios
-        .delete(`/api/products/${product._id}`)
+        .delete(`${baseUrl}/products/${product._id}`)
         .then((result) => console.log(result))
         .catch((err) => console.log(err));
 
@@ -164,7 +165,7 @@ type Blog = {
 };
 
 export const BlogCard = ({ blog }: { blog: Blog }) => {
-  const imageSrc = `http://localhost:5000/${blog.thumbnail}`;
+  const imageSrc = `https://sudamawebsite.onrender.com/${blog.thumbnail}`;
   return (
     <Link to={`/admin/blogs/edit/${blog._id}`}>
       <div className="bg-white/20 flex flex-row gap-4 p-4 rounded-lg text-white hover:scale-95 transition duration-300">
@@ -191,7 +192,7 @@ export const CategoryCard = ({
     <div className=" bg-white/20 flex flex-row gap-4 p-3 rounded-lg text-white hover:scale-95 transition duration-300 justify-between">
       <div className="flex flex-row gap-3">
         <img
-          src={`http://localhost:5000/${thumbnail}`}
+          src={`https://sudamawebsite.onrender.com/${thumbnail}`}
           alt=""
           className="min-w-15 w-15 h-15 rounded-xl bg-white"
         />

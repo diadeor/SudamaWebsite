@@ -1,5 +1,6 @@
 import { useContext, createContext, useEffect, useState, type ReactNode } from "react";
 import useFetch from "../hooks/useFetch";
+import { baseUrl } from "./AuthContext";
 
 const ItemContext: any = createContext("");
 
@@ -27,8 +28,8 @@ const ItemProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Array<Product>>();
   const [blogs, setBlogs] = useState<Array<Blog>>();
   const [loading, setLoading] = useState<Boolean>(true);
-  const prodRequest = useFetch("/api/products");
-  const blogRequest = useFetch("/api/blogs");
+  const prodRequest = useFetch(`${baseUrl}/products`);
+  const blogRequest = useFetch(`${baseUrl}/blogs`);
 
   useEffect(() => {
     const fetchItems = async () => {

@@ -6,6 +6,7 @@ import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import { FaRightFromBracket } from "react-icons/fa6";
 import { FormInput, FormLabel } from "../components/Form";
 import Top from "../components/Top";
+import { baseUrl } from "../contexts/AuthContext";
 
 const Profile = () => {
   const { user, setUser } = useAuth();
@@ -14,9 +15,9 @@ const Profile = () => {
   const [result, setResult] = useState<string | { message: string }>("");
   const [emailField, setEmailField] = useState(user?.email);
   const [nameField, setNameField] = useState(user?.name);
-  const URI = `/api/users/update/${user?.id}`;
+  const URI = `${baseUrl}/users/update/${user?.id}`;
   const req = usePost(URI);
-  const getReq = useFetch("/api/auth/logout");
+  const getReq = useFetch(`${baseUrl}/auth/logout`);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const Profile = () => {
       setResult(data);
       setErr(error);
 
-      // const { data, error } = usePost(`/api/users/update/${user.id}`);
+      // const { data, error } = usePost(`${baseUrl}/users/update/${user.id}`);
       // console.log(data, error);
     } catch (error) {
       setErr("Error handling update");
@@ -104,16 +105,28 @@ const Profile = () => {
     );
   };
 
+  type Item = {
+    name: string;
+    quantity: number;
+    subTotal: number;
+  };
+  type Order = {
+    paymentStatus: string;
+    tx: string;
+    total: number;
+    items: Item[];
+  };
+
   const Orders = () => {
-    const getOrders = useFetch("/api/orders/me");
-    const [orders, setOrder] = useState<Array<Object>>([]);
+    const getOrders = useFetch(`${baseUrl}/orders/me`);
+    const [orders, setOrders] = useState<Order[]>();
 
     useEffect(() => {
       const fetchOrders = async () => {
         try {
           const { data } = await getOrders();
           // console.log(data.orders);
-          data.success && setOrder(data.orders);
+          data.success && setOrders(data.orders);
         } catch (error) {
           setErr("Error while fetching orders");
         }
@@ -127,53 +140,54 @@ const Profile = () => {
 
     return (
       <div className=" text-white rounded-lg flex flex-col gap-2">
-        {orders.map((order, index) => {
-          const payment = order.paymentStatus;
-          return (
-            <div className="item rounded-lg bg-white/10 p-3 flex flex-row gap-2" key={index}>
-              <div className="left font-fauna">
-                <p className=" text-lg text-yellow-500 font-bold">#{order.tx}</p>
-                <p className="bg-white/10 p-2 rounded-sm text-center text-sm">
-                  <span className="font-bold tracking-widest font-lobster">Total</span> <br />
-                  <span className="font-bold">Rs.{order.total}</span>
-                </p>
-                {payment === "paid" && (
-                  <p className="font-poppins font-bold tracking-wider text-emerald-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
-                    PAID
+        {orders &&
+          orders.map((order, index) => {
+            const payment = order.paymentStatus;
+            return (
+              <div className="item rounded-lg bg-white/10 p-3 flex flex-row gap-2" key={index}>
+                <div className="left font-fauna">
+                  <p className=" text-lg text-yellow-500 font-bold">#{order.tx}</p>
+                  <p className="bg-white/10 p-2 rounded-sm text-center text-sm">
+                    <span className="font-bold tracking-widest font-lobster">Total</span> <br />
+                    <span className="font-bold">Rs.{order.total}</span>
                   </p>
-                )}
-                {payment === "refunded" && (
-                  <p className="font-poppins font-bold tracking-wider text-red-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
-                    RE
-                  </p>
-                )}
-                {payment === "unpaid" && (
-                  <button
-                    onClick={() => handlePay(order)}
-                    className="cursor-pointer hover:scale-95 transition duration-200 w-full font-poppins font-bold tracking-wider text-white bg-green-600 p-2 rounded-sm text-center text-md mt-2"
-                  >
-                    Pay
-                  </button>
-                )}
-              </div>
-              <div className="font-fauna right text-center w-full bg-white/10 rounded-md flex flex-col p-2 pt-0 pb-1">
-                <p className="font-lobster font-bold tracking-widest border-b-2 border-white/20">
-                  Items
-                </p>
-                {order.items.map((item) => {
-                  return (
-                    <p className=" flex flex-row justify-between">
-                      <span className="tracking-normal text-left">
-                        {item.name} x {item.quantity}
-                      </span>
-                      <span className="font-bold">Rs.{item.subTotal}</span>
+                  {payment === "paid" && (
+                    <p className="font-poppins font-bold tracking-wider text-emerald-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
+                      PAID
                     </p>
-                  );
-                })}
+                  )}
+                  {payment === "refunded" && (
+                    <p className="font-poppins font-bold tracking-wider text-red-300 bg-white/10 p-2 rounded-sm text-center text-md mt-2">
+                      RE
+                    </p>
+                  )}
+                  {payment === "unpaid" && (
+                    <button
+                      onClick={() => handlePay(order)}
+                      className="cursor-pointer hover:scale-95 transition duration-200 w-full font-poppins font-bold tracking-wider text-white bg-green-600 p-2 rounded-sm text-center text-md mt-2"
+                    >
+                      Pay
+                    </button>
+                  )}
+                </div>
+                <div className="font-fauna right text-center w-full bg-white/10 rounded-md flex flex-col p-2 pt-0 pb-1">
+                  <p className="font-lobster font-bold tracking-widest border-b-2 border-white/20">
+                    Items
+                  </p>
+                  {order.items.map((item) => {
+                    return (
+                      <p className=" flex flex-row justify-between">
+                        <span className="tracking-normal text-left">
+                          {item.name} x {item.quantity}
+                        </span>
+                        <span className="font-bold">Rs.{item.subTotal}</span>
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     );
   };
@@ -183,7 +197,7 @@ const Profile = () => {
     const [success, setSuccess] = useState("");
     const [err, setErr] = useState("");
     const form = useRef<HTMLFormElement>(null);
-    const passRequest = usePost("/api/auth/pass");
+    const passRequest = usePost(`${baseUrl}/auth/pass`);
 
     const handlePass = async (e: any) => {
       e.preventDefault();

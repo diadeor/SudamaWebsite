@@ -12,6 +12,7 @@ import { FaUsers, FaLayerGroup, FaCubesStacked, FaFilePen, FaEye, FaList } from 
 import CreateCategory from "../components/Admin/CreateCat";
 import EditCat from "../components/Admin/EditCat";
 import EditBlogs from "../components/Admin/EditBlogs";
+import { baseUrl } from "../contexts/AuthContext";
 // import usePost from "../hooks/usePost";
 
 const Admin = () => {
@@ -19,7 +20,7 @@ const Admin = () => {
   const [result, setResult] = useState("");
   const [data, setData] = useState(Object);
   const { user } = useAuth();
-  const stats = useFetch("/api/stats");
+  const stats = useFetch(`${baseUrl}/stats`);
   const [count, setCount] = useState(3);
   const nav = useNavigate();
 
@@ -118,7 +119,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaLayerGroup />}
                 title="products"
-                url="/api/products"
+                url={`${baseUrl}/products`}
                 errFunc={setErr}
                 option={<Option url="/admin/products/create" />}
               />
@@ -127,7 +128,12 @@ const Admin = () => {
           <Route
             path="/users"
             element={
-              <AdminFetch icon={<FaUsers />} title="users" url="/api/users" errFunc={setErr} />
+              <AdminFetch
+                icon={<FaUsers />}
+                title="users"
+                url={`${baseUrl}/users`}
+                errFunc={setErr}
+              />
             }
           />
           <Route
@@ -136,7 +142,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaCubesStacked />}
                 title="orders"
-                url="/api/orders"
+                url={`${baseUrl}/orders`}
                 errFunc={setErr}
               />
             }
@@ -147,7 +153,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaFilePen />}
                 title="blogs"
-                url="/api/blogs"
+                url={`${baseUrl}/blogs`}
                 errFunc={setErr}
                 option={<Option url="/admin/blogs/create" />}
               />
@@ -159,7 +165,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaList />}
                 title="categories"
-                url="/api/categories"
+                url={`${baseUrl}/categories`}
                 errFunc={setErr}
                 option={<Option url="/admin/cats/create" />}
               />
@@ -168,7 +174,12 @@ const Admin = () => {
           <Route
             path="/visits"
             element={
-              <AdminFetch icon={<FaEye />} title="visits" url="/api/visits" errFunc={setErr} />
+              <AdminFetch
+                icon={<FaEye />}
+                title="visits"
+                url={`${baseUrl}/visits`}
+                errFunc={setErr}
+              />
             }
           />
           <Route path="/products/create" element={<Create />} />

@@ -2,6 +2,7 @@ import usePost from "../../hooks/usePost";
 import { useRef, useState } from "react";
 import { FormInput, FormLabel } from "../Form";
 import useFile from "../../hooks/useFile";
+import { baseUrl } from "../../contexts/AuthContext";
 
 const CreateCategory = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -10,7 +11,7 @@ const CreateCategory = () => {
   const [thumbText, setThumbText] = useState("Choose a thumbnail");
   const imageRef = useRef<HTMLImageElement>(null);
   const file = useFile(setThumbText);
-  const request = usePost("/api/categories/create");
+  const request = usePost(`${baseUrl}/categories/create`);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

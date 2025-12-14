@@ -6,6 +6,8 @@ export const AuthContext: any = createContext("");
 
 export const useAuth: any = () => useContext(AuthContext);
 
+export const baseUrl = import.meta.env.VITE_API_URL;
+
 const generateRandomCode = () => {
   const lowStr = "abcdefghijklmnopqrstuvwxyz";
   const string = `${lowStr}${lowStr.toUpperCase()}01234567890`;
@@ -20,13 +22,13 @@ const generateRandomCode = () => {
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const visitRequest = usePost("/api/visits/update");
+  const visitRequest = usePost(`${baseUrl}/visits/update`);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const resp = await (
-          await axios.get("/api/users/me", {
+          await axios.get(`${baseUrl}/users/me`, {
             withCredentials: true,
             validateStatus: () => true,
           })

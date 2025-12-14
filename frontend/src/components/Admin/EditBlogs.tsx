@@ -4,6 +4,7 @@ import useFile from "../../hooks/useFile";
 import useFetch from "../../hooks/useFetch";
 import usePut from "../../hooks/usePut";
 import { useParams } from "react-router-dom";
+import { baseUrl } from "../../contexts/AuthContext";
 
 type Blog = {
   _id: string;
@@ -21,13 +22,13 @@ const EditBlogs = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const handleFile = useFile(setThumbText);
-  const getBlog = useFetch(`/api/blogs/${id}`);
-  const updateBlog = usePut(`/api/blogs/update/${id}`);
+  const getBlog = useFetch(`${baseUrl}/blogs/${id}`);
+  const updateBlog = usePut(`${baseUrl}/blogs/update/${id}`);
 
   useEffect(() => {
     try {
       const fetchBlog = async () => {
-        const { data, error } = await getBlog();
+        const { data } = await getBlog();
         if (data.success) {
           setBlog(data.blog);
         }
@@ -51,7 +52,7 @@ const EditBlogs = () => {
       setSuccess("");
     }
   };
-  const imagePath = blog && `http://localhost:5000/${blog.thumbnail}`;
+  const imagePath = blog && `https://sudamawebsite.onrender.com/${blog.thumbnail}`;
   console.log(imagePath, blog);
 
   return (

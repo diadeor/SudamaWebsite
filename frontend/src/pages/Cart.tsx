@@ -5,6 +5,7 @@ import { useCart } from "../contexts/CartContext";
 import usePost from "../hooks/usePost";
 import { useNavigate } from "react-router-dom";
 import Top from "../components/Top";
+import { baseUrl } from "../contexts/AuthContext";
 
 const Item = ({
   name,
@@ -24,8 +25,8 @@ const Item = ({
   const [isDisabled, setIsDisabled] = useState(true);
   const [bgColor, setBgColor] = useState("bg-white/20");
   const [cursor, setCursor] = useState("auto");
-  const updateRequest = usePost("/api/carts/update");
-  const removeRequest = usePost("/api/carts/remove");
+  const updateRequest = usePost(`${baseUrl}/carts/update`);
+  const removeRequest = usePost(`${baseUrl}/carts/remove`);
 
   useEffect(() => {
     if (qtyUser == 1) {

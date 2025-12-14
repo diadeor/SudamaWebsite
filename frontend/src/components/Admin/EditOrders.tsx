@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import usePost from "../../hooks/usePost";
 import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
+import { baseUrl } from "../../contexts/AuthContext";
 
 const InfoItem = ({ title, value }: { title: string; value: string }) => {
   return (
@@ -49,8 +50,8 @@ const EditOrders = () => {
   const [status, setStatus] = useState<string>("");
   const [paymentStatus, setPaymentStatus] = useState<string>("");
   const { tx } = useParams();
-  const getSingleOrder = useFetch(`/api/orders/${tx}`);
-  const request = usePost(`/api/orders/update/${tx}`);
+  const getSingleOrder = useFetch(`${baseUrl}/orders/${tx}`);
+  const request = usePost(`${baseUrl}/orders/update/${tx}`);
 
   useEffect(() => {
     (async () => {

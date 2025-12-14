@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import usePost from "../../hooks/usePost";
 import useFile from "../../hooks/useFile";
 import useFetch from "../../hooks/useFetch";
+import { baseUrl } from "../../contexts/AuthContext";
 
 const Create = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -12,8 +13,8 @@ const Create = () => {
   const [error, setError] = useState("");
   const [catOptions, setCatOptions] = useState<Array<string>>([]);
   const file = useFile(setThumbText);
-  const request = usePost("/api/products/create");
-  const catRequest = useFetch("/api/categories");
+  const request = usePost(`${baseUrl}/products/create`);
+  const catRequest = useFetch(`${baseUrl}/categories`);
 
   useEffect(() => {
     (async () => {

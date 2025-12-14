@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import usePut from "../../hooks/usePut";
+import { baseUrl } from "../../contexts/AuthContext";
 
 const EditProducts = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -15,9 +16,9 @@ const EditProducts = () => {
   const [productCategory, setProductCategory] = useState("");
   const [badge, setBadge] = useState("");
   const { id } = useParams();
-  const getProduct = useFetch(`/api/products/${id}`);
-  const request = usePut(`/api/products/update/${id}`);
-  const getCategories = useFetch("/api/categories");
+  const getProduct = useFetch(`${baseUrl}/products/${id}`);
+  const request = usePut(`${baseUrl}/products/update/${id}`);
+  const getCategories = useFetch(`${baseUrl}/categories`);
 
   useEffect(() => {
     const fetchVals = async () => {
@@ -37,7 +38,7 @@ const EditProducts = () => {
     fetchVals();
   }, []);
 
-  const imagePath = product && `http://localhost:5000/${product.thumbnail}`;
+  const imagePath = product && `https://sudamawebsite.onrender.com/${product.thumbnail}`;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../contexts/AuthContext";
 
 type product = {
   _id: string;
@@ -20,7 +21,7 @@ const Product = ({ pd }: { pd: product | any }) => {
   const bgColor =
     pd.badge == "featured" ? "bg-yellow-700" : pd.badge == "new" ? "bg-green-700" : "bg-rose-900";
   const { setCart } = useCart();
-  const request = usePost("/api/carts/add");
+  const request = usePost(`${baseUrl}/carts/add`);
   const { user } = useAuth();
 
   const addToCart = async () => {
@@ -45,7 +46,7 @@ const Product = ({ pd }: { pd: product | any }) => {
       )}
 
       <img
-        src={`http://localhost:5000/${pd.thumbnail}`}
+        src={`https://sudamawebsite.onrender.com/${pd.thumbnail}`}
         alt=""
         className="hover:z-15 w-40 h-40 rounded-xl hover:scale-105 transition duration-300 mb-2"
       />

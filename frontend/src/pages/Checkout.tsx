@@ -5,6 +5,7 @@ import { useCart } from "../contexts/CartContext";
 import usePost from "../hooks/usePost";
 import { useNavigate } from "react-router-dom";
 import Top from "../components/Top";
+import { baseUrl } from "../contexts/AuthContext";
 
 const Checkout = () => {
   const { user, setUser } = useAuth();
@@ -13,7 +14,7 @@ const Checkout = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bgColor, setBgColor] = useState<string>("bg-zinc-500");
   const form = useRef<HTMLFormElement>(null);
-  const checkoutRequest = usePost("/api/orders/create");
+  const checkoutRequest = usePost(`${baseUrl}/orders/create`);
   const nav = useNavigate();
 
   const handleFormChange = () => {

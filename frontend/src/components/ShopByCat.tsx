@@ -3,6 +3,7 @@ import Section from "./Sections";
 import useFetch from "../hooks/useFetch";
 import Category from "./Category";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../contexts/AuthContext";
 
 type Cat = {
   name: string;
@@ -12,7 +13,7 @@ type Cat = {
 const ShopByCat = ({ limit }: { limit: number }) => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
-  const request = useFetch("/api/categories");
+  const request = useFetch(`${baseUrl}/categories`);
   useEffect(() => {
     request().then(({ data, error }) => {
       data ? setData(data.categories) : setErr(error);
@@ -20,12 +21,16 @@ const ShopByCat = ({ limit }: { limit: number }) => {
   }, []);
   return (
     <Section title="Categories" subtitle="Select any category to shop">
+      {err && <p>There's an error</p>}
       {data &&
         data.map((cat: Cat, index: number) => {
           return (
             index < limit && (
               <Link to="/shop" key={index}>
-                <Category name={cat.name} img={`http://localhost:5000/${cat.thumbnail}`} />
+                <Category
+                  name={cat.name}
+                  img={`https://sudamawebsite.onrender.com/${cat.thumbnail}`}
+                />
               </Link>
             )
           );

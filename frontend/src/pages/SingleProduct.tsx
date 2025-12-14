@@ -4,6 +4,7 @@ import usePost from "../hooks/usePost";
 import { FaCartPlus } from "react-icons/fa6";
 import { useCart } from "../contexts/CartContext";
 import { useItem } from "../contexts/ItemContext";
+import { baseUrl } from "../contexts/AuthContext";
 // import { useAuth } from "../contexts/AuthContext";
 
 type Product = {
@@ -23,7 +24,7 @@ const Single = () => {
   const [qtyUser, setQtyUser] = useState(1);
   const [bgColor, setBgColor] = useState("bg-white/20");
   const [cursor, setCursor] = useState("auto");
-  const request = usePost("/api/carts/add");
+  const request = usePost(`${baseUrl}/carts/add`);
   const { setCart } = useCart();
 
   if (!id) return;
@@ -69,7 +70,7 @@ const Single = () => {
       {valid && product ? (
         <div className=" prod flex flex-row flex-wrap justify-center gap-3">
           <img
-            src={`http://localhost:5000/${product.thumbnail}`}
+            src={`https://sudamawebsite.onrender.com/${product.thumbnail}`}
             alt=""
             className="flex-1 w-full max-w-120 md:max-w-1/2 aspect-square  bg-black/20 rounded-md"
           />

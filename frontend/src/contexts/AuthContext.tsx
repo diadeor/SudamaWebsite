@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, useContext, type ReactNode } from "react";
 import axios from "axios";
-import usePost from "../hooks/usePost";
 
 export const AuthContext: any = createContext("");
 
@@ -8,6 +7,7 @@ export const useAuth: any = () => useContext(AuthContext);
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
+/*
 const generateRandomCode = () => {
   const lowStr = "abcdefghijklmnopqrstuvwxyz";
   const string = `${lowStr}${lowStr.toUpperCase()}01234567890`;
@@ -18,11 +18,12 @@ const generateRandomCode = () => {
   }
   return generated;
 };
+*/
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const visitRequest = usePost(`${baseUrl}/visits/update`);
+  // const visitRequest = usePost(`${baseUrl}/visits/update`);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -34,13 +35,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           })
         ).data;
         setUser(resp.user);
-        if (!localStorage.getItem("session")) {
-          localStorage.setItem("session", generateRandomCode());
-        }
-        await visitRequest({
-          user: resp.user ? resp.user.id : null,
-          session: localStorage.getItem("session"),
-        });
+        // if (!localStorage.getItem("session")) {
+        //   localStorage.setItem("session", generateRandomCode());
+        // }
+        // await visitRequest({
+        //   user: resp.user ? resp.user.id : null,
+        //   session: localStorage.getItem("session"),
+        // });
       } catch (error) {
         console.log(error);
         setUser(null);

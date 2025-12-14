@@ -14,9 +14,17 @@ import authUser from "./middlewares/auth.middleware.js";
 import blogRouter from "./routes/blogs.route.js";
 import catRouter from "./routes/cat.routes.js";
 import visitRouter from "./routes/visits.route.js";
+import cors from "cors";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: ["https://web-chat-virid-two.vercel.app", "http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 // Middlewares
 app.use(cookieParser());
 app.use(express.json());

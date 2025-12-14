@@ -10,7 +10,7 @@ const CreateBlogs = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const handleFile = useFile(setThumbText);
-  const request = usePost("/api/v1/blogs/create");
+  const request = usePost("/api/blogs/create");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

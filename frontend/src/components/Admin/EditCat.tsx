@@ -18,8 +18,8 @@ const EditCat = () => {
   const [category, setCategory] = useState<Category>();
   const imageRef = useRef<HTMLImageElement>(null);
   const form = useRef<HTMLFormElement>(null);
-  const getCat = useFetch(`/api/v1/categories/${id}`);
-  const setCat = usePut(`/api/v1/categories/update/${id}`);
+  const getCat = useFetch(`/api/categories/${id}`);
+  const setCat = usePut(`/api/categories/update/${id}`);
 
   useEffect(() => {
     try {

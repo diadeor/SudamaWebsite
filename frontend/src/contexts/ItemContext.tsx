@@ -27,8 +27,8 @@ const ItemProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Array<Product>>();
   const [blogs, setBlogs] = useState<Array<Blog>>();
   const [loading, setLoading] = useState<Boolean>(true);
-  const prodRequest = useFetch("/api/v1/products");
-  const blogRequest = useFetch("/api/v1/blogs");
+  const prodRequest = useFetch("/api/products");
+  const blogRequest = useFetch("/api/blogs");
 
   useEffect(() => {
     const fetchItems = async () => {

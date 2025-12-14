@@ -11,7 +11,7 @@ const Register = () => {
   const passInput: any = useRef("");
   const nav = useNavigate();
   const { user, setUser } = useAuth();
-  const req = usePost("/api/v1/auth/register");
+  const req = usePost("/api/auth/register");
 
   const cFunc = () => {
     return {

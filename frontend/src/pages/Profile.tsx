@@ -14,9 +14,9 @@ const Profile = () => {
   const [result, setResult] = useState<string | { message: string }>("");
   const [emailField, setEmailField] = useState(user?.email);
   const [nameField, setNameField] = useState(user?.name);
-  const URI = `/api/v1/users/update/${user?.id}`;
+  const URI = `/api/users/update/${user?.id}`;
   const req = usePost(URI);
-  const getReq = useFetch("/api/v1/auth/logout");
+  const getReq = useFetch("/api/auth/logout");
   const nav = useNavigate();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Profile = () => {
       setResult(data);
       setErr(error);
 
-      // const { data, error } = usePost(`/api/v1/users/update/${user.id}`);
+      // const { data, error } = usePost(`/api/users/update/${user.id}`);
       // console.log(data, error);
     } catch (error) {
       setErr("Error handling update");
@@ -105,7 +105,7 @@ const Profile = () => {
   };
 
   const Orders = () => {
-    const getOrders = useFetch("/api/v1/orders/me");
+    const getOrders = useFetch("/api/orders/me");
     const [orders, setOrder] = useState<Array<Object>>([]);
 
     useEffect(() => {
@@ -183,7 +183,7 @@ const Profile = () => {
     const [success, setSuccess] = useState("");
     const [err, setErr] = useState("");
     const form = useRef<HTMLFormElement>(null);
-    const passRequest = usePost("/api/v1/auth/pass");
+    const passRequest = usePost("/api/auth/pass");
 
     const handlePass = async (e: any) => {
       e.preventDefault();

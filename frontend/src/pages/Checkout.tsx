@@ -13,7 +13,7 @@ const Checkout = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [bgColor, setBgColor] = useState<string>("bg-zinc-500");
   const form = useRef<HTMLFormElement>(null);
-  const checkoutRequest = usePost("/api/v1/orders/create");
+  const checkoutRequest = usePost("/api/orders/create");
   const nav = useNavigate();
 
   const handleFormChange = () => {

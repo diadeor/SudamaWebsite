@@ -12,8 +12,8 @@ const Create = () => {
   const [error, setError] = useState("");
   const [catOptions, setCatOptions] = useState<Array<string>>([]);
   const file = useFile(setThumbText);
-  const request = usePost("/api/v1/products/create");
-  const catRequest = useFetch("/api/v1/categories");
+  const request = usePost("/api/products/create");
+  const catRequest = useFetch("/api/categories");
 
   useEffect(() => {
     (async () => {

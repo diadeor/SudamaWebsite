@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "http://localhost:5000",
+      "/api": "https://sudamawebsite.onrender.com",
     },
     host: "0.0.0.0",
     port: 5173, // or your custom port

@@ -19,7 +19,7 @@ const Admin = () => {
   const [result, setResult] = useState("");
   const [data, setData] = useState(Object);
   const { user } = useAuth();
-  const stats = useFetch("/api/v1/stats");
+  const stats = useFetch("/api/stats");
   const [count, setCount] = useState(3);
   const nav = useNavigate();
 
@@ -118,7 +118,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaLayerGroup />}
                 title="products"
-                url="/api/v1/products"
+                url="/api/products"
                 errFunc={setErr}
                 option={<Option url="/admin/products/create" />}
               />
@@ -127,7 +127,7 @@ const Admin = () => {
           <Route
             path="/users"
             element={
-              <AdminFetch icon={<FaUsers />} title="users" url="/api/v1/users" errFunc={setErr} />
+              <AdminFetch icon={<FaUsers />} title="users" url="/api/users" errFunc={setErr} />
             }
           />
           <Route
@@ -136,7 +136,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaCubesStacked />}
                 title="orders"
-                url="/api/v1/orders"
+                url="/api/orders"
                 errFunc={setErr}
               />
             }
@@ -147,7 +147,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaFilePen />}
                 title="blogs"
-                url="/api/v1/blogs"
+                url="/api/blogs"
                 errFunc={setErr}
                 option={<Option url="/admin/blogs/create" />}
               />
@@ -159,7 +159,7 @@ const Admin = () => {
               <AdminFetch
                 icon={<FaList />}
                 title="categories"
-                url="/api/v1/categories"
+                url="/api/categories"
                 errFunc={setErr}
                 option={<Option url="/admin/cats/create" />}
               />
@@ -168,7 +168,7 @@ const Admin = () => {
           <Route
             path="/visits"
             element={
-              <AdminFetch icon={<FaEye />} title="visits" url="/api/v1/visits" errFunc={setErr} />
+              <AdminFetch icon={<FaEye />} title="visits" url="/api/visits" errFunc={setErr} />
             }
           />
           <Route path="/products/create" element={<Create />} />

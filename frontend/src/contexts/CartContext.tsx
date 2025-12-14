@@ -9,7 +9,7 @@ export const useCart: any = () => useContext(CartContext);
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Array<Object>>();
   const [loading, setLoading] = useState(true);
-  const request = useFetch("/api/v1/carts/me");
+  const request = useFetch("/api/carts/me");
 
   useEffect(() => {
     (async () => {

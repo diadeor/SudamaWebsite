@@ -11,7 +11,7 @@ const Shop = () => {
   const [searchProd, setSearchProd] = useState(products);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const catsRequest = useFetch("/api/v1/categories");
+  const catsRequest = useFetch("/api/categories");
 
   useEffect(() => {
     catsRequest().then(({ data }) => {

@@ -21,8 +21,8 @@ const EditBlogs = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const handleFile = useFile(setThumbText);
-  const getBlog = useFetch(`/api/v1/blogs/${id}`);
-  const updateBlog = usePut(`/api/v1/blogs/update/${id}`);
+  const getBlog = useFetch(`/api/blogs/${id}`);
+  const updateBlog = usePut(`/api/blogs/update/${id}`);
 
   useEffect(() => {
     try {

@@ -10,7 +10,7 @@ const CreateCategory = () => {
   const [thumbText, setThumbText] = useState("Choose a thumbnail");
   const imageRef = useRef<HTMLImageElement>(null);
   const file = useFile(setThumbText);
-  const request = usePost("/api/v1/categories/create");
+  const request = usePost("/api/categories/create");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

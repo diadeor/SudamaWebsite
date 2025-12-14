@@ -12,7 +12,7 @@ type Cat = {
 const ShopByCat = ({ limit }: { limit: number }) => {
   const [data, setData] = useState<any>();
   const [err, setErr] = useState("");
-  const request = useFetch("/api/v1/categories");
+  const request = useFetch("/api/categories");
   useEffect(() => {
     request().then(({ data, error }) => {
       data ? setData(data.categories) : setErr(error);

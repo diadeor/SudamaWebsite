@@ -20,7 +20,7 @@ const Product = ({ pd }: { pd: product | any }) => {
   const bgColor =
     pd.badge == "featured" ? "bg-yellow-700" : pd.badge == "new" ? "bg-green-700" : "bg-rose-900";
   const { setCart } = useCart();
-  const request = usePost("/api/v1/carts/add");
+  const request = usePost("/api/carts/add");
   const { user } = useAuth();
 
   const addToCart = async () => {

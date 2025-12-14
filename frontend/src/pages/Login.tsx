@@ -10,7 +10,7 @@ const Login = () => {
   const emailInput: any = useRef("");
   const passInput: any = useRef("");
   const { user, setUser } = useAuth();
-  const req = usePost("/api/v1/auth/login");
+  const req = usePost("/api/auth/login");
   const nav = useNavigate();
 
   const elseFunc = ({ data }: { data: { user: Object } }) => {

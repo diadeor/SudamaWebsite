@@ -15,9 +15,9 @@ const EditProducts = () => {
   const [productCategory, setProductCategory] = useState("");
   const [badge, setBadge] = useState("");
   const { id } = useParams();
-  const getProduct = useFetch(`/api/v1/products/${id}`);
-  const request = usePut(`/api/v1/products/update/${id}`);
-  const getCategories = useFetch("/api/v1/categories");
+  const getProduct = useFetch(`/api/products/${id}`);
+  const request = usePut(`/api/products/update/${id}`);
+  const getCategories = useFetch("/api/categories");
 
   useEffect(() => {
     const fetchVals = async () => {

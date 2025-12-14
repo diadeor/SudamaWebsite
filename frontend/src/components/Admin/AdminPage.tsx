@@ -50,7 +50,7 @@ export const ProductsCard = ({ product }: { product: Pd }) => {
     if (!secondConfirmation) return;
     if (firstConfirmation && secondConfirmation) {
       axios
-        .delete(`/api/v1/products/${product._id}`)
+        .delete(`/api/products/${product._id}`)
         .then((result) => console.log(result))
         .catch((err) => console.log(err));
 

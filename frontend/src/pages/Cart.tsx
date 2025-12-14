@@ -24,8 +24,8 @@ const Item = ({
   const [isDisabled, setIsDisabled] = useState(true);
   const [bgColor, setBgColor] = useState("bg-white/20");
   const [cursor, setCursor] = useState("auto");
-  const updateRequest = usePost("/api/v1/carts/update");
-  const removeRequest = usePost("/api/v1/carts/remove");
+  const updateRequest = usePost("/api/carts/update");
+  const removeRequest = usePost("/api/carts/remove");
 
   useEffect(() => {
     if (qtyUser == 1) {

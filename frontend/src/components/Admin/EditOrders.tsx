@@ -49,8 +49,8 @@ const EditOrders = () => {
   const [status, setStatus] = useState<string>("");
   const [paymentStatus, setPaymentStatus] = useState<string>("");
   const { tx } = useParams();
-  const getSingleOrder = useFetch(`/api/v1/orders/${tx}`);
-  const request = usePost(`/api/v1/orders/update/${tx}`);
+  const getSingleOrder = useFetch(`/api/orders/${tx}`);
+  const request = usePost(`/api/orders/update/${tx}`);
 
   useEffect(() => {
     (async () => {

@@ -76,7 +76,7 @@ export const Form = ({
   const [err, setErr] = useState("");
   const [success, setSuccess] = useState("");
   const nav = useNavigate();
-  const googleLoginUrl = "/api/v1/auth/google";
+  const googleLoginUrl = "/api/auth/google";
   const { setUser } = useAuth();
 
   const googleLoginSuccess = async (resp: any) => {

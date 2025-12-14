@@ -20,13 +20,13 @@ const generateRandomCode = () => {
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const visitRequest = usePost("/api/v1/visits/update");
+  const visitRequest = usePost("/api/visits/update");
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const resp = await (
-          await axios.get("/api/v1/users/me", {
+          await axios.get("/api/users/me", {
             withCredentials: true,
             validateStatus: () => true,
           })
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (!localStorage.getItem("session")) {
           localStorage.setItem("session", generateRandomCode());
         }
-        const { data } = await visitRequest({
+        await visitRequest({
           user: resp.user ? resp.user.id : null,
           session: localStorage.getItem("session"),
         });

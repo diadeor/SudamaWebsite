@@ -23,7 +23,7 @@ const Single = () => {
   const [qtyUser, setQtyUser] = useState(1);
   const [bgColor, setBgColor] = useState("bg-white/20");
   const [cursor, setCursor] = useState("auto");
-  const request = usePost("/api/v1/carts/add");
+  const request = usePost("/api/carts/add");
   const { setCart } = useCart();
 
   if (!id) return;

@@ -3,7 +3,7 @@ import axios from "axios";
 const useFetch = (url: string) => {
   const getReq = async () => {
     try {
-      const resp = await (await axios.get(url)).data;
+      const resp = await (await axios.get(url, { withCredentials: true })).data;
       if (resp.success == false) {
         return { data: "", error: resp.message };
       } else {

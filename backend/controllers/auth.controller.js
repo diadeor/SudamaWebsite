@@ -34,8 +34,8 @@ export const signUp = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
-      secure: false,
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
     });
     res.json({
       success: true,
@@ -74,9 +74,9 @@ export const signIn = async (req, res, next) => {
     const token = jwt.sign({ id, role }, JWT_SECRET, { expiresIn: JWT_EXPIRE });
 
     res.cookie("token", token, {
-      secure: false,
+      secure: true,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24,
     });
 
@@ -102,7 +102,7 @@ export const signOut = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     if (!token) throw new Error("User not logged in");
-    res.cookie("token", token, { httpOnly: true, secure: false, sameSite: true, maxAge: 1 });
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "none", maxAge: 1 });
 
     res.json({
       success: true,
@@ -178,9 +178,9 @@ export const googleLogin = async (req, res, next) => {
     );
 
     res.cookie("token", appToken, {
-      secure: false,
+      secure: true,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24,
     });
     res.json({

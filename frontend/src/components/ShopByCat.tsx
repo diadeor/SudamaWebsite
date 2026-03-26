@@ -27,10 +27,7 @@ const ShopByCat = ({ limit }: { limit: number }) => {
           return (
             index < limit && (
               <Link to="/shop" key={index}>
-                <Category
-                  name={cat.name}
-                  img={`https://sudamawebsite.onrender.com/${cat.thumbnail}`}
-                />
+                <Category name={cat.name} img={`http://localhost:5000/${cat.thumbnail}`} />
               </Link>
             )
           );

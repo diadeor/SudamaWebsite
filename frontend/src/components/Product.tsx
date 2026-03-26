@@ -46,7 +46,7 @@ const Product = ({ pd }: { pd: product | any }) => {
       )}
 
       <img
-        src={`https://sudamawebsite.onrender.com/${pd.thumbnail}`}
+        src={`http://localhost:5000/${pd.thumbnail}`}
         alt=""
         className="hover:z-15 w-40 h-40 rounded-xl hover:scale-105 transition duration-300 mb-2"
       />
@@ -68,7 +68,7 @@ const Product = ({ pd }: { pd: product | any }) => {
         )}
         {pd.badge == "sale" && (
           <span className="bg-rose-800 p-1 px-3 rounded-sm font-jetbrains">
-            -{Math.floor(((pd.regularPrice - pd.salePrice) / pd.salePrice) * 100)}%
+            -{Math.floor(((pd.regularPrice - pd.salePrice) / pd.regularPrice) * 100)}%
           </span>
         )}
       </p>

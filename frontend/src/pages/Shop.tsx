@@ -48,7 +48,7 @@ const Shop = () => {
           cat.map((item: any, index: number) => {
             return (
               <Category
-                img={`https://sudamawebsite.onrender.com/${item.thumbnail}`}
+                img={`http://localhost:5000/${item.thumbnail}`}
                 name={item.name}
                 setName={setSelectedCategory}
                 key={index}

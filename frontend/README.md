@@ -1,5 +1,7 @@
 # Full-Stack E-Commerce Platform
 
+**[Click here to visit the live demo](https://sudama-website.vercel.app)**
+
 A complete, full-stack e-commerce platform built to handle complex business logic, secure user authentication, and relational data modeling. This project demonstrates a deep understanding of RESTful API architecture.
 
 _Note: Since the backend is currently running on free tier of render, it takes time for server to start so bear on for now. It will be fixed soon._

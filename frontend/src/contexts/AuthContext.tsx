@@ -34,7 +34,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             validateStatus: () => true,
           })
         ).data;
-        setUser(resp.user);
+
+        // const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+        // await sleep(10000);
+        if (resp.success) {
+          setUser(resp.user);
+        } else throw new Error("User not authorized");
         // if (!localStorage.getItem("session")) {
         //   localStorage.setItem("session", generateRandomCode());
         // }

@@ -1,8 +1,6 @@
-import path from "path";
-import { rename } from "fs";
 import Product from "../models/products.model.js";
 import Category from "../models/categories.model.js";
-import mongoose from "mongoose";
+import uploader from "../config/cloudinary.js";
 
 export const getProducts = async (req, res, next) => {
   try {
@@ -59,7 +57,8 @@ export const createProduct = async (req, res, next) => {
     console.log("Create product route by", id);
 
     const { name, category, regularPrice, salePrice, description, stock, badge } = req.body;
-    const thumbnail = req.file;
+    if (!req.file) throw new Error("No image uploaded");
+
     if ((!name, !category, !salePrice, !stock)) throw new Error("Required fields are not given");
     const itemExists = await Product.findOne({ name });
 
@@ -73,34 +72,37 @@ export const createProduct = async (req, res, next) => {
     }
     if (stock < 1) throw new Error("Stock is less than 1");
 
-    const genId = new mongoose.Types.ObjectId();
-    const oldPath = req.file.path;
-    const newName = `${genId}${path.extname(thumbnail.originalname)}`;
-    const newPath = `public/products/${newName}`;
+    const uploadStream = uploader.upload_stream(
+      { folder: "product_thumbnail" },
+      async (error, result) => {
+        if (error) {
+          console.error(error);
+          throw new Error("Cloudinary upload failed.");
+        }
+        const imageUrl = result.secure_url;
+        console.log(imageUrl);
 
-    rename(oldPath, newPath, (err) => {
-      if (err) throw new Error("File rename error");
-    });
+        const product = await Product.create({
+          name,
+          badge,
+          category,
+          regularPrice,
+          salePrice,
+          stock,
+          description,
+          thumbnail: imageUrl,
+        });
 
-    const product = await Product.create({
-      _id: genId,
-      name,
-      badge,
-      category,
-      regularPrice,
-      salePrice,
-      stock,
-      description,
-      thumbnail: `products/${newName}`,
-    });
-
-    res.json({
-      success: true,
-      message: "New Product Created",
-      data: {
-        product,
+        return res.status(200).json({
+          success: true,
+          message: "New Product Created",
+          data: {
+            product,
+          },
+        });
       },
-    });
+    );
+    uploadStream.end(req.file.buffer);
   } catch (error) {
     next(error);
   }
@@ -136,6 +138,7 @@ export const updateProduct = async (req, res, next) => {
     console.log("Update product route by", userId);
     const { id } = req.params;
     const { name, category, regularPrice, salePrice, description, stock, badge } = req.body;
+    if (!req.file) throw new Error("No image uploaded");
     const thumbnail = req.file;
 
     if (!name || !category || !salePrice || !stock) throw new Error("Required fields are missing");
@@ -149,37 +152,42 @@ export const updateProduct = async (req, res, next) => {
 
     if (!item) throw new Error("Invalid product id");
 
-    const oldPath = req.file.path;
-    const newName = `${id}${path.extname(thumbnail.originalname)}`;
-    const newPath = `public/products/${newName}`;
+    const uploadStream = uploader.upload_stream(
+      { folder: "product_thumbnail" },
+      async (error, result) => {
+        if (error) {
+          console.error(error);
+          throw new Error("Cloudinary upload failed.");
+        }
+        const imageUrl = result.secure_url;
+        console.log(imageUrl);
 
-    rename(oldPath, newPath, (err) => {
-      if (err) throw new Error("File rename error");
-    });
-
-    const product = await Product.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          name,
-          category,
-          regularPrice,
-          salePrice,
-          stock,
-          badge,
-          description,
-          thumbnail: `products/${newName}`,
-        },
+        const product = await Product.findByIdAndUpdate(
+          id,
+          {
+            $set: {
+              name,
+              category,
+              regularPrice,
+              salePrice,
+              stock,
+              badge,
+              description,
+              thumbnail: imageUrl,
+            },
+          },
+          { new: true },
+        );
+        res.json({
+          success: true,
+          message: "Product Updated",
+          data: {
+            product,
+          },
+        });
       },
-      { new: true },
     );
-    res.json({
-      success: true,
-      message: "Product Updated",
-      data: {
-        product,
-      },
-    });
+    uploadStream.end(req.file.buffer);
   } catch (error) {
     next(error);
   }

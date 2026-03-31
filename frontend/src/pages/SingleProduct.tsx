@@ -70,7 +70,7 @@ const Single = () => {
       {valid && product ? (
         <div className=" prod flex flex-row flex-wrap justify-center gap-3">
           <img
-            src={`https://sudamawebsite.onrender.com/${product.thumbnail}`}
+            src={product.thumbnail}
             alt=""
             className="flex-1 w-full max-w-120 md:max-w-1/2 aspect-square  bg-black/20 rounded-md"
           />

@@ -46,7 +46,7 @@ const Product = ({ pd }: { pd: product | any }) => {
       )}
 
       <img
-        src={`http://localhost:5000/${pd.thumbnail}`}
+        src={pd.thumbnail}
         alt=""
         className="hover:z-15 w-40 h-40 rounded-xl hover:scale-105 transition duration-300 mb-2"
       />
@@ -55,8 +55,8 @@ const Product = ({ pd }: { pd: product | any }) => {
           pd.badge && pd.badge == "new"
             ? "animate-pulse"
             : pd.badge == "featured"
-            ? "animate-bounce"
-            : ""
+              ? "animate-bounce"
+              : ""
         } extra absolute font-bold text-white text-center text-sm`}
       >
         {pd.badge && pd.badge != "sale" && (

@@ -1,7 +1,5 @@
 import Category from "../models/categories.model.js";
-import path from "path";
-import { rename } from "fs";
-import mongoose from "mongoose";
+import uploader from "../config/cloudinary.js";
 
 export const getCategories = async (req, res, next) => {
   try {
@@ -48,27 +46,32 @@ export const updateCategory = async (req, res, next) => {
         throw new Error("No changes made");
     }
 
-    const oldPath = req.file.path;
-    const newName = `${id}${path.extname(thumbnail.originalname)}`;
-    const newPath = `public/categories/${newName}`;
+    const uploadStream = uploader.upload_stream(
+      { folder: "cats_thumbnail" },
+      async (error, result) => {
+        if (error) {
+          console.error(error);
+          throw new Error("Cloudinary upload failed.");
+        }
+        const imageUrl = result.secure_url;
+        console.log(imageUrl);
 
-    rename(oldPath, newPath, (err) => {
-      if (err) throw new Error("File rename error");
-    });
+        const category = await Category.findByIdAndUpdate(
+          id,
+          {
+            $set: { name, thumbnail: imageUrl },
+          },
+          { new: true },
+        );
 
-    const category = await Category.findByIdAndUpdate(
-      id,
-      {
-        $set: { name, thumbnail: `categories/${newName}` },
+        return res.json({
+          success: true,
+          message: "Category updated",
+          category,
+        });
       },
-      { new: true },
     );
-
-    res.json({
-      success: true,
-      message: "Category updated",
-      category,
-    });
+    uploadStream.end(req.file.buffer);
   } catch (error) {
     next(error);
   }
@@ -77,35 +80,38 @@ export const updateCategory = async (req, res, next) => {
 export const createCategory = async (req, res, next) => {
   try {
     const { name } = req.body;
-    const thumbnail = req.file;
+    if (!req.file) throw new Error("No image uploaded");
     const { role } = req.user;
     if (role !== "admin") throw new Error("Unauthorized");
 
     console.log("Create category route");
 
-    const generateID = new mongoose.Types.ObjectId();
-    const oldPath = req.file.path;
-    const newName = `${generateID}${path.extname(thumbnail.originalname)}`;
-    const newPath = `public/categories/${newName}`;
-
-    rename(oldPath, newPath, (err) => {
-      if (err) throw new Error("File rename error");
-    });
-
     const catExists = await Category.findOne({ name });
 
     if (catExists) throw new Error("Category already exists");
 
-    const category = await Category.create({
-      _id: generateID,
-      name,
-      thumbnail: `categories/${newName}`,
-    });
-    res.json({
-      success: true,
-      message: "New category created",
-      category,
-    });
+    const uploadStream = uploader.upload_stream(
+      { folder: "cats_thumbnail" },
+      async (error, result) => {
+        if (error) {
+          console.error(error);
+          throw new Error("Cloudinary upload failed.");
+        }
+        const imageUrl = result.secure_url;
+        console.log(imageUrl);
+
+        const category = await Category.create({
+          name,
+          thumbnail: imageUrl,
+        });
+        return res.json({
+          success: true,
+          message: "New category created",
+          category,
+        });
+      },
+    );
+    uploadStream.end(req.file.buffer);
   } catch (error) {
     next(error);
   }

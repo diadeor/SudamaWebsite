@@ -21,11 +21,7 @@ const Blog = () => {
     <div className="text-white font-poppins blog-container flex flex-col min-h-[calc(100svh-70px)] p-5 w-full max-w-6xl bg-neutral-800">
       {blog && (
         <div className="blog flex flex-col gap-5 items-center">
-          <img
-            src={`https://sudamawebsite.onrender.com/${blog.thumbnail}`}
-            alt=""
-            className="w-full max-w-150 rounded-xl aspect-square"
-          />
+          <img src={blog.thumbnail} alt="" className="w-full max-w-150 rounded-xl aspect-square" />
           <p className="font-bold text-xl w-full">{blog.title}</p>
           <p className=" w-full">{blog.description}</p>
         </div>

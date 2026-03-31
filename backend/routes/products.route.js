@@ -10,14 +10,7 @@ import {
 import authUser from "../middlewares/auth.middleware.js";
 
 const productRouter = Router();
-const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
-    cb(null, "public/products/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${file.originalname}`);
-  },
-});
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 productRouter.get("/", getProducts);

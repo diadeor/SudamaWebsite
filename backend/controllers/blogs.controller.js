@@ -1,7 +1,5 @@
 import Blog from "../models/blogs.model.js";
-import path from "path";
-import { rename } from "fs";
-import mongoose from "mongoose";
+import uploader from "../config/cloudinary.js";
 
 export const getBlogs = async (req, res, next) => {
   try {
@@ -33,31 +31,35 @@ export const createBlog = async (req, res, next) => {
     console.log("Create blog route", { user: req.user });
 
     const { title, description } = req.body;
+    if (!req.file) throw new Error("No image uploaded");
     const thumbnail = req.file;
 
     const blogExists = await Blog.findOne({ title });
     if (blogExists) throw new Error("A blog with that title already exists");
 
-    const generateId = new mongoose.Types.ObjectId();
+    const uploadStream = uploader.upload_stream(
+      { folder: "blog_thumbnail" },
+      async (error, result) => {
+        if (error) {
+          console.error(error);
+          throw new Error("Cloudinary upload failed.");
+        }
+        const imageUrl = result.secure_url;
+        console.log(imageUrl);
 
-    const oldPath = req.file.path;
-    const newName = `${generateId}${path.extname(thumbnail.originalname)}`;
-    const newPath = `public/blogs/${newName}`;
-    rename(oldPath, newPath, (err) => {
-      if (err) throw new Error("File rename error");
-    });
+        const blog = await Blog.create({
+          title,
+          description,
+          thumbnail: imageUrl,
+        });
 
-    const blog = await Blog.create({
-      _id: generateId,
-      title,
-      description,
-      thumbnail: `blogs/${newName}`,
-    });
-
-    res.json({
-      success: true,
-      blog,
-    });
+        return res.json({
+          success: true,
+          blog,
+        });
+      },
+    );
+    uploadStream.end(thumbnail.buffer);
   } catch (error) {
     next(error);
   }
@@ -79,25 +81,30 @@ export const updateBlog = async (req, res, next) => {
     if (blogExists && blogExists._id !== id)
       throw new Error("A blog with that title already exists");
 
-    const oldPath = req.file.path;
-    const newName = `${id}${path.extname(thumbnail.originalname)}`;
-    const newPath = `public/blogs/${newName}`;
+    const uploadStream = uploader.upload_stream(
+      { folder: "blog_thumbnail" },
+      async (error, result) => {
+        if (error) {
+          console.error(error);
+          throw new Error("Cloudinary upload failed.");
+        }
+        const imageUrl = result.secure_url;
+        console.log(imageUrl);
 
-    rename(oldPath, newPath, (err) => {
-      if (err) throw new Error("File rename error");
-    });
+        const blog = await Blog.findByIdAndUpdate(
+          id,
+          { $set: { title, description, thumbnail: imageUrl } },
+          { new: true },
+        );
 
-    const blog = await Blog.findByIdAndUpdate(
-      id,
-      { $set: { title, description, thumbnail: `blogs/${newName}` } },
-      { new: true },
+        return res.json({
+          success: true,
+          message: "Blog updated successfully",
+          blog,
+        });
+      },
     );
-
-    res.json({
-      success: true,
-      message: "Blog updated successfully",
-      blog,
-    });
+    uploadStream.end(thumbnail.buffer);
   } catch (error) {
     next(error);
   }

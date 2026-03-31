@@ -24,10 +24,11 @@ const ShopByCat = ({ limit }: { limit: number }) => {
       {err && <p>There's an error</p>}
       {data &&
         data.map((cat: Cat, index: number) => {
+          const { name, thumbnail } = cat;
           return (
             index < limit && (
               <Link to="/shop" key={index}>
-                <Category name={cat.name} img={`http://localhost:5000/${cat.thumbnail}`} />
+                <Category name={name} img={thumbnail} />
               </Link>
             )
           );

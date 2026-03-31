@@ -10,12 +10,7 @@ import {
 
 const catRouter = Router();
 
-const storage = multer.diskStorage({
-  destination: "public/categories/",
-  filename: (req, file, cb) => {
-    cb(null, `${file.originalname}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
 

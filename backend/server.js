@@ -48,7 +48,9 @@ app.use("/api/visits", visitRouter);
 app.use(errorHandle);
 
 // Listening on a port
-app.listen(PORT, () => {
-  console.log("Listening on port", PORT);
-  ConnectDB();
-});
+// app.listen(PORT, () => {
+//   console.log("Listening on port", PORT);
+//   ConnectDB();
+// });
+
+export default app;

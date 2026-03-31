@@ -4,12 +4,7 @@ import multer from "multer";
 import authUser from "../middlewares/auth.middleware.js";
 
 const blogRouter = Router();
-const storage = multer.diskStorage({
-  destination: "public/blogs/",
-  filename: (req, file, cb) => {
-    cb(null, `${file.originalname}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage });
 

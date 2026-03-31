@@ -50,7 +50,7 @@ app.use(errorHandle);
 // Listening on a port
 // app.listen(PORT, () => {
 //   console.log("Listening on port", PORT);
-//   ConnectDB();
 // });
 
+ConnectDB();
 export default app;
